@@ -7,6 +7,7 @@
     <script type="text/javascript" charset="utf-8">
       $.couch.app(function(app) {
         $("#posts").evently("posts", app);
+        $("#entry").evently("entry", app);
       });
     </script>
   </head>
@@ -14,5 +15,6 @@
     <h1>Sharebill</h1>
     <h2>Posts</h2>
     <div id="posts"></div>
+    <div id="entry"></div>
   </body>
 </html>
