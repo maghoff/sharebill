@@ -17,6 +17,10 @@ thead {
     border-top-right-radius: 15px;
 }
 
+thead>tr:first-child>th {
+    border-top: 1px solid #AAA;
+}
+
 table>thead>tr:first-child>th:first-child {
     background: #999;
     border-top-left-radius: 15px;
