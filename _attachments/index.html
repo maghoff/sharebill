@@ -6,10 +6,13 @@
     <script src="vendor/couchapp/loader.js"></script>
     <script type="text/javascript" charset="utf-8">
       $.couch.app(function(app) {
+        $("#posts").evently("posts", app);
       });
     </script>
   </head>
   <body>
     <h1>Sharebill</h1>
+    <h2>Posts</h2>
+    <div id="posts"></div>
   </body>
 </html>

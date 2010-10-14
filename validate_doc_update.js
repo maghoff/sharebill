@@ -1,16 +1,25 @@
 function(newDoc, oldDoc, userCtx) {
-    var transaction_total = 0;
-    for (name in newDoc.transaction) {
-        var value = newDoc.transaction[name];
-        transaction_total += value;
-        /*if (value != Math.floor(value)) {
-            throw({forbidden : 'The values in a transaction must be whole numbers'});
-        }*/
+    var totals = {"credits": 0, "debets": 0};
+    var types = ["credits", "debets"];
+    for (type_n in types) {
+        var type = types[type_n];
+        for (name in newDoc.transaction[type]) {
+            var value = newDoc.transaction[type][name];
+            totals[type] += value;
+
+            if (value < 0) throw({forbidden: "All values must be positive. " +
+                "(" + type + ": " + name + " = " + value + ")"});
+
+            /*if (value != Math.floor(value)) {
+                throw({forbidden : 'The values in a transaction must be whole numbers'});
+            }*/
+        }
     }
-    if (transaction_total != 0) {
+    if (totals.credits != totals.debets) {
         throw({
-            forbidden : 'The transaction must have a total of zero ' +
-                '(Actual total: ' + transaction_total + ')'
+            forbidden : 'Total credits must equal total debets in a transaction.\n' +
+                'Actual total credits: ' + totals.credits + '\n' +
+                'Actual total debets: ' + totals.debets
         });
     }
 }
