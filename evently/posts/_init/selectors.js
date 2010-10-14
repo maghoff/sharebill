@@ -11,8 +11,8 @@ function() {
                 .children(":nth-child(" + users + ")")
                     .before(h.clone());
 
-            $("tbody>tr>td:nth-child(" + users + ")").before($('<td class="credits"></td>'));
             $("tbody>tr").append($('<td class="debets"></td>'));
+            $("tbody>tr>td.debets").first().before($('<td class="credits"></td>'));
 
             $(".user_super_header").attr("colspan", users);
         }
@@ -24,9 +24,8 @@ function() {
             "_changes": {
                 "query": {
                     view: "all",
-                    type: "newRows"
-                    //group: true,
-                    //reduce: true
+                    type: "newRows",
+                    descending: true
                 },
                 "after": function(row) {
                     var v = row.value;

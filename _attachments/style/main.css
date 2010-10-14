@@ -48,3 +48,7 @@ tbody>tr:nth-child(2n):hover { background: hsl(120, 70%, 85%); }
 tbody>tr:nth-child(2n+1):hover { background: hsl(120, 70%, 80%); }
 tbody>tr:nth-child(2n):hover>.credits { background: hsl(0, 70%, 85%); }
 tbody>tr:nth-child(2n+1):hover>.credits { background: hsl(0, 70%, 80%); }
+
+td.credits, td.debets {
+    text-align: right;
+}
