@@ -11,6 +11,8 @@ table {
 
 thead {
     background: #999;
+    background-image: url("gradient.png");
+    background-repeat: repeat-x;
     color: #111;
     text-shadow: #EEE 1px 1px 1px;
     border-top-left-radius: 15px;
@@ -18,24 +20,29 @@ thead {
 }
 
 thead>tr:first-child>th {
-    border-top: 1px solid #AAA;
+    border-top: 1px solid #BBB;
 }
 
 table>thead>tr:first-child>th:first-child {
     background: #999;
+    background-image: url("gradient.png");
+    background-repeat: repeat-x;
     border-top-left-radius: 15px;
 }
 
 table>thead>tr:first-child>th:last-child {
     background: #999;
+    background-image: url("gradient.png");
+    background-repeat: repeat-x;
     border-top-right-radius: 15px;
 }
 
 th {
     padding-left: 1em;
     padding-right: 1em;
-    border-left: 1px solid #AAA;
+    border-left: 1px solid #BBB;
     border-right: 1px solid #888;
+    font-weight: normal;
 }
 
 td {
