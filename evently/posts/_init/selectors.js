@@ -11,8 +11,8 @@ function() {
                 .children(":nth-child(" + users + ")")
                     .before(h.clone());
 
-            $("tbody>tr").append($('<td class="debets"></td>'));
-            $("tbody>tr>td.debets").first().before($('<td class="credits"></td>'));
+            $("table#posts tbody>tr").append($('<td class="debets"></td>'));
+            $("table#posts tbody>tr").each(function() { $(this).children("td.debets").first().before($('<td class="credits"></td>')) });
 
             $(".user_super_header").attr("colspan", users);
         }
@@ -46,7 +46,7 @@ function() {
                     for (var i = 0; i < users; ++i) {
                         r.append($('<td class="debets"></td>').text(lists.debets[i] || ""));
                     }
-                    $("tbody").append(r);
+                    $("table#posts tbody").append(r);
                 }
             }
         }
