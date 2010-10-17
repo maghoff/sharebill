@@ -7,7 +7,10 @@
     <script type="text/javascript" charset="utf-8">
       $.couch.app(function(app) {
         $("#posts").evently("posts", app);
-        $("#entry").evently("entry", app);
+        $("#entry_link").click(function() {
+          $("#entry").evently("entry", app);
+          return false;
+        });
       });
     </script>
   </head>
@@ -15,6 +18,7 @@
     <h1>Sharebill</h1>
     <h2>Posts</h2>
     <div id="posts"></div>
-    <div id="entry"></div>
+    <h2>Data entry</h2>
+    <div id="entry"><a href="" id="entry_link">Add a free form post</a></div>
   </body>
 </html>
