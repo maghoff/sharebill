@@ -1,5 +1,4 @@
 function() {
-
     var timestamp = function (date) {
         var pad = function (amount, width) {
             var str = amount.toString();
@@ -8,42 +7,42 @@ function() {
         };
 
         date = date ? date : new Date();
-        return
+        return (
             pad(date.getUTCFullYear(), 4) + "-" +
             pad(date.getUTCMonth() + 1, 2) + "-" +
             pad(date.getUTCDate(), 2) + "T" +
             pad(date.getUTCHours(), 2) + ":" +
             pad(date.getUTCMinutes(), 2) + ":" +
             pad(date.getUTCSeconds(), 2) + "." +
-            pad(date.getUTCMilliseconds(), 3) + "Z";
+            pad(date.getUTCMilliseconds(), 3) + "Z"
+        );
     };
 
     return {
         "form": {
             "submit": function() {
+                var get_items = function(table) {
+                    var items = {};
+                    table.find("tr").each(function() {
+                        var name = $(this).find(".name").val();
+                        var value = parseInt($(this).find(".value").val(), 10);
+                        if (name && name != "" && value && value != 0) {
+                            items[name] = value;
+                        }
+                    });
+                    return items;
+                };
+
                 post = {
                     "meta": {
                         "timestamp": timestamp(),
                         "description": $("#description_entry").val()
                     },
                     "transaction": {
-                        "credits": { },
-                        "debets": { }
+                        "credits": get_items($("table#credits")),
+                        "debets": get_items($("table#debets"))
                     }
                 };
-
-                $("form").find("tr").each(function(index) {
-                    var add_pair = function(target, pair) {
-                        var name = pair.filter(".name").val();
-                        var value = parseInt(pair.filter(".value").val(), 10);
-                        if (name && name != "" && value && value != 0) {
-                            target[name] = value;
-                        }
-                    }
-                    var row = $(this);
-                    add_pair(post.transaction.credits, row.find(".cr"));
-                    add_pair(post.transaction.debets, row.find(".dr"));
-                });
 
                 $$(this).app.db.saveDoc(post, {
                     success: function() { $("form").reset(); },
