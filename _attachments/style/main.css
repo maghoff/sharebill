@@ -59,3 +59,8 @@ tbody>tr:nth-child(2n+1):hover>.credits { background: hsl(0, 70%, 80%); }
 td.credits, td.debets {
     text-align: right;
 }
+
+#totals>td {
+    border-top: 1px solid gray;
+    border-bottom: 3px double gray;
+}

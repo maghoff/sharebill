@@ -20,7 +20,7 @@ function() {
     };
     
     return {
-        "table tbody": {
+        "table#posts>tbody": {
             "_changes": {
                 "query": {
                     view: "all",
@@ -46,7 +46,31 @@ function() {
                     for (var i = 0; i < users; ++i) {
                         r.append($('<td class="debets"></td>').text(lists.debets[i] || ""));
                     }
-                    $("table#posts tbody").append(r);
+                    $("table#posts>tbody>#totals").before(r);
+                }
+            }
+        },
+        "table#posts>tbody>#totals": {
+            "_changes": {
+                "query": {
+                    view: "totals",
+                    group: true,
+                    reduce: true
+                },
+                "after": function(data) {
+                    var sumrow = $("table#posts>tbody>tr#totals");
+
+                    for (row in data.rows) {
+                        var r = data.rows[row];
+                        var type = r.key[0];
+                        var user = r.key[1];
+                        var value = r.value;
+
+                        if (value == 0) value = "";
+
+                        var col = get_column(user);
+                        sumrow.find("td." + type).slice(col, col+1).text(value);
+                    }
                 }
             }
         }
