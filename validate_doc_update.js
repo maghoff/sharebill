@@ -1,4 +1,6 @@
 function(newDoc, oldDoc, userCtx) {
+    if (newDoc._deleted) return;
+
     var totals = {"credits": 0, "debets": 0};
     var types = ["credits", "debets"];
     for (type_n in types) {
