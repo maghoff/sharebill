@@ -1,6 +1,6 @@
 function() {
     var column_map = {}, users = 0;
-    
+
     var get_column = function(id) {
         if (!(id in column_map)) {
             column_map[id] = users++;
@@ -11,14 +11,14 @@ function() {
                 .children(":nth-child(" + users + ")")
                     .before(h.clone());
 
-            $("table#posts tbody>tr").append($('<td class="debets"></td>'));
-            $("table#posts tbody>tr").each(function() { $(this).children("td.debets").first().before($('<td class="credits"></td>')) });
+            $("table#posts tbody>tr").append($('<td class="credits"></td>'));
+            $("table#posts tbody>tr").each(function() { $(this).children("td.credits").first().before($('<td class="debets"></td>')) });
 
             $(".user_super_header").attr("colspan", users);
         }
         return column_map[id];
     };
-    
+
     return {
         "table#posts>tbody": {
             "_changes": {
@@ -36,15 +36,15 @@ function() {
                             lists[type][col] = v.transaction[type][user];
                         }
                     }
-                    
+
                     var r = $("<tr></tr>");
                     r.append($("<td></td>").text(v.meta.timestamp));
                     r.append($("<td></td>").text(v.meta.description));
                     for (var i = 0; i < users; ++i) {
-                        r.append($('<td class="credits"></td>').text(lists.credits[i] || ""));
+                        r.append($('<td class="debets"></td>').text(lists.debets[i] || ""));
                     }
                     for (var i = 0; i < users; ++i) {
-                        r.append($('<td class="debets"></td>').text(lists.debets[i] || ""));
+                        r.append($('<td class="credits"></td>').text(lists.credits[i] || ""));
                     }
                     $("table#posts>tbody>#totals").before(r);
                 }
@@ -88,8 +88,8 @@ function() {
 
                         var row = $('<tr></tr>');
                         row.append($('<td></td>').text(user));
-                        row.append(cr);
                         row.append(dr);
+                        row.append(cr);
                         list.append(row);
                     }
                     $("#totals_summary").replaceWith(list);

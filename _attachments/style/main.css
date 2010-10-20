@@ -48,13 +48,13 @@ td {
 
 tbody>tr:nth-child(2n) { background: hsl(120, 70%, 95%); }
 tbody>tr:nth-child(2n+1) { background: hsl(120, 70%, 90%); }
-tbody>tr:nth-child(2n)>.credits { background: hsl(0, 70%, 95%); }
-tbody>tr:nth-child(2n+1)>.credits { background: hsl(0, 70%, 90%); }
+tbody>tr:nth-child(2n)>.debets { background: hsl(0, 70%, 95%); }
+tbody>tr:nth-child(2n+1)>.debets { background: hsl(0, 70%, 90%); }
 
 tbody>tr:nth-child(2n):hover { background: hsl(120, 70%, 85%); }
 tbody>tr:nth-child(2n+1):hover { background: hsl(120, 70%, 80%); }
-tbody>tr:nth-child(2n):hover>.credits { background: hsl(0, 70%, 85%); }
-tbody>tr:nth-child(2n+1):hover>.credits { background: hsl(0, 70%, 80%); }
+tbody>tr:nth-child(2n):hover>.debets { background: hsl(0, 70%, 85%); }
+tbody>tr:nth-child(2n+1):hover>.debets { background: hsl(0, 70%, 80%); }
 
 td.credits, td.debets {
     text-align: right;
