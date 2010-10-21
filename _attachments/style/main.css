@@ -1,6 +1,11 @@
+@font-face {
+    font-family: "Ubuntu";
+    src: uri("Ubuntu-R.ttf") format("truetype");
+}
+
 body {
-    font:1em Ubuntu, Helvetica, sans-serif;
-    padding:4px;
+    font-family: "Ubuntu", "Helvetica", sans-serif;
+    padding: 4px;
 }
 
 table {
