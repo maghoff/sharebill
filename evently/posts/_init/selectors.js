@@ -19,6 +19,14 @@ function() {
         return column_map[id];
     };
 
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var format_timestamp = function(timestamp) {
+        var month = parseInt(timestamp.substr(5, 2), 10);
+        var day = parseInt(timestamp.substr(8, 2), 10);
+
+        return months[month - 1] + " " + day;
+    };
+
     return {
         "table#posts>tbody": {
             "_changes": {
@@ -38,7 +46,7 @@ function() {
                     }
 
                     var r = $("<tr></tr>");
-                    r.append($("<td></td>").text(v.meta.timestamp));
+                    r.append($("<td></td>").text(format_timestamp(v.meta.timestamp)));
                     r.append($("<td></td>").text(v.meta.description));
                     for (var i = 0; i < users; ++i) {
                         r.append($('<td class="debets"></td>').text(lists.debets[i] || ""));
