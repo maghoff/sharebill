@@ -6,7 +6,11 @@
     <script src="vendor/couchapp/loader.js"></script>
     <script type="text/javascript" charset="utf-8">
       $.couch.app(function(app) {
-        $("#posts").evently("posts", app);
+        $("#balances").evently("balances", app);
+        $("#posts_link").click(function() {
+          $("#posts").evently("posts", app);
+          return false;
+        });
         $("#entry_link").click(function() {
           $("#entry").evently("entry", app);
           return false;
@@ -16,8 +20,10 @@
   </head>
   <body>
     <h1>Sharebill</h1>
+    <h2>Balances</h2>
+    <div id="balances"></div>
     <h2>Posts</h2>
-    <div id="posts"></div>
+    <div id="posts"><a href="" id="posts_link">Show all posts</a></div>
     <h2>Data entry</h2>
     <div id="entry"><a href="" id="entry_link">Add a free form post</a></div>
   </body>
