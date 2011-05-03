@@ -21,6 +21,7 @@ function() {
     return {
         "form": {
             "submit": function() {
+                var form = $(this);
                 var get_items = function(table) {
                     var items = {};
                     table.find("tr").each(function() {
@@ -45,7 +46,7 @@ function() {
                 };
 
                 $$(this).app.db.saveDoc(post, {
-                    success: function() { $("form").reset(); },
+                    success: function() { form[0].reset(); },
                     failure: function(msg) { alert(msg); }
                 });
 
