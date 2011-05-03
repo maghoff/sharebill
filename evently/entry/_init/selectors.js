@@ -33,7 +33,7 @@ function() {
                     return items;
                 };
 
-                post = {
+                var post = {
                     "meta": {
                         "timestamp": timestamp(),
                         "description": $("#description_entry").val()
