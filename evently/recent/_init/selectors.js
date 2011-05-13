@@ -53,7 +53,7 @@ function() {
     today.setUTCMilliseconds(0);
 
     var daysAgo = today;
-    daysAgo.setUTCDate(today.getUTCDate() - 3);
+    daysAgo.setUTCDate(today.getUTCDate() - 7);
 
     var startKey = timestamp(daysAgo);
 
