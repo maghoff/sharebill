@@ -22,6 +22,8 @@ function() {
         "form": {
             "submit": function() {
                 var form = $(this);
+                var inputs = form.find("input");
+
                 var get_items = function(table) {
                     var items = {};
                     table.find("tr").each(function() {
@@ -45,9 +47,16 @@ function() {
                     }
                 };
 
+                inputs.attr("disabled", true);
+
                 $$(this).app.db.saveDoc(post, {
-                    success: function() { form[0].reset(); },
-                    failure: function(msg) { alert(msg); }
+                    success: function() {
+                        form.slideUp(500, form.remove);
+                    },
+                    error: function(httpCode, httpMessage, body) {
+                        alert(body);
+                        inputs.removeAttr("disabled");
+                    }
                 });
 
                 return false;
