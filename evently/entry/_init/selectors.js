@@ -20,6 +20,10 @@ function() {
 
     return {
         "form": {
+            "_init": function() {
+                $(this).find("#description_entry").focus();
+                return false;
+            },
             "submit": function() {
                 var form = $(this);
                 var inputs = form.find("input");
