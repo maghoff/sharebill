@@ -18,6 +18,35 @@ function() {
         );
     };
 
+    var sum_calculator = function() {
+        var table = $(this).closest("table");
+
+        var sum = 0;
+        var sum_is_valid = true;
+        table.find(".value").each(
+            function(index, element) {
+                var value_text = $(element).val();
+                $(element).removeClass("error");
+                if (value_text != "") {
+                    var value = parseInt(value_text, 10);
+                    if (value.toString(10) == value_text) {
+                        sum = sum + value;
+                    } else {
+                        sum_is_valid = false;
+                        $(element).addClass("error");
+                    }
+                }
+            }
+        );
+
+        var sum_text = "-";
+        if (sum_is_valid) {
+            sum_text = sum.toString(10);
+        }
+
+        table.find("#sum").text(sum_text);
+    };
+
     return {
         "form": {
             "_init": function() {
@@ -47,8 +76,8 @@ function() {
                         "description": $("#description_entry").val()
                     },
                     "transaction": {
-                        "credits": get_items($("table#credits")),
-                        "debets": get_items($("table#debets"))
+                        "credits": get_items(form.find("table#credits")),
+                        "debets": get_items(form.find("table#debets"))
                     }
                 };
 
@@ -83,6 +112,8 @@ function() {
                 return false;
             },
         },
+        "input.dr.value": { "change": sum_calculator },
+        "input.cr.value": { "change": sum_calculator },
         "#cancel": {
             "click": function() {
                 var form = $(this).closest("form");
