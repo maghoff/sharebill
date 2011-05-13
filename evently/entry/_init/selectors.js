@@ -23,6 +23,7 @@ function() {
             "submit": function() {
                 var form = $(this);
                 var inputs = form.find("input");
+                var status = form.find("#status");
 
                 var get_items = function(table) {
                     var items = {};
@@ -48,14 +49,28 @@ function() {
                 };
 
                 inputs.attr("disabled", true);
+                form.fadeTo(1000, 0.60);
+                status.text("Saving...");
+                status.removeClass("error");
+                status.addClass("info");
 
                 $$(this).app.db.saveDoc(post, {
                     success: function() {
-                        form.slideUp(500, form.remove);
+                        status.text("Saved successfully!");
+                        status.removeClass("error");
+                        status.addClass("info");
+                        setTimeout(function() {
+                            form.stop();
+                            form.slideUp(500, form.remove);
+                        }, 1000);
                     },
                     error: function(httpCode, httpMessage, body) {
-                        alert(body);
+                        status.text("Error: " + body);
+                        status.removeClass("info");
+                        status.addClass("error");
                         inputs.removeAttr("disabled");
+                        form.stop();
+                        form.fadeTo(100, 1.00);
                     }
                 });
 

@@ -64,3 +64,19 @@ td.credits, td.debets {
     border-top: 1px solid gray;
     border-bottom: 3px double gray;
 }
+
+.info, .error {
+    border-style: solid;
+    border-width: 2px;
+    padding: 2px;
+}
+
+.info {
+    border-color: #FF0;
+    background-color: #FFD;
+}
+
+.error {
+    border-color: #F00;
+    background-color: #FDD;
+}
