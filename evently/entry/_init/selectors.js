@@ -75,6 +75,12 @@ function() {
                 });
 
                 return false;
+            },
+        },
+        "#cancel": {
+            "click": function() {
+                var form = $(this).closest("form");
+                form.slideUp(500, form.remove);
             }
         }
     };
