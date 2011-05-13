@@ -73,7 +73,7 @@ function() {
                 var post = {
                     "meta": {
                         "timestamp": timestamp(),
-                        "description": $("#description_entry").val()
+                        "description": form.find("#description_entry").val()
                     },
                     "transaction": {
                         "credits": get_items(form.find("table#credits")),
