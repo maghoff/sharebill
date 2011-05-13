@@ -54,6 +54,7 @@ function() {
                 status.removeClass("error");
                 status.addClass("info");
 
+                var app = $$(this).app;
                 $$(this).app.db.saveDoc(post, {
                     success: function() {
                         status.text("Saved successfully!");
@@ -63,6 +64,7 @@ function() {
                             form.stop();
                             form.slideUp(500, form.remove);
                         }, 1000);
+                        $("#balances").evently("balances", app);
                     },
                     error: function(httpCode, httpMessage, body) {
                         status.text("Error: " + body);
