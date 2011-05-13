@@ -112,6 +112,13 @@ function() {
                 return false;
             },
         },
+        "#description_entry": {
+            "change": function() {
+                var is_valid = $(this).val() != "";
+                if (is_valid) $(this).removeClass("error");
+                else $(this).addClass("error");
+            }
+        },
         "input.dr.value": { "change": sum_calculator },
         "input.cr.value": { "change": sum_calculator },
         "#cancel": {
