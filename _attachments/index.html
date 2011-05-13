@@ -8,6 +8,7 @@
     <script type="text/javascript" charset="utf-8">
       $.couch.app(function(app) {
         $("#balances").evently("balances", app);
+        $("#recent").evently("recent", app);
         $("#entry_link").click(function() {
           var form = $("<div/>");
           $("#entry").before(form);
@@ -21,6 +22,8 @@
     <h1>Sharebill</h1>
     <h2>Balances</h2>
     <div id="balances"></div>
+    <h2>Recent activity</h2>
+    <div id="recent"></div>
     <p><a href="posts.html">All posts</a></p>
     <h2>Data entry</h2>
     <div id="entry"><a href="" id="entry_link">Add a free form post</a></div>
