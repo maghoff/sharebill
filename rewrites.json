@@ -1,0 +1,24 @@
+[
+    {
+        "to": "index.html",
+        "from": ""
+    }, {
+        "to": "vendor/*",
+        "from": "vendor/*"
+    }, {
+        "to": "app/*",
+        "from": "app/*"
+    }, {
+        "to": "config/*",
+        "from": "config/*"
+    }, {
+        "to": "_view/*",
+        "from": "_view/*"
+    }, {
+        "to": "../../*",
+        "from": "sharebill/*"
+    }, {
+        "to": "*",
+        "from": "*"
+    }
+]

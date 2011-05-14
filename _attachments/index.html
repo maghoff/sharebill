@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
     <link rel="stylesheet" href="style/main.css" type="text/css">
     <script src="vendor/couchapp/loader.js"></script>
+    <script src="config.js"></script>
     <script type="text/javascript" charset="utf-8">
       $.couch.app(function(app) {
         $("#balances").evently("balances", app);
@@ -15,7 +16,7 @@
           form.evently("entry", app);
           return false;
         });
-      });
+      }, config);
     </script>
   </head>
   <body>
