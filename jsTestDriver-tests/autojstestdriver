@@ -18,9 +18,14 @@ while inotify_waitr
 do
 	clear
 
+	echo "# couchapp push:"
+	couchapp push
+	echo
+
+	echo "# jsLint:"
 	node $DIR/wrapper.js $DIR/*.js
+	echo
 
-	echo " ------ "
-
+	echo "# jsTestDriver:"
 	jstestdriver --tests all
 done
