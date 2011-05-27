@@ -63,3 +63,5 @@ do
 	report $COUCHAPP_PID
 	cat "$COUCHAPP_OUT"
 done
+
+cleanup()
