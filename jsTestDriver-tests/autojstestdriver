@@ -14,18 +14,52 @@ function inotify_waitr {
 	[ $? != 130 ]
 }
 
+BASENAME="/tmp/$(basename $0).$$"
+COUCHAPP_OUT="$BASENAME.couchapp.out"
+JSLINT_OUT="$BASENAME.jslint.out"
+JSTESTDRIVER_OUT="$BASENAME.jstestdriver.out"
+
+trap cleanup INT
+
+cleanup() {
+	rm -f "$COUCHAPP_OUT" "$JSLINT_OUT" "$JSTESTDRIVER_OUT"
+	exit 1
+}
+
+report() {
+	if wait $1
+	then
+		echo -e "\e[0;32mPASS\\e[m"
+	else
+		echo -e "\e[0;31mFAIL\\e[m"
+	fi
+}
+
 while inotify_waitr
 do
 	clear
 
-	echo "# couchapp push:"
-	couchapp push
+	couchapp push > "$COUCHAPP_OUT" 2>&1 &
+	COUCHAPP_PID=$!
+
+	export GLOBIGNORE=$DIR/{jslint,wrapper}.js
+	node $DIR/wrapper.js $DIR/*.js > "$JSLINT_OUT" 2>&1 &
+	JSLINT_PID=$!
+
+	jstestdriver --tests all > "$JSTESTDRIVER_OUT" 2>&1 &
+	JSTESTDRIVER_PID=$!
+
+	echo -n "# jsLint: "
+	report $JSLINT_PID
+	cat "$JSLINT_OUT"
 	echo
 
-	echo "# jsLint:"
-	node $DIR/wrapper.js $DIR/*.js
+	echo -n "# jsTestDriver: "
+	report $JSTESTDRIVER_PID
+	cat "$JSTESTDRIVER_OUT"
 	echo
 
-	echo "# jsTestDriver:"
-	jstestdriver --tests all
+	echo -n "# couchapp push: "
+	report $COUCHAPP_PID
+	cat "$COUCHAPP_OUT"
 done
