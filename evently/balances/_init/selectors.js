@@ -34,7 +34,7 @@ function() {
                         else credit_value = -value;
                         user_total_credits[user] = (user_total_credits[user] || 0) + credit_value;
                     }
-                    
+
                     var sorted_keys = function(d, sort_func) {
                         return Object.keys(d).sort();
                     };
