@@ -1,3 +1,5 @@
 syntax: glob
 *~
 .couchapprc
+*-swp
+jsTestDriver-tests/jslint.js

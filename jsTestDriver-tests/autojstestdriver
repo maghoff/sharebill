@@ -1,0 +1,26 @@
+#!/bin/bash
+
+DIR=`dirname $0`
+
+pushd $DIR
+node wrapper.js --upgrade
+popd
+
+echo Ready...
+
+function inotify_waitr {
+	inotifywait -qqr . --exclude '.*-swp' -e modify -e move -e create -e delete -e delete_self
+
+	[ $? != 130 ]
+}
+
+while inotify_waitr
+do
+	clear
+
+	node $DIR/wrapper.js $DIR/*.js
+
+	echo " ------ "
+
+	jstestdriver --tests all
+done
