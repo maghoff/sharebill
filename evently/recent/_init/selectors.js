@@ -78,7 +78,7 @@ function() {
 
                     var r = $("<tr></tr>");
                     r.append($("<td></td>").text(format_timestamp(v.meta.timestamp)));
-                    r.append($("<td></td>").text(v.meta.description));
+                    r.append($("<td></td>").append($("<a></a>").attr("href", "_show/freeform/" + v._id).text(v.meta.description)));
                     for (var i = 0; i < users; ++i) {
                         r.append($('<td class="debets"></td>').text(lists.debets[i] || ""));
                     }
