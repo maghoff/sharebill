@@ -2,6 +2,9 @@
 <html>
 
 <head>
+	<title>Post - Sharebill</title>
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
+	<link rel="stylesheet" href="../../style/main.css" type="text/css">
 </head>
 
 <body>
@@ -16,23 +19,35 @@
 {{/meta}}
 
 {{#transaction}}
-<table>
+<table style="float: left; margin-right: 1em" id="debets">
+
+<thead>
+<tr><th colspan="2">Debit</th></tr>
+<tr><th>Account</th><th>Value</th></tr>
+</thead>
+
 <tbody>
 {{#debit_array}}
 <tr>
-<td>{{key}}</td>
-<td>{{value}}</td>
+<td class="debets">{{key}}</td>
+<td class="debets">{{value}}</td>
 </tr>
 {{/debit_array}}
 </tbody>
 </table>
 
-<table>
+<table style="float: left; margin-bottom: 1em" id="credits">
+
+<thead>
+<tr><th colspan="2">Credit</th></tr>
+<tr><th>Account</th><th>Value</th></tr>
+</thead>
+
 <tbody>
 {{#credit_array}}
 <tr>
-<td>{{key}}</td>
-<td>{{value}}</td>
+<td class="credits">{{key}}</td>
+<td class="credits">{{value}}</td>
 </tr>
 {{/credit_array}}
 </tbody>
