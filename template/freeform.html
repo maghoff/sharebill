@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+</head>
+
 <body>
+
+<h1>Post</h1>
+
 {{#meta}}
-<h1>{{description}}</h1>
-<p>{{timestamp}}</p>
+<dl>
+<dt>Description:</dt> <dd>{{description}}</dd>
+<dt>Timestamp:</dt> <dd>{{timestamp}}</dd>
+</dl>
 {{/meta}}
+
+{{#transaction}}
+<table>
+<tbody>
+{{#debit_array}}
+<tr>
+<td>{{key}}</td>
+<td>{{value}}</td>
+</tr>
+{{/debit_array}}
+</tbody>
+</table>
+
+<table>
+<tbody>
+{{#credit_array}}
+<tr>
+<td>{{key}}</td>
+<td>{{value}}</td>
+</tr>
+{{/credit_array}}
+</tbody>
+</table>
+{{/transaction}}
+
 </body>
 
 </html>
