@@ -13,5 +13,7 @@ function(doc, req) {
 	doc.transaction.debit_array = make_dict_array(doc.transaction.debets);
 	doc.transaction.credit_array = make_dict_array(doc.transaction.credits);
 
+	doc.a = make_dict_array(doc._attachments);
+
 	return Mustache.to_html(template.freeform, doc);
 }
