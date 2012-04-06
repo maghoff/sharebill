@@ -17,9 +17,9 @@ function (head, req) {
 			that.setUTCMinutes(parseInt(d[9],10));
 			that.setUTCSeconds(parseInt(d[11],10));
 			if (d[12])
-			that.setUTCMilliseconds(parseFloat(d[12]) * 1000);
+				that.setUTCMilliseconds(parseFloat(d[12]) * 1000);
 			else
-			that.setUTCMilliseconds(0);
+				that.setUTCMilliseconds(0);
 			if (d[13] != 'Z') {
 				offset = (d[15] * 60) + parseInt(d[17],10);
 				offset *= ((d[14] == '-') ? -1 : 1);

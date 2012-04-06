@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{user}} (Sharebill)</title>
+    <base href="../">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
+    <link rel="stylesheet" href="style/main.css" type="text/css">
+    <link rel="alternate" href="{{atom-uri}}" type="application/atom+xml" title="{{user}} (Sharebill)">
+    <script src="vendor/couchapp/loader.js"></script>
+    <script src="config.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      $.couch.app(function(app) {
+        $("#posts").evently("user_posts", app);
+      }, config);
+    </script>
+  </head>
+  <body>
+    <h1>Userpage for {{user}}</h1>
+    <h2>Posts</h2>
+    <div id="posts"></div>
+  </body>
+</html>

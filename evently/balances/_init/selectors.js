@@ -17,8 +17,6 @@ function() {
                     reduce: true
                 },
                 "after": function(data) {
-                    var sumrow = $("table#posts>tbody>tr#totals");
-
                     var user_total_credits = {};
 
                     for (row in data.rows) {
@@ -46,8 +44,10 @@ function() {
                         var dr = $('<td class="debets"></td>');
                         (value > 0 ? cr : dr).text(Math.abs(value) || "");
 
+                        var userpage = '_show/userpage?user=' + encodeURIComponent(user);
+
                         var row = $('<tr></tr>');
-                        row.append($('<td></td>').text(user));
+                        row.append($('<td></td>').append($('<a></a>').text(user).attr('href', userpage)));
                         row.append(dr);
                         row.append(cr);
                         list.append(row);

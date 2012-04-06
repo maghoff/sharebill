@@ -10,7 +10,7 @@ function(doc) {
 	function mergeUnique(a, b) {
 		var result = [];
 		var i = 0, j = 0;
-		while ((i < a.length) && (j < b.length)) {
+		while ((i < a.length) || (j < b.length)) {
 			if (a[i] === undefined) {
 				result.push(b[j++]);
 			} else if (b[j] === undefined) {
