@@ -1,0 +1,68 @@
+<html>
+
+<head>
+	<title>Post - Sharebill</title>
+	<base href="../../">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
+	<link rel="stylesheet" href="style/main.css" type="text/css">
+</head>
+
+<body>
+
+<h1>Post</h1>
+
+{{#meta}}
+<dl>
+<dt>Description:</dt> <dd>{{description}}</dd>
+<dt>Timestamp:</dt> <dd>{{timestamp}}</dd>
+</dl>
+{{/meta}}
+
+{{#transaction}}
+<table style="float: left; margin-right: 1em" id="debets">
+
+<thead>
+<tr><th colspan="2">Debit</th></tr>
+<tr><th>Account</th><th>Value</th></tr>
+</thead>
+
+<tbody>
+{{#debit_array}}
+<tr>
+  <td class="debets" >{{key}}</td>
+  <td class="debets" >{{value}}</td>
+</tr>
+{{/debit_array}}
+<tr id="totals"><td class="debets" >Sum</td><td class="debets" id="sum">{{sum_debits}}</input></td></tr>
+</tbody>
+</table>
+
+<table style="float: left; margin-bottom: 1em" id="credits">
+
+<thead>
+<tr><th colspan="2">Credit</th></tr>
+<tr><th>Account</th><th>Value</th></tr>
+</thead>
+
+<tbody>
+{{#credit_array}}
+<tr>
+  <td class="credits">{{key}}</td>
+  <td class="credits">{{value}}</td>
+</tr>
+{{/credit_array}}
+<tr id="totals"><td class="credits" >Sum</td><td class="credits" id="sum">{{sum_credits}}</input></td></tr>
+</tbody>
+</table>
+{{/transaction}}
+
+<p style="clear:both">Attachments:</p>
+{{#a}}
+<p><a href="../../{{_id}}/{{key}}">{{key}}</a></p>
+{{/a}}
+
+<p style="clear:both"></p>
+
+</body>
+
+</html>

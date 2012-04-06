@@ -78,6 +78,9 @@ exports.init = function(req) {
     },
     absolute : function(path) {
       return 'http://' + req.headers.Host + path;
-    }
+    },
+
+    concatArgs: concatArgs,
+    makePath : makePath
   }
 };
