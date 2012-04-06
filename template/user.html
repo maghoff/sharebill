@@ -13,10 +13,18 @@
         $("#posts").evently("user_posts", app);
       }, config);
     </script>
+    <style type="text/css">
+      #atomlink {
+        opacity: 0.4;
+      }
+      #atomlink:hover {
+        opacity: 1.0;
+      }
+    </style>
   </head>
   <body>
     <h1>Userpage for {{user}}</h1>
-    <h2>Posts</h2>
+    <h2>Posts <a id="atomlink" href="{{atom-uri}}"><img alt="Subscribe" src="style/Feed-icon.svg" style="width: 18px; height: 18px"></a></h2>
     <div id="posts"></div>
   </body>
 </html>
