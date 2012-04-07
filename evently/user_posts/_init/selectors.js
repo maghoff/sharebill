@@ -1,5 +1,7 @@
 function () {
-	var data = eval($$(this).evently._init.data)();
+	var dataFunctionString = $$(this).evently._init.data;
+	var dataFunction = eval("(" + dataFunctionString + ")");
+	var data = dataFunction();
 
 	var column_map = {}, users = 0;
 
