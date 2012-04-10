@@ -3,3 +3,4 @@ syntax: glob
 .couchapprc
 *-swp
 jsTestDriver-tests/jslint.js
+_attachments/vendor/couchapp/lol.js
