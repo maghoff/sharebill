@@ -10,7 +10,6 @@ function(doc, req) {
 			"account_posts",
 			"user",
 			{
-				reduce: false,
 				descending: true,
 				startkey: [ user, {} ],
 				endkey: [ user ],

@@ -39,8 +39,7 @@ function () {
                     type: "newRows",
                     descending: true,
                     startkey: [data.user, {}],
-                    endkey: [data.user],
-                    reduce: false
+                    endkey: [data.user]
                 },
                 "after": function(row) {
                     var v = row.value;
@@ -62,36 +61,6 @@ function () {
                         r.append($('<td class="credits"></td>').text(lists.credits[i] || ""));
                     }
                     $("table#posts>tbody>#totals").before(r);
-                }
-            }
-        },
-        "table#posts>tbody>tr#totals": {
-            "_changes": {
-                "query": {
-                    view: "user",
-                    descending: true,
-                    startkey: [data.user, {}],
-                    endkey: [data.user],
-                    group: true,
-                    group_level: 1,
-                    reduce: true
-                },
-                "after": function(data) {
-                    var sumrow = $("table#posts>tbody>tr#totals");
-
-                    var synthetic_transaction = data.rows[0].value.transaction;
-                    var type, user;
-                    for (type in synthetic_transaction) {
-                        var items = synthetic_transaction[type];
-                        for (user in items) {
-                            var value = items[user];
-
-                            if (value == 0) value = "";
-
-                            var col = get_column(user);
-                            sumrow.find("td." + type).slice(col, col+1).text(value);
-                        }
-                    }
                 }
             }
         }
