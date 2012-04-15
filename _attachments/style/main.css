@@ -127,6 +127,7 @@ button {
 }
 
 button[type=submit] {
+	text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
 	background-color:#0074cc;
 	background-image:-moz-linear-gradient(top, #0088cc, #0055cc);
 	background-image:-ms-linear-gradient(top, #0088cc, #0055cc);
@@ -137,7 +138,7 @@ button[type=submit] {
 	background-repeat:repeat-x;
 	border-color:#0055cc #0055cc #003580;
 	border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-	color: rgba(255, 255, 255, 0.75);
+	color: white;
 }
 
 button[type=submit]:hover {
@@ -145,6 +146,7 @@ button[type=submit]:hover {
 }
 
 button[type=submit]:active {
+	color: rgba(255,255,255,.75);
 	background-color:#004099;
 }
 
