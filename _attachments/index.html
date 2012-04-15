@@ -10,23 +10,36 @@
       $.couch.app(function(app) {
         $("#balances").evently("balances", app);
         $("#recent").evently("recent", app);
-        $("#entry_link").click(function() {
+        $(".entry_link").click(function(event) {
+          event.preventDefault();
           var form = $("<div/>");
           $("#entry").before(form);
-          form.evently("entry", app);
-          return false;
+          form.evently($(this).attr("entry_type"), app);
         });
       }, config);
     </script>
   </head>
   <body>
     <h1>Sharebill</h1>
-    <h2>Balances</h2>
-    <div id="balances"></div>
-    <h2>Recent activity</h2>
-    <div id="recent"></div>
-    <p><a href="posts.html">All posts</a></p>
-    <h2>Data entry</h2>
-    <div id="entry"><a href="" id="entry_link">Add a free form post</a></div>
+    <div class="section">
+        <h2>Balances</h2>
+        <div id="balances"></div>
+    </div>
+    <div class="section">
+        <h2>Activity</h2>
+        <div id="recent"></div>
+        <p><a href="posts.html">Go to all posts</a></p>
+        <!-- button class="entry_link" entry_type="single_payer">I paid an expense</button -->
+        <button class="entry_link" entry_type="entry">Add a free form post</button>
+    </div>
+    <div id="entry">
+    </div>
+    <div class="footer">
+        <ul>
+            <li>Sharebill</li>
+            <li><a href="http://bitbucket.org/maghoff/sharebill">Source code</a></li>
+            <li><a href="http://bitbucket.org/maghoff/sharebill/issues">Report an issue</a></li>
+        </ul>
+    </div>
   </body>
 </html>

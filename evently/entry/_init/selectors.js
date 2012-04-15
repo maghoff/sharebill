@@ -1,4 +1,6 @@
 function() {
+    var self = this;
+
     var timestamp = function (date) {
         var pad = function (amount, width) {
             var str = amount.toString();
@@ -50,7 +52,6 @@ function() {
     return {
         "form": {
             "_init": function() {
-                $(this).find("#description_entry").focus();
                 return false;
             },
             "submit": function() {
@@ -82,7 +83,7 @@ function() {
                 };
 
                 inputs.attr("disabled", true);
-                form.fadeTo(1000, 0.60);
+                self.fadeTo(1000, 0.60);
                 status.text("Saving...");
                 status.removeClass("error");
                 status.addClass("info");
@@ -94,8 +95,8 @@ function() {
                         status.removeClass("error");
                         status.addClass("info");
                         setTimeout(function() {
-                            form.stop();
-                            form.slideUp(500, form.remove);
+                            self.stop();
+                            self.slideUp(500, self.remove);
                         }, 1000);
                         $("#balances").evently("balances", app);
                     },
@@ -104,8 +105,8 @@ function() {
                         status.removeClass("info");
                         status.addClass("error");
                         inputs.removeAttr("disabled");
-                        form.stop();
-                        form.fadeTo(100, 1.00);
+                        self.stop();
+                        self.fadeTo(100, 1.00);
                     }
                 });
 
@@ -122,9 +123,9 @@ function() {
         "input.dr.value": { "change": sum_calculator },
         "input.cr.value": { "change": sum_calculator },
         "#cancel": {
-            "click": function() {
-                var form = $(this).closest("form");
-                form.slideUp(500, form.remove);
+            "click": function(event) {
+                event.preventDefault();
+                self.slideUp(500, self.remove);
             }
         }
     };
