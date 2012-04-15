@@ -52,11 +52,6 @@ function() {
     today.setUTCSeconds(0);
     today.setUTCMilliseconds(0);
 
-    var daysAgo = today;
-    daysAgo.setUTCDate(today.getUTCDate() - 7);
-
-    var startKey = timestamp(daysAgo);
-
     return {
         "table#recent>tbody": {
             "_changes": {
@@ -64,7 +59,7 @@ function() {
                     view: "all",
                     type: "newRows",
                     descending: true,
-                    endkey: startKey
+                    limit: 5
                 },
                 "after": function(row) {
                     var v = row.value;
