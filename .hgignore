@@ -4,3 +4,6 @@ syntax: glob
 *-swp
 jsTestDriver-tests/jslint.js
 _attachments/vendor/couchapp/lol.js
+rewrites.json
+_attachments/config.js
+*.pyc
