@@ -1,0 +1,47 @@
+<div class="section">
+
+<h2>I paid an expense</h2>
+
+<form class="form-inline">
+
+<div class="p">
+On <input id="timestamp" type="text" value="" class="wide"></input>,
+<input type="text" id="payer" placeholder="this guy" required></input>
+paid <input type="text" id="amount" placeholder="this much" required></input>
+for <input type="text" id="description_entry" placeholder="this thing" required></input>
+</div>
+
+<div class="p">
+The expense should be shared
+<div class="controls" style="display: inline-block; vertical-align: middle; margin: 1ex">
+    <div>
+        <input type="radio" name="optionsRadios" id="evenly" value="option1" checked="">
+        <label class="radio" for="evenly">evenly</label>
+    </div>
+    <div>
+        <input type="radio" name="optionsRadios" id="specific" value="option2">
+        <label class="radio" for="specific">by exact specification</label>
+    </div>
+</div>
+</div>
+
+<div class="p">
+among <div style="display: inline-block; vertical-align: top">
+    <table class="people">
+        <tr><td><input type="checkbox" checked></td><td><label> Myself</label></td><td>123</td></tr>
+        <tr><td>(X)</td><td>Irene</td><td>123</td></tr>
+        <tr><td>(+)</td><td><input type="text" placeholder="this guy"></td><td>97</td></tr>
+    </table>
+</div>
+</div>
+
+<div class="p">
+  <button type="submit">Submit expense</button>
+  <button id="cancel">Cancel</button>
+</div>
+
+<div class="p"><span id="status"></span></div>
+
+</form>
+
+</div>

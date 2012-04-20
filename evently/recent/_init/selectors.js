@@ -59,7 +59,7 @@ function() {
                     view: "all",
                     type: "newRows",
                     descending: true,
-                    limit: 5
+                    limit: 10
                 },
                 "after": function(row) {
                     var v = row.value;

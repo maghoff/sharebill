@@ -75,9 +75,10 @@ td.credits, td.debets {
 }
 
 .info, .error {
+	border-radius: 5px;
     border-style: solid;
     border-width: 2px;
-    padding: 2px;
+    padding: 10px;
 }
 
 .info {
@@ -162,6 +163,10 @@ input[type=text].wide {
 	padding: 6px;
 	margin: 0 3px 0 3px;
 	font-size: inherit;
+}
+
+input[type=text]:focus {
+	box-shadow: 0 0 5px #88f;
 }
 
 input[type=radio] {

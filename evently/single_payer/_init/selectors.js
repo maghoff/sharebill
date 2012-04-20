@@ -49,36 +49,37 @@ function() {
         table.find("#sum").text(sum_text);
     };
 
+    //var storage = JSON.parse(localStorage["single_payer"]);
+
     return {
         "form": {
             "_init": function() {
+                //$(this).find("#");
+                //$(this).find("#description_entry").focus();
+                self.find("#timestamp").attr('value', timestamp());
                 return false;
             },
-            "submit": function() {
-                var form = $(this);
-                var inputs = form.find("input");
-                var status = form.find("#status");
+            "submit": function(event) {
+                event.preventDefault();
 
-                var get_items = function(table) {
-                    var items = {};
-                    table.find("tr").each(function() {
-                        var name = $(this).find(".name").val();
-                        var value = parseInt($(this).find(".value").val(), 10);
-                        if (name && name != "" && value && value != 0) {
-                            items[name] = value;
-                        }
-                    });
-                    return items;
-                };
+                var inputs = self.find("input");
+                var status = self.find("#status");
+
+                var payer = self.find("#payer").val();
+                var totalAmount = parseInt(self.find("#amount").val(), 10);
+                var credits = {};
+                credits[payer] = totalAmount;
+
+                var debits = {};
 
                 var post = {
                     "meta": {
-                        "timestamp": timestamp(),
-                        "description": form.find("#description_entry").val()
+                        "timestamp": self.find("#timestamp").val(),
+                        "description": self.find("#description_entry").val()
                     },
                     "transaction": {
-                        "credits": get_items(form.find("table#credits")),
-                        "debets": get_items(form.find("table#debets"))
+                        "credits": credits,
+                        "debets": debits
                     }
                 };
 
