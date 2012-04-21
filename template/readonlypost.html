@@ -30,10 +30,10 @@
 {{#debit_array}}
 <tr>
   <td class="debets" >{{key}}</td>
-  <td class="debets" >{{value}}</td>
+  <td class="debets currency" >{{value}}</td>
 </tr>
 {{/debit_array}}
-<tr id="totals"><td class="debets" >Sum</td><td class="debets" id="sum">{{sum_debits}}</input></td></tr>
+<tr id="totals"><td class="debets" >Sum</td><td class="debets currency" id="sum">{{sum_debits}}</input></td></tr>
 </tbody>
 </table>
 
@@ -48,10 +48,10 @@
 {{#credit_array}}
 <tr>
   <td class="credits">{{key}}</td>
-  <td class="credits">{{value}}</td>
+  <td class="credits currency">{{value}}</td>
 </tr>
 {{/credit_array}}
-<tr id="totals"><td class="credits" >Sum</td><td class="credits" id="sum">{{sum_credits}}</input></td></tr>
+<tr id="totals"><td class="credits" >Sum</td><td class="credits currency" id="sum">{{sum_credits}}</input></td></tr>
 </tbody>
 </table>
 {{/transaction}}

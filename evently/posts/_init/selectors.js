@@ -11,8 +11,8 @@ function() {
                 .children(":nth-child(" + users + ")")
                     .before(h.clone());
 
-            $("table#posts tbody>tr").append($('<td class="credits"></td>'));
-            $("table#posts tbody>tr").each(function() { $(this).children("td.credits").first().before($('<td class="debets"></td>')) });
+            $("table#posts tbody>tr").append($('<td class="credits currency"></td>'));
+            $("table#posts tbody>tr").each(function() { $(this).children("td.credits").first().before($('<td class="debets currency"></td>')) });
 
             $(".user_super_header").attr("colspan", users);
         }
@@ -49,10 +49,10 @@ function() {
                     r.append($("<td></td>").text(format_timestamp(v.meta.timestamp)));
                     r.append($("<td></td>").append($("<a></a>").attr("href", "_show/freeform/" + v._id).text(v.meta.description)));
                     for (var i = 0; i < users; ++i) {
-                        r.append($('<td class="debets"></td>').text(lists.debets[i] || ""));
+                        r.append($('<td class="debets currency"></td>').text(lists.debets[i] || ""));
                     }
                     for (var i = 0; i < users; ++i) {
-                        r.append($('<td class="credits"></td>').text(lists.credits[i] || ""));
+                        r.append($('<td class="credits currency"></td>').text(lists.credits[i] || ""));
                     }
                     $("table#posts>tbody>#totals").before(r);
                 }

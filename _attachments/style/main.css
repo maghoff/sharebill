@@ -67,7 +67,7 @@ tbody>tr:nth-child(2n+1)>.debets { background: hsl(0, 70%, 90%); }
 tbody>tr:nth-child(2n):hover>.debets { background: hsl(0, 70%, 85%); }
 tbody>tr:nth-child(2n+1):hover>.debets { background: hsl(0, 70%, 80%); }
 
-td.numeric {
+td.currency {
     text-align: right;
 }
 

@@ -40,8 +40,8 @@ function() {
                     var list = $('<tbody id="totals_summary"></tbody>');
                     sorted_keys(user_total_credits).forEach(function(user) {
                         var value = user_total_credits[user];
-                        var cr = $('<td class="credits"></td>');
-                        var dr = $('<td class="debets"></td>');
+                        var cr = $('<td class="credits currency"></td>');
+                        var dr = $('<td class="debets currency"></td>');
                         (value > 0 ? cr : dr).text(Math.abs(value) || "");
 
                         var userpage = '_show/userpage?user=' + encodeURIComponent(user);
