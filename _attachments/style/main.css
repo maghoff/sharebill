@@ -4,13 +4,15 @@ body {
 	background-color: #ddd;
 }
 
-table {
+.too_wide {
+	overflow-x: auto;
+}
+
+table.accounts {
     border-spacing: 0;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-}
 
-table {
     background: #999;
     background-image: url("gradient.png");
     background-repeat: repeat-x;
@@ -55,17 +57,17 @@ td {
     padding-right: 1em;
 }
 
-tbody>tr:nth-child(2n) { background: hsl(120, 70%, 95%); }
-tbody>tr:nth-child(2n+1) { background: hsl(120, 70%, 90%); }
+.accounts>tbody>tr:nth-child(2n), tbody>tr:nth-child(2n)>.credits { background: hsl(120, 70%, 95%); }
+.accounts>tbody>tr:nth-child(2n+1), tbody>tr:nth-child(2n+1)>.credits { background: hsl(120, 70%, 90%); }
 tbody>tr:nth-child(2n)>.debets { background: hsl(0, 70%, 95%); }
 tbody>tr:nth-child(2n+1)>.debets { background: hsl(0, 70%, 90%); }
 
-tbody>tr:nth-child(2n):hover { background: hsl(120, 70%, 85%); }
-tbody>tr:nth-child(2n+1):hover { background: hsl(120, 70%, 80%); }
+tbody>tr:nth-child(2n):hover>.credits { background: hsl(120, 70%, 85%); }
+tbody>tr:nth-child(2n+1):hover>.credits { background: hsl(120, 70%, 80%); }
 tbody>tr:nth-child(2n):hover>.debets { background: hsl(0, 70%, 85%); }
 tbody>tr:nth-child(2n+1):hover>.debets { background: hsl(0, 70%, 80%); }
 
-td.credits, td.debets {
+td.numeric {
     text-align: right;
 }
 
@@ -106,6 +108,7 @@ input[type="text"] {
 	margin: 1em;
 	padding: 1em;
 	background-color: white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 button {
