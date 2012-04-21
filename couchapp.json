@@ -10,6 +10,8 @@
     "compress": {
       "js": {
         "vendor/couchapp/lol.js": [
+          "_attachments/config.js",
+
           "vendor/couchapp/_attachments/sha1.js",
           "vendor/couchapp/_attachments/json2.js",
           "vendor/couchapp/_attachments/jquery.js",
