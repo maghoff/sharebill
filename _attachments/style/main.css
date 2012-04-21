@@ -62,8 +62,8 @@ td {
 tbody>tr:nth-child(2n)>.debets { background: hsl(0, 70%, 95%); }
 tbody>tr:nth-child(2n+1)>.debets { background: hsl(0, 70%, 90%); }
 
-tbody>tr:nth-child(2n):hover>.credits { background: hsl(120, 70%, 85%); }
-tbody>tr:nth-child(2n+1):hover>.credits { background: hsl(120, 70%, 80%); }
+.accounts>tbody>tr:nth-child(2n):hover, tbody>tr:nth-child(2n):hover>.credits { background: hsl(120, 70%, 85%); }
+.accounts>tbody>tr:nth-child(2n+1):hover, tbody>tr:nth-child(2n+1):hover>.credits { background: hsl(120, 70%, 80%); }
 tbody>tr:nth-child(2n):hover>.debets { background: hsl(0, 70%, 85%); }
 tbody>tr:nth-child(2n+1):hover>.debets { background: hsl(0, 70%, 80%); }
 
