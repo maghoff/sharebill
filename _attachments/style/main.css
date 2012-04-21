@@ -103,6 +103,10 @@ input[type="text"] {
 	background-color: white;
 }
 
+.currency input[type="text"] {
+	text-align: right;
+}
+
 .section {
 	border-radius: 6px;
 	margin: 1em;
