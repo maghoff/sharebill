@@ -1,4 +1,6 @@
 function(doc) {
+    if (doc._id === "instance_config") return;
+
 	function getAllKeys(dict) {
 		var keys = [];
 		for (key in dict) {

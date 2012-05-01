@@ -71,6 +71,13 @@ THE SOFTWARE.
  */
 Fraction = function(numerator, denominator)
 {
+    if (numerator instanceof Fraction) {
+        if (denominator !== undefined) return undefined;
+        this.numerator = numerator.numerator;
+        this.denominator = numerator.denominator;
+        return;
+    }
+
     /* double argument invocation */
     if (typeof(numerator) === 'number' && typeof(denominator) === 'number') {
         this.numerator = numerator;

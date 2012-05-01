@@ -22,7 +22,10 @@
 
           "_attachments/config.js",
 
-          "views/lib/fraction.js"
+          "views/lib/fraction.js",
+          "views/lib/sprintf-0.7-beta1.js",
+
+          "sharebill.js"
         ]
       }
     }

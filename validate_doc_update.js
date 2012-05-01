@@ -1,6 +1,8 @@
 function(newDoc, oldDoc, userCtx) {
     if (newDoc._deleted) return;
 
+    if (newDoc._id === "instance_config") return;
+
     var Fraction = require("views/lib/fraction").Fraction;
 
     var assert_has = function(path) {

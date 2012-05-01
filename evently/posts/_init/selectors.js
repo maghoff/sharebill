@@ -49,10 +49,10 @@ function() {
                     r.append($("<td></td>").text(format_timestamp(v.meta.timestamp)));
                     r.append($("<td></td>").append($("<a></a>").attr("href", "_show/freeform/" + v._id).text(v.meta.description)));
                     for (var i = 0; i < users; ++i) {
-                        r.append($('<td class="debets currency"></td>').text(lists.debets[i] || ""));
+                        r.append($('<td class="debets currency"></td>').text(sharebill.formatCurrencyShortOrEmpty(lists.debets[i])));
                     }
                     for (var i = 0; i < users; ++i) {
-                        r.append($('<td class="credits currency"></td>').text(lists.credits[i] || ""));
+                        r.append($('<td class="credits currency"></td>').text(sharebill.formatCurrencyShortOrEmpty(lists.credits[i])));
                     }
                     $("table#posts>tbody>#totals").before(r);
                 }
@@ -76,10 +76,8 @@ function() {
                         var user = r.key[1];
                         var value = r.value;
 
-                        if (value == 0) value = "";
-
                         var col = get_column(user);
-                        sumrow.find("td." + type).slice(col, col+1).text(value);
+                        sumrow.find("td." + type).slice(col, col+1).text(sharebill.formatCurrencyShortOrEmpty(value));
                     }
                 }
             }

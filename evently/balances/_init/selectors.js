@@ -40,7 +40,7 @@ function() {
                         var cr = $('<td class="credits currency"></td>');
                         var dr = $('<td class="debets currency"></td>');
                         var sign = (value.numerator < 0 ? -1 : 1);
-                        (value.numerator > 0 ? cr : dr).text(value.multiply(sign).toString());
+                        (value.numerator > 0 ? cr : dr).text(sharebill.formatCurrencyShort(value.multiply(sign)));
 
                         var userpage = '_show/userpage?user=' + encodeURIComponent(user);
 
