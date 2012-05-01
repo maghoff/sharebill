@@ -25,6 +25,16 @@ var sharebill = (function () {
 			success: function(json) {
 				config = json;
 				ready();
+			},
+			error: function() {
+				console.log("This sharebill instance lacks instance_config -- it should be configured! Falling back on default config");
+
+				config = {
+					currency_formatting: {
+						short: "%(wholepart)d"
+					}
+				};
+				ready();
 			}
 		});
 	});
