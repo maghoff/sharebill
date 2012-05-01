@@ -74,9 +74,9 @@
 		                    var items = {};
 		                    table.find("tr").each(function() {
 		                        var name = $(this).find(".name").val();
-		                        var value = parseInt($(this).find(".value").val(), 10);
-		                        if (name && name != "" && value && value != 0) {
-		                            items[name] = value;
+		                        var value = new Fraction($(this).find(".value").val());
+		                        if ((name) && (name !== "") && (value) && (!value.equals(0))) {
+		                            items[name] = value.toString();
 		                        }
 		                    });
 		                    return items;
