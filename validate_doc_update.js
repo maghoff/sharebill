@@ -1,6 +1,8 @@
 function(newDoc, oldDoc, userCtx) {
     if (newDoc._deleted) return;
 
+    var Fraction = require("views/lib/fraction").Fraction;
+
     var assert_has = function(path) {
         var node = newDoc;
         for (x in path) {
@@ -14,26 +16,23 @@ function(newDoc, oldDoc, userCtx) {
     assert_has(["transaction", "credits"]);
     assert_has(["transaction", "debets"]);
 
-    var rfc3339 = /\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z/;
+    var rfc3339 = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z$/;
     if (!newDoc.meta.timestamp.match(rfc3339)) throw({forbidden: 'meta.timestamp must be RFC3339-formatted and in UTC with timezone specifier Z'});
 
-    var totals = {"credits": 0, "debets": 0};
+    var fractionPattern = /^(\d+ )?\d+(\/\d+)?$/;
+    var totals = { "credits": new Fraction(0), "debets": new Fraction(0) };
     var types = ["credits", "debets"];
     for (type_n in types) {
         var type = types[type_n];
         for (name in newDoc.transaction[type]) {
-            var value = newDoc.transaction[type][name];
-            totals[type] += value;
+            var value = new Fraction(newDoc.transaction[type][name]);
+            totals[type] = totals[type].add(value);
 
-            if (value < 0) throw({forbidden: "All values must be non-negative. " +
+            if (value.numerator < 0) throw({forbidden: "All values must be non-negative. " +
                 "(" + type + ": " + name + " = " + value + ")"});
-
-            if (value != Math.floor(value)) {
-                throw({forbidden : 'The values in a transaction must be whole numbers'});
-            }
         }
     }
-    if (totals.credits != totals.debets) {
+    if (!totals.credits.equals(totals.debets)) {
         throw({
             forbidden : 'Total credits must equal total debets in a transaction.\n' +
                 'Actual total credits: ' + totals.credits + '\n' +

@@ -1,6 +1,8 @@
 function (head, req) {
 	// !json template.readonlypost
 
+	var Fraction = require("views/lib/fraction").Fraction;
+
 	function parseRFC3339(dString) {
 		var regexp = /(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)(T)?(\d\d)(:)?(\d\d)(:)?(\d\d)(\.\d+)?(Z|([+-])(\d\d)(:)?(\d\d))/;
 
@@ -102,11 +104,11 @@ function (head, req) {
 		};
 
 		function sum_values(d) {
-			var sum = 0;
+			var sum = new Fraction(0);
 			for (var key in d) {
-				sum += d[key];
+				sum = sum.add(d[key]);
 			}
-			return sum;
+			return sum.toString();
 		};
 
 		doc.transaction.debit_array = make_dict_array(doc.transaction.debets);
@@ -144,7 +146,7 @@ function (head, req) {
 				title : row.value.meta.description,
 				content : formatTransaction(row.value),
 				updated : new Date(parseRFC3339(row.value.meta.timestamp)),
-				author : "Anonymous Coward",
+				author : "",
 				alternate : path.absolute(path.show('freeform', row.id))
 			});
 			// send the entry to client

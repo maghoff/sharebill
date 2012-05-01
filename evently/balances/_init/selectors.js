@@ -23,14 +23,11 @@ function() {
                         var r = data.rows[row];
                         var type = r.key[0];
                         var user = r.key[1];
-                        var value = r.value;
+                        var value = new Fraction(r.value);
 
-                        if (value == 0) value = "";
+                        if (type !== "credits") value = value.multiply(-1);
 
-                        var credit_value;
-                        if (type == "credits") credit_value = value;
-                        else credit_value = -value;
-                        user_total_credits[user] = (user_total_credits[user] || 0) + credit_value;
+                        user_total_credits[user] = value.add(user_total_credits[user] || 0);
                     }
 
                     var sorted_keys = function(d, sort_func) {
@@ -42,7 +39,8 @@ function() {
                         var value = user_total_credits[user];
                         var cr = $('<td class="credits currency"></td>');
                         var dr = $('<td class="debets currency"></td>');
-                        (value > 0 ? cr : dr).text(Math.abs(value) || "");
+                        var sign = (value.numerator < 0 ? -1 : 1);
+                        (value.numerator > 0 ? cr : dr).text(value.multiply(sign).toString());
 
                         var userpage = '_show/userpage?user=' + encodeURIComponent(user);
 

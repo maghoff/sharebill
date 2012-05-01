@@ -20,30 +20,31 @@ function() {
         );
     };
 
+    var fractionPattern = /^(\d+ )?\d+(\/\d+)?$/;
     var sum_calculator = function() {
         var table = $(this).closest("table");
 
-        var sum = 0;
+        var sum = new Fraction(0);
         var sum_is_valid = true;
         table.find(".value").each(
             function(index, element) {
-                var value_text = $(element).val();
+                var value_text = $(element).val().trim();
                 $(element).removeClass("error");
-                if (value_text != "") {
-                    var value = parseInt(value_text, 10);
-                    if (value.toString(10) == value_text) {
-                        sum = sum + value;
-                    } else {
-                        sum_is_valid = false;
-                        $(element).addClass("error");
-                    }
+                if (value_text === "") return;
+
+                if (value_text.match(fractionPattern)) {
+                    var value = new Fraction(value_text);
+                    sum = sum.add(value);
+                } else {
+                    sum_is_valid = false;
+                    $(element).addClass("error");
                 }
             }
         );
 
         var sum_text = "-";
         if (sum_is_valid) {
-            sum_text = sum.toString(10);
+            sum_text = sum.toString();
         }
 
         table.find("#sum").text(sum_text);
@@ -63,9 +64,9 @@ function() {
                     var items = {};
                     table.find("tr").each(function() {
                         var name = $(this).find(".name").val();
-                        var value = parseInt($(this).find(".value").val(), 10);
-                        if (name && name != "" && value && value != 0) {
-                            items[name] = value;
+                        var value = new Fraction($(this).find(".value").val());
+                        if ((name) && (name !== "") && (value) && (!value.equals(0))) {
+                            items[name] = value.toString();
                         }
                     });
                     return items;

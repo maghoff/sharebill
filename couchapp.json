@@ -10,8 +10,6 @@
     "compress": {
       "js": {
         "vendor/couchapp/lol.js": [
-          "_attachments/config.js",
-
           "vendor/couchapp/_attachments/sha1.js",
           "vendor/couchapp/_attachments/json2.js",
           "vendor/couchapp/_attachments/jquery.js",
@@ -20,7 +18,11 @@
           "vendor/couchapp/_attachments/jquery.couch.app.js",
           "vendor/couchapp/_attachments/jquery.couch.app.util.js",
           "vendor/couchapp/_attachments/jquery.mustache.js",
-          "vendor/couchapp/_attachments/jquery.evently.js"
+          "vendor/couchapp/_attachments/jquery.evently.js",
+
+          "_attachments/config.js",
+
+          "views/lib/fraction.js"
         ]
       }
     }
