@@ -32,6 +32,9 @@ var config = (function() {
         "to": "_view/*",
         "from": "_view/*"
     }, {
+        "to": "../../",
+        "from": "%(db)s"
+    }, {
         "to": "../../*",
         "from": "%(design)s/*"
     }, {

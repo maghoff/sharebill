@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style/main.css" type="text/css">
     <script src="vendor/couchapp/lol.js"></script>
     <script type="text/javascript" charset="utf-8">
-      $.couch.app(function(app) {
+      sharebill.onReady(function(app) {
         $("#balances").evently("balances", app);
         $("#recent").evently("recent", app);
         $(".entry_link").click(function(event) {
@@ -15,7 +15,7 @@
           $("#entry").before(form);
           form.evently($(this).attr("entry_type"), app);
         });
-      }, config);
+      });
     </script>
   </head>
   <body>

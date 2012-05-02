@@ -2,20 +2,21 @@ var sharebill = (function () {
 	var isReady = false;
 	var app = null;
 	var runOnReady = [];
-	var config = {};
+	var instance_config = null;
 
-	function onReady(callback) {
+	function onReady(callback, config) {
 		if (!isReady) {
 			runOnReady.push(callback);
 		} else {
-			callback(app);
+			callback.call(app, app);
 		}
 	}
 
 	function ready() {
+		console.log(app);
 		isReady = true;
 		runOnReady.forEach(function (cb) {
-			cb(app);
+			cb.call(app, app);
 		});
 	}
 
@@ -23,13 +24,13 @@ var sharebill = (function () {
 		app = newApp;
 		app.db.openDoc("instance_config", {
 			success: function(json) {
-				config = json;
+				instance_config = json;
 				ready();
 			},
 			error: function() {
 				console.log("This sharebill instance lacks instance_config -- it should be configured! Falling back on default config");
 
-				config = {
+				instance_config = {
 					currency_formatting: {
 						short: "%(wholepart)d"
 					}
@@ -37,13 +38,12 @@ var sharebill = (function () {
 				ready();
 			}
 		});
-	});
-
+	}, config);
 
 	function formatCurrencyShort(fraction) {
 		fraction = new Fraction(fraction);
 
-		var formatString = config.currency_formatting.short;
+		var formatString = instance_config.currency_formatting.short;
 
 		var formatData = {
 			decimal: fraction.numerator / fraction.denominator,
