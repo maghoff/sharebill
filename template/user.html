@@ -8,9 +8,9 @@
     <link rel="alternate" href="{{atom-uri}}" type="application/atom+xml" title="{{user}} (Sharebill)">
     <script src="vendor/couchapp/lol.js"></script>
     <script type="text/javascript" charset="utf-8">
-      $.couch.app(function(app) {
+      sharebill.onReady(function(app) {
         $("#posts").evently("user_posts", app);
-      }, config);
+      });
     </script>
     <style type="text/css">
       #atomlink {
