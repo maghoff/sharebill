@@ -21,8 +21,8 @@ function() {
 
                     for (row in data.rows) {
                         var r = data.rows[row];
-                        var type = r.key[0];
-                        var user = r.key[1];
+                        var user = r.key[0];
+                        var type = r.key[1];
                         var value = new Fraction(r.value);
 
                         if (type !== "credits") value = value.multiply(-1);
