@@ -17,5 +17,36 @@ function(doc, req) {
 			}
 		));
 
+	req.query["credit-uri"] =
+		path.absolute(path.list(
+			"balance",
+			"totals",
+			{
+				group: true,
+				keys: JSON.stringify([[user, "credits"]])
+			}
+		));
+
+	req.query["debit-uri"] =
+		path.absolute(path.list(
+			"balance",
+			"totals",
+			{
+				group: true,
+				keys: JSON.stringify([[user, "debets"]])
+			}
+		));
+
+	req.query["balance-uri"] =
+		path.absolute(path.list(
+			"balance",
+			"totals",
+			{
+				group: true,
+				startkey: [ user, "credits" ],
+				endkey: [ user, "debets" ]
+			}
+		));
+
 	return Mustache.to_html(template.user, req.query);
 }

@@ -9,6 +9,29 @@
     <script src="vendor/couchapp/lol.js"></script>
     <script type="text/javascript" charset="utf-8">
       sharebill.onReady(function(app) {
+        app.view("totals", {
+          group: true,
+          startkey: ["{{user}}", "credits"],
+          endkey: ["{{user}}", "debets"],
+          success: function (json) {
+            var totals = {
+              credits: new Fraction(0),
+              debets: new Fraction(0)
+            };
+            json.rows.forEach(function (row) {
+              totals[row.key[1]] = new Fraction(row.value);
+            });
+            $("#credit").text(sharebill.formatCurrencyShortOrEmpty(totals.credits));
+            $("#debit").text(sharebill.formatCurrencyShortOrEmpty(totals.debets));
+
+            var balance = totals.credits.subtract(totals.debets);
+            $("#balance").text(sharebill.formatCurrencyShortOrEmpty(balance));
+            if (balance.numerator < 0) {
+              $("#balance").closest("tr").find("td").addClass("debets");
+            }
+          }
+        });
+
         $("#posts").evently("user_posts", app);
       });
     </script>
@@ -23,6 +46,19 @@
   </head>
   <body>
     <h1>Userpage for {{user}}</h1>
+    <div class="section">
+      <h2>Balance</h2>
+      <table class="accounts">
+        <thead>
+          <tr><th>What</th><th>Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="credits">Credit <a class="fileformat" href="{{credit-uri}}">[txt]</a></td><td class="credits currency" id="credit"></td></tr>
+          <tr><td class="debets">Debit <a class="fileformat" href="{{debit-uri}}">[txt]</a></td><td class="debets currency" id="debit"></td></tr>
+          <tr id="totals"><td>Balance <a class="fileformat" href="{{balance-uri}}">[txt]</a></td><td class="currency" id="balance"></td></tr>
+        </tbody>
+      </table>
+    </div>
     <div class="section">
       <h2>Posts <a id="atomlink" href="{{atom-uri}}"><img alt="Subscribe" src="style/Feed-icon.svg" style="width: 18px; height: 18px"></a></h2>
       <div id="posts"></div>

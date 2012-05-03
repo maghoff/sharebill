@@ -225,3 +225,8 @@ ul.people {
 .people li {
 	margin: 0;
 }
+
+a.fileformat {
+	font-size: 80%;
+	font-weight: thin;
+}
