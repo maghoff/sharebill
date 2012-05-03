@@ -32,7 +32,12 @@
           }
         });
 
-        $("#posts").evently("user_posts", app);
+        $("#show-all").click(function (event) {
+          event.preventDefault();
+          $("#posts").html("").evently("user_posts", app, {});
+          $(this).remove();
+        });
+        $("#posts").evently("user_posts", app, {limit: 10});
       });
     </script>
     <style type="text/css">
@@ -62,6 +67,7 @@
     <div class="section">
       <h2>Posts <a id="atomlink" href="{{atom-uri}}"><img alt="Subscribe" src="style/Feed-icon.svg" style="width: 18px; height: 18px"></a></h2>
       <div id="posts"></div>
+      <p><a id="show-all" href="#">Show all posts</a></p>
     </div>
     <div class="footer">
         <ul>

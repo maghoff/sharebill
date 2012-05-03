@@ -34,12 +34,17 @@ function () {
     return {
         "table#posts>tbody": {
             "_changes": {
-                "query": {
-                    view: "user",
-                    type: "newRows",
-                    descending: true,
-                    startkey: [data.user, {}],
-                    endkey: [data.user]
+                "query": function (wat) {
+                    var args = wat.data.args[1];
+                    var q = {
+                        view: "user",
+                        type: "newRows",
+                        descending: true,
+                        startkey: [data.user, {}],
+                        endkey: [data.user]
+                    };
+                    if (args.limit) q.limit = args.limit;
+                    return q;
                 },
                 "after": function(row) {
                     var v = row.value;
