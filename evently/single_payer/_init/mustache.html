@@ -5,9 +5,9 @@
 <form class="form-inline">
 
 <div class="p">
-On <input id="timestamp" type="text" value="" class="wide"></input>,
-<input type="text" id="payer" placeholder="this guy" required></input>
-paid <input type="text" id="amount" placeholder="this much" required></input>
+On <span class="input-prepend"><span class="add-on"><i class="icon-calendar"></i></span><input id="timestamp" type="text" value="" class="wide"></input></span>,
+<span class="input-prepend"><span class="add-on"><i class="icon-user"></i></span><input type="text" id="payer" placeholder="this guy" required></input></span>
+paid <span class="input-append"><input type="text" id="amount" placeholder="this much" required></input><span class="add-on">kr</span></span>
 for <input type="text" id="description_entry" placeholder="this thing" required></input>
 </div>
 
@@ -29,15 +29,15 @@ The expense should be shared
 among <div style="display: inline-block; vertical-align: top">
     <table class="people">
         <tr><td><input type="checkbox" checked></td><td><label> Myself</label></td><td>123</td></tr>
-        <tr><td>(X)</td><td>Irene</td><td>123</td></tr>
-        <tr><td>(+)</td><td><input type="text" placeholder="this guy"></td><td>97</td></tr>
+        <tr><td><i class="icon-remove-sign"></i></td><td>Irene</td><td>123</td></tr>
+        <tr><td><i class="icon-plus-sign"></i></td><td><input type="text" placeholder="this guy"></td><td>97</td></tr>
     </table>
 </div>
 </div>
 
 <div class="p">
-  <button type="submit">Submit expense</button>
-  <button id="cancel">Cancel</button>
+  <button class="btn btn-primary" type="submit">Submit expense</button>
+  <button class="btn" id="cancel">Cancel</button>
 </div>
 
 <div class="p"><span id="status"></span></div>

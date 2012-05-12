@@ -2,9 +2,8 @@
 <html>
   <head>
     <title>Sharebill</title>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
-    <link rel="stylesheet" href="style/main.css" type="text/css">
-    <script src="vendor/couchapp/lol.js"></script>
+    <link rel="stylesheet" href="style/all.css" type="text/css">
+    <script src="all.js"></script>
     <script type="text/javascript" charset="utf-8">
       sharebill.onReady(function(app) {
         $("#balances").evently("balances", app);
@@ -28,8 +27,8 @@
         <h2>Activity</h2>
         <div id="recent"></div>
         <p><a href="posts.html">Go to all posts</a></p>
-        <button class="entry_link" entry_type="single_payer">I paid an expense</button>
-        <button class="entry_link" entry_type="entry">Add a free form post</button>
+        <button class="entry_link btn" entry_type="single_payer">I paid an expense</button>
+        <button class="entry_link btn" entry_type="entry">Add a free form post</button>
     </div>
     <div id="entry">
     </div>

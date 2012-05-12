@@ -1,0 +1,77 @@
+body {
+  padding: 12px;
+  background-color: #ddd;
+  background: url("vichy.png");
+}
+
+input {
+  margin-bottom: 0;
+}
+
+.section {
+  border-radius: 6px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 1em;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background: url("exclusive_paper.png");
+}
+
+.too_wide {
+  overflow-x: auto;
+}
+
+td.currency {
+    text-align: right;
+}
+
+#totals>td {
+    border-top: 1px solid rgb(200,200,200);
+    border-bottom: 3px double rgb(200,200,200);
+}
+
+th {
+  vertical-align: bottom;
+}
+
+td,th {
+    padding-left: 1ex;
+    padding-right: 1ex;
+}
+
+td+td {
+  border-left: 1px solid rgba(200,200,200,0.4);
+}
+
+td:not(.debets)+td.debets, td:not(.credits)+td.credits {
+  border-left: 1px solid rgba(200,200,200,0.8);
+}
+
+.accounts>tbody>tr:nth-child(2n), tbody>tr:nth-child(2n)>.credits { background: rgba(200, 250, 200, 0.2); }
+.accounts>tbody>tr:nth-child(2n+1), tbody>tr:nth-child(2n+1)>.credits { background: rgba(150, 200, 150, 0.2); }
+tbody>tr:nth-child(2n)>.debets { background: rgba(250, 200, 200, 0.2); }
+tbody>tr:nth-child(2n+1)>.debets { background: rgba(200, 150, 150, 0.2); }
+
+.footer {
+  text-align: center;
+  color: #888;
+  font-size: 90%;
+}
+
+.footer a {
+  color: inherit;
+}
+
+.footer ul {
+  list-style-type: none;
+}
+
+.footer li {
+  display: inline;
+}
+
+.footer li+li:before {
+  content: " | ";
+  padding: 0 5px 0 5px;
+}

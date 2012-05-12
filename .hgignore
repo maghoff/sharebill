@@ -3,7 +3,8 @@ syntax: glob
 .couchapprc
 *-swp
 jsTestDriver-tests/jslint.js
-_attachments/vendor/couchapp/lol.js
 rewrites.json
 _attachments/config.js
 *.pyc
+_attachments/style/all.css
+_attachments/all.js

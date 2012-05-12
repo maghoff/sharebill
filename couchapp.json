@@ -8,11 +8,20 @@
       ]
     },
     "compress": {
+      "css": {
+        "style/all.css": [
+          "vendor/bootstrap/_attachments/css/bootstrap.css",
+          "_attachments/style/local.css"
+        ]
+      },
       "js": {
-        "vendor/couchapp/lol.js": [
+        "all.js": [
+          "vendor/jquery/_attachments/jquery-1.7.2.js",
+
+          "vendor/bootstrap/_attachments/js/bootstrap.min.js",
+
           "vendor/couchapp/_attachments/sha1.js",
           "vendor/couchapp/_attachments/json2.js",
-          "vendor/couchapp/_attachments/jquery.js",
           "vendor/couchapp/_attachments/jquery.couch.js",
 
           "vendor/couchapp/_attachments/jquery.couch.app.js",
