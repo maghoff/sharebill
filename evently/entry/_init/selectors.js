@@ -53,6 +53,7 @@ function() {
     return {
         "form": {
             "_init": function() {
+                $(this).find(".account_input").evently("account_input", $$(this).app);
                 $(this).find(".currency_input").evently("currency_input", $$(this).app);
                 return false;
             },
@@ -64,7 +65,7 @@ function() {
                 var get_items = function(table) {
                     var items = {};
                     table.find("tr").each(function() {
-                        var name = $(this).find(".name").val();
+                        var name = $(this).find(".account_input input").val();
                         var value = new Fraction($(this).find(".currency_input input").val());
                         if ((name) && (name !== "") && (value) && (!value.equals(0))) {
                             items[name] = value.toString();
