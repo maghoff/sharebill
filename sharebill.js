@@ -3,6 +3,7 @@ var sharebill = (function () {
 	var runOnReady = [];
 	var app = null;
 	var instance_config = null;
+	var accounts = null;
 
 	function onReady(callback, config) {
 		if (!isReady) {
@@ -19,7 +20,7 @@ var sharebill = (function () {
 	}
 
 	function maybeReady() {
-		isReady = (instance_config !== null) && (app !== null);
+		isReady = (instance_config !== null) && (app !== null) && (accounts !== null);
 		if (isReady) ready();
 	}
 
@@ -31,10 +32,12 @@ var sharebill = (function () {
 		var dbname = opts.db || fragments[index + 2];
 		var dname = opts.design || fragments[index + 4];
 
-		return $.couch.db(dbname);
+		return [$.couch.db(dbname), dname];
 	}
 
-	var db = getdb(config);
+	var dbInfo = getdb(config);
+	var db = dbInfo[0];
+	var dname = dbInfo[1];
 
 	db.openDoc("instance_config", {
 		success: function(json) {
@@ -46,9 +49,21 @@ var sharebill = (function () {
 
 			instance_config = {
 				currency_formatting: {
-					short: "%(wholepart)d"
+					short: "%(wholepart)d",
+					currency: "kr",
+					currency_position: "suffix"
 				}
 			};
+			maybeReady();
+		}
+	});
+
+	db.view(dname + "/totals", {
+		reduce: true,
+		group: true,
+		group_level: 1,
+		success: function(json) {
+			accounts = json.rows.map(function (row) { return row.key[0]; });
 			maybeReady();
 		}
 	});
@@ -94,6 +109,7 @@ var sharebill = (function () {
 		formatCurrencyShort: formatCurrencyShort,
 		formatCurrencyShortOrEmpty: formatCurrencyShortOrEmpty,
 		currencyName: currencyName,
-		currencyPosition: currencyPosition
+		currencyPosition: currencyPosition,
+		allAccounts: function () { return accounts; }
 	};
 }());

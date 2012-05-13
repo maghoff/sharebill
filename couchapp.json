@@ -19,6 +19,7 @@
           "vendor/jquery/_attachments/jquery-1.7.2.js",
 
           "vendor/bootstrap/_attachments/js/bootstrap.min.js",
+          "vendor/bootstrap/_attachments/js/bootstrap-typeahead.js",
 
           "vendor/couchapp/_attachments/sha1.js",
           "vendor/couchapp/_attachments/json2.js",
