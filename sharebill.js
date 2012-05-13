@@ -59,8 +59,6 @@ var sharebill = (function () {
 	});
 
 	db.view(dname + "/totals", {
-		reduce: true,
-		group: true,
 		group_level: 1,
 		success: function(json) {
 			accounts = json.rows.map(function (row) { return row.key[0]; });
