@@ -1,7 +1,7 @@
 body {
   padding: 12px;
-  background-color: #ddd;
-  background: url("vichy.png");
+  background-color: #6f951f;
+  background: url("ornate_13.png");
 }
 
 input {
@@ -15,7 +15,8 @@ input {
   padding: 1em;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  background: url("exclusive_paper.png");
+  background: #ddd;
+  background: url("clean_textile.png");
 }
 
 .too_wide {
@@ -53,9 +54,13 @@ td:not(.debets)+td.debets, td:not(.credits)+td.credits {
 tbody>tr:nth-child(2n)>.debets { background: rgba(250, 200, 200, 0.2); }
 tbody>tr:nth-child(2n+1)>.debets { background: rgba(200, 150, 150, 0.2); }
 
+h1, .footer {
+  color: #eee;
+  text-shadow: 0px 0px 8px rgba(0,0,0,0.7);
+}
+
 .footer {
   text-align: center;
-  color: #888;
   font-size: 90%;
 }
 
