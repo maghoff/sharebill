@@ -26,7 +26,7 @@ function() {
 
         var sum = new Fraction(0);
         var sum_is_valid = true;
-        table.find(".value").each(
+        table.find(".currency_input input").each(
             function(index, element) {
                 var value_text = $(element).val().trim();
                 $(element).removeClass("error");
@@ -53,6 +53,7 @@ function() {
     return {
         "form": {
             "_init": function() {
+                $(this).find(".currency_input").evently("currency_input", $$(this).app);
                 return false;
             },
             "submit": function() {
@@ -64,7 +65,7 @@ function() {
                     var items = {};
                     table.find("tr").each(function() {
                         var name = $(this).find(".name").val();
-                        var value = new Fraction($(this).find(".value").val());
+                        var value = new Fraction($(this).find(".currency_input input").val());
                         if ((name) && (name !== "") && (value) && (!value.equals(0))) {
                             items[name] = value.toString();
                         }
@@ -121,8 +122,7 @@ function() {
                 else $(this).addClass("error");
             }
         },
-        "input.dr.value": { "change": sum_calculator },
-        "input.cr.value": { "change": sum_calculator },
+        ".currency_input input": { "change": sum_calculator },
         "#cancel": {
             "click": function(event) {
                 event.preventDefault();

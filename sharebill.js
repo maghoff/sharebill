@@ -81,9 +81,19 @@ var sharebill = (function () {
 		return formatCurrencyShort(fraction);
 	}
 
+	function currencyName() {
+		return instance_config.currency_formatting.currency;
+	}
+
+	function currencyPosition() {
+		return instance_config.currency_formatting.currency_position;
+	}
+
 	return {
 		onReady: onReady,
 		formatCurrencyShort: formatCurrencyShort,
-		formatCurrencyShortOrEmpty: formatCurrencyShortOrEmpty
+		formatCurrencyShortOrEmpty: formatCurrencyShortOrEmpty,
+		currencyName: currencyName,
+		currencyPosition: currencyPosition
 	};
 }());

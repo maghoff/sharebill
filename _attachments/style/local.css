@@ -80,3 +80,7 @@ h1, .footer {
   content: " | ";
   padding: 0 5px 0 5px;
 }
+
+input.currency {
+  text-align: right;
+}
