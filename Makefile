@@ -3,7 +3,7 @@ COPY_DIRS=views,lists,shows,evently,template,vendor/couchapp/lib
 HTMLS=_attachments/index.html _attachments/posts.html
 BOOTSTRAP_ATTACHMENTS=_attachments/img/glyphicons-halflings-white.png _attachments/img/glyphicons-halflings.png
 STYLE=_attachments/style/Feed-icon.svg _attachments/style/brillant.png _attachments/style/ornate_13.png
-MISC=_id couchapp.json language validate_doc_update.js .couchapprc
+MISC=_id couchapp.json language validate_doc_update.js .couchapprc rewrites.json
 COPY_FILES=$(HTMLS) $(BOOTSTRAP_ATTACHMENTS) $(STYLE) $(MISC)
 
 JQUERY=vendor/jquery/_attachments/jquery-1.7.2.js
