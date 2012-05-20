@@ -5,3 +5,4 @@ syntax: glob
 jsTestDriver-tests/jslint.js
 *.pyc
 release
+.intermediate

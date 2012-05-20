@@ -3,40 +3,7 @@
     "description": "An application to help you share bills",
     "hooks": {
       "pre-push": [
-        ["py", "../hooks/configjs.py"],
-        ["py", "couchapp.hooks.compress"]
+        ["py", "../hooks/configjs.py"]
       ]
-    },
-    "compress": {
-      "css": {
-        "style/all.css": [
-          "vendor/bootstrap/_attachments/css/bootstrap.css",
-          "_attachments/style/local.css"
-        ]
-      },
-      "js": {
-        "all.js": [
-          "vendor/jquery/_attachments/jquery-1.7.2.js",
-
-          "vendor/bootstrap/_attachments/js/bootstrap.min.js",
-          "vendor/bootstrap/_attachments/js/bootstrap-typeahead.js",
-
-          "vendor/couchapp/_attachments/sha1.js",
-          "vendor/couchapp/_attachments/json2.js",
-          "vendor/couchapp/_attachments/jquery.couch.js",
-
-          "vendor/couchapp/_attachments/jquery.couch.app.js",
-          "vendor/couchapp/_attachments/jquery.couch.app.util.js",
-          "vendor/couchapp/_attachments/jquery.mustache.js",
-          "vendor/couchapp/_attachments/jquery.evently.js",
-
-          "_attachments/config.js",
-
-          "views/lib/fraction.js",
-          "views/lib/sprintf-0.7-beta1.js",
-
-          "sharebill.js"
-        ]
-      }
     }
 }
