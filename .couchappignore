@@ -1,6 +1,0 @@
-[
-  ".*~$",
-  "^jsTestDriver.*",
-  ".*-swp$",
-  "^hooks"
-]

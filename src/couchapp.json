@@ -3,7 +3,7 @@
     "description": "An application to help you share bills",
     "hooks": {
       "pre-push": [
-        ["py", "hooks/configjs.py"],
+        ["py", "../hooks/configjs.py"],
         ["py", "couchapp.hooks.compress"]
       ]
     },
