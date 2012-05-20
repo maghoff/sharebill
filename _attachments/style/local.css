@@ -1,7 +1,6 @@
 body {
   padding: 12px;
-  background-color: #6f951f;
-  background: url("ornate_13.png");
+  background: url("ornate_13.png") #6f951f;
 }
 
 input {
@@ -13,10 +12,8 @@ input {
   margin-top: 1em;
   margin-bottom: 1em;
   padding: 1em;
-  background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  background: #ddd;
-  background: url("clean_textile.png");
+  background: url("hipster.png") #eee;
 }
 
 .too_wide {
