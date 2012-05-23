@@ -1,11 +1,10 @@
 COPY_DIRS=views,lists,shows,evently,template,vendor/couchapp/lib
 
 HTMLS=_attachments/index.html _attachments/posts.html
-BOOTSTRAP_ATTACHMENTS=_attachments/img/glyphicons-halflings-white.png _attachments/img/glyphicons-halflings.png
 MISC=_id couchapp.json language validate_doc_update.js .couchapprc rewrites.json
-COPY_FILES=$(HTMLS) $(BOOTSTRAP_ATTACHMENTS) $(MISC)
+COPY_FILES=$(HTMLS) $(MISC)
 
-IMAGE_FILES=_attachments/style/Feed-icon.svg _attachments/style/brillant.png _attachments/style/ornate_13.png
+IMAGE_FILES=_attachments/style/Feed-icon.svg _attachments/style/brillant.png _attachments/style/ornate_13.png _attachments/img//glyphicons-halflings-white.png _attachments/img//glyphicons-halflings.png
 IMAGE_SUM_SRCS=$(IMAGE_FILES)
 IMAGE_SUM_FILES=$(IMAGE_SUM_SRCS:%=.intermediate/%.sum)
 
@@ -65,7 +64,7 @@ release/_attachments/all.js: $(JS_FILES:%.js=.intermediate/%.min.js)
 
 # pystache claims to accept filenames, but it doesn't seem to work right
 release/_attachments/style/all.css: .intermediate/_attachments/style/all.css .intermediate/image-sums.json
-	pystache "`cat .intermediate/_attachments/style/all.css`" .intermediate/image-sums.json > $@
+	pystache "`sed -e 's/glyphicons-halflings.png/glyphicons-halflings.sum-{{glyphicons-halflings_png_sum}}.png/' -e 's/glyphicons-halflings-white.png/glyphicons-halflings-white.sum-{{glyphicons-halflings-white_png_sum}}.png/' .intermediate/_attachments/style/all.css`" .intermediate/image-sums.json > $@
 
 .intermediate/_attachments/style/all.css: $(CSS_FILES:%=src/%)
 	mkdir -p `dirname $@`
