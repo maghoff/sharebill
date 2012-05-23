@@ -5,48 +5,48 @@ function(doc, req) {
 
 	var user = req.query.user;
 
-	req.query["atom-uri"] =
-		path.absolute(path.list(
-			"account_posts",
-			"user",
-			{
-				descending: true,
-				startkey: [ user, {} ],
-				endkey: [ user ],
-				limit: 10
-			}
-		));
+	function list(list_function, view, arguments) {
+		return path.makePath(["_list", list_function, view, arguments]);
+	}
 
-	req.query["credit-uri"] =
-		path.absolute(path.list(
-			"balance",
-			"totals",
-			{
-				group: true,
-				keys: JSON.stringify([[user, "credits"]])
-			}
-		));
+	req.query["atom-uri"] = list(
+		"account_posts",
+		"user",
+		{
+			descending: true,
+			startkey: [ user, {} ],
+			endkey: [ user ],
+			limit: 10
+		}
+	);
 
-	req.query["debit-uri"] =
-		path.absolute(path.list(
-			"balance",
-			"totals",
-			{
-				group: true,
-				keys: JSON.stringify([[user, "debets"]])
-			}
-		));
+	req.query["credit-uri"] = list(
+		"balance",
+		"totals",
+		{
+			group: true,
+			keys: JSON.stringify([[user, "credits"]])
+		}
+	);
 
-	req.query["balance-uri"] =
-		path.absolute(path.list(
-			"balance",
-			"totals",
-			{
-				group: true,
-				startkey: [ user, "credits" ],
-				endkey: [ user, "debets" ]
-			}
-		));
+	req.query["debit-uri"] = list(
+		"balance",
+		"totals",
+		{
+			group: true,
+			keys: JSON.stringify([[user, "debets"]])
+		}
+	);
+
+	req.query["balance-uri"] = list(
+		"balance",
+		"totals",
+		{
+			group: true,
+			startkey: [ user, "credits" ],
+			endkey: [ user, "debets" ]
+		}
+	);
 
 	return Mustache.to_html(template.user, req.query);
 }
