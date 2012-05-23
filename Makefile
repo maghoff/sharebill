@@ -2,9 +2,12 @@ COPY_DIRS=views,lists,shows,evently,template,vendor/couchapp/lib
 
 HTMLS=_attachments/index.html _attachments/posts.html
 BOOTSTRAP_ATTACHMENTS=_attachments/img/glyphicons-halflings-white.png _attachments/img/glyphicons-halflings.png
-STYLE=_attachments/style/Feed-icon.svg _attachments/style/brillant.png _attachments/style/ornate_13.png
 MISC=_id couchapp.json language validate_doc_update.js .couchapprc rewrites.json
-COPY_FILES=$(HTMLS) $(BOOTSTRAP_ATTACHMENTS) $(STYLE) $(MISC)
+COPY_FILES=$(HTMLS) $(BOOTSTRAP_ATTACHMENTS) $(MISC)
+
+IMAGE_FILES=_attachments/style/Feed-icon.svg _attachments/style/brillant.png _attachments/style/ornate_13.png
+IMAGE_SUM_SRCS=$(IMAGE_FILES)
+IMAGE_SUM_FILES=$(IMAGE_SUM_SRCS:%=.intermediate/%.sum)
 
 JQUERY=vendor/jquery/_attachments/jquery-1.7.2.js
 BOOTSTRAP_FILES=bootstrap.min bootstrap-typeahead
@@ -16,10 +19,12 @@ JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(LOCAL)
 
 CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/local.css
 
-SRCS=$(shell find src/{$(COPY_DIRS)}) $(COPY_FILES)
-TRGS=$(SRCS:src/%=%)
+FILES_FROM_COPY_DIRS=$(shell find src/{$(COPY_DIRS)})
+TRGS_FROM_COPY_DIRS=$(FILES_FROM_COPY_DIRS:src/%=%)
+SRCS=$(TRGS_FROM_COPY_DIRS) $(COPY_FILES)
+TRGS=$(SRCS:%=release/%)
 
-release: $(TRGS:%=release/%) release/_attachments/all.js release/_attachments/style/all.css
+release: $(TRGS) release/_attachments/style/all.css release/_attachments/all.js
 
 release/%: src/%
 	mkdir -p `dirname $@`
@@ -31,6 +36,18 @@ clean:
 remake: clean release
 
 .PHONY: clean remake
+
+
+
+.intermediate/%.sum: src/%
+	./checksumify.sh $<
+
+.intermediate/%.sum: .intermediate/%
+	./checksumify.sh $<
+
+.intermediate/image-sums.json: $(IMAGE_SUM_FILES)
+	./collect_checksums.sh $@ $(IMAGE_SUM_FILES)
+
 
 
 release/_attachments/all.js: $(JS_FILES:%.js=.intermediate/%.min.js)
@@ -46,6 +63,10 @@ release/_attachments/all.js: $(JS_FILES:%.js=.intermediate/%.min.js)
 	uglifyjs -nc --unsafe -o $@ $<
 
 
-release/_attachments/style/all.css: $(CSS_FILES:%=src/%)
+# pystache claims to accept filenames, but it doesn't seem to work right
+release/_attachments/style/all.css: .intermediate/_attachments/style/all.css .intermediate/image-sums.json
+	pystache "`cat .intermediate/_attachments/style/all.css`" .intermediate/image-sums.json > $@
+
+.intermediate/_attachments/style/all.css: $(CSS_FILES:%=src/%)
 	mkdir -p `dirname $@`
 	cat $(CSS_FILES:%=src/%) > $@

@@ -1,6 +1,6 @@
 body {
   padding: 12px;
-  background: url("ornate_13.png") #6f951f;
+  background: url("ornate_13.sum-{{ornate_13_png_sum}}.png") #6f951f;
 }
 
 input {
@@ -13,7 +13,16 @@ input {
   margin-bottom: 1em;
   padding: 1em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  background: url("brillant.png") #fdfdfd;
+  background: url("brillant.sum-{{brillant_png_sum}}.png") #fdfdfd;
+}
+
+.atomlink {
+  width: 18px;
+  height: 18px;
+  background-image: url("Feed-icon.sum-{{Feed-icon_svg_sum}}.svg");
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  display: inline-block;
 }
 
 .too_wide {
