@@ -1,4 +1,6 @@
 #!/bin/bash
 
 npm install -g uglify-js
-pip install pystache
+
+easy_install pip
+pip install couchapp pystache
