@@ -6,3 +6,4 @@ jsTestDriver-tests/jslint.js
 *.pyc
 release
 .intermediate
+cdn_base

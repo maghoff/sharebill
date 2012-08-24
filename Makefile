@@ -39,17 +39,17 @@ remake: clean release
 
 
 
-.intermediate/%.sum: ./checksumify.sh src/%
+.intermediate/%.sum: src/% ./checksumify.sh
 	./checksumify.sh $<
 
-.intermediate/%.sum: ./checksumify.sh .intermediate/%
+.intermediate/%.sum: .intermediate/% ./checksumify.sh
 	./checksumify.sh $<
 
-.intermediate/image-sums.json: ./collect_checksums.sh $(IMAGE_SUM_FILES)
+.intermediate/image-sums.json: $(IMAGE_SUM_FILES) ./collect_checksums.sh cdn_base
 	./collect_checksums.sh $@ $(IMAGE_SUM_FILES)
 
 
-.intermediate/html-dep-sums.json: ./collect_checksums.sh $(HTML_DEP_SUM_FILES)
+.intermediate/html-dep-sums.json: $(HTML_DEP_SUM_FILES) ./collect_checksums.sh cdn_base
 	./collect_checksums.sh $@ $(HTML_DEP_SUM_FILES)
 
 
