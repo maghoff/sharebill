@@ -102,7 +102,8 @@
 
 		                var app = $$(this).app;
 		                $$(this).app.db.saveDoc(post, {
-		                    success: function() {
+		                    success: function(response) {
+								form.find("#_rev").val(response.rev);
 		                        status.text("Saved successfully!");
 		                        status.removeClass("error");
 		                        status.addClass("info");
@@ -132,10 +133,42 @@
 		        },
 		        "input.dr.value": { "_init": sum_calculator, "change": sum_calculator },
 		        "input.cr.value": { "_init": sum_calculator, "change": sum_calculator },
-		        "#cancel": {
-		            "click": function() {
-		                var form = $(this).closest("form");
-		                form.slideUp(500, form.remove);
+		        "#delete": {
+		            "click": function(ev) {
+						ev.stopPropagation();
+						ev.preventDefault();
+
+		                var form = $("form");
+		                var inputs = form.find("input");
+		                var status = form.find("#status");
+
+		                var post = {
+				            "_id": form.find("#_id").val(),
+				            "_rev": form.find("#_rev").val()
+		                };
+
+		                inputs.attr("disabled", true);
+		                form.fadeTo(1000, 0.60);
+		                status.text("Deleting...");
+		                status.removeClass("error");
+		                status.addClass("info");
+
+		                $$(this).app.db.removeDoc(post, {
+		                    success: function(response) {
+		                        status.text("Deleted successfully!");
+		                        status.removeClass("error");
+		                        status.addClass("info");
+		                        inputs.removeAttr("disabled");
+		                    },
+		                    error: function(httpCode, httpMessage, body) {
+		                        status.text("Error: " + body);
+		                        status.removeClass("info");
+		                        status.addClass("error");
+		                        inputs.removeAttr("disabled");
+		                        form.stop();
+		                        form.fadeTo(100, 1.00);
+		                    }
+		                });
 		            }
 		        }
 		    };
@@ -218,6 +251,7 @@
 <p style="clear:both">
 <button class="btn btn-primary" type="submit">Save</button>
 <button class="btn" type="reset">Reset</button>
+<button class="btn btn-danger" id="delete">Delete</button>
 </p>
 <p><span id="status"></span></p>
 
