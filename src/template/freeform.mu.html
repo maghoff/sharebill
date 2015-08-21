@@ -9,169 +9,169 @@
     <script src="<%cdn_base%>all.sum-<%all_js_sum%>.js"></script>
     <script type="text/javascript" charset="utf-8">
 		var selectors = function() {
-		    var timestamp = function (date) {
-		        var pad = function (amount, width) {
-		            var str = amount.toString();
-		            while (str.length < width) str = "0" + str;
-		            return str;
-		        };
+			var timestamp = function (date) {
+				var pad = function (amount, width) {
+					var str = amount.toString();
+					while (str.length < width) str = "0" + str;
+					return str;
+				};
 
-		        date = date ? date : new Date();
-		        return (
-		            pad(date.getUTCFullYear(), 4) + "-" +
-		            pad(date.getUTCMonth() + 1, 2) + "-" +
-		            pad(date.getUTCDate(), 2) + "T" +
-		            pad(date.getUTCHours(), 2) + ":" +
-		            pad(date.getUTCMinutes(), 2) + ":" +
-		            pad(date.getUTCSeconds(), 2) + "." +
-		            pad(date.getUTCMilliseconds(), 3) + "Z"
-		        );
-		    };
+				date = date ? date : new Date();
+				return (
+					pad(date.getUTCFullYear(), 4) + "-" +
+					pad(date.getUTCMonth() + 1, 2) + "-" +
+					pad(date.getUTCDate(), 2) + "T" +
+					pad(date.getUTCHours(), 2) + ":" +
+					pad(date.getUTCMinutes(), 2) + ":" +
+					pad(date.getUTCSeconds(), 2) + "." +
+					pad(date.getUTCMilliseconds(), 3) + "Z"
+				);
+			};
 
-		    var fractionPattern = /^(\d+ )?\d+(\/\d+)?$/;
-		    var sum_calculator = function() {
-		        var table = $(this).closest("table");
+			var fractionPattern = /^(\d+ )?\d+(\/\d+)?$/;
+			var sum_calculator = function() {
+				var table = $(this).closest("table");
 
-		        var sum = new Fraction(0);
-		        var sum_is_valid = true;
-		        table.find(".value").each(
-		            function(index, element) {
-		                var value_text = $(element).val().trim();
-		                $(element).removeClass("error");
-		                if (value_text === "") return;
+				var sum = new Fraction(0);
+				var sum_is_valid = true;
+				table.find(".value").each(
+					function(index, element) {
+						var value_text = $(element).val().trim();
+						$(element).removeClass("error");
+						if (value_text === "") return;
 
-		                if (value_text.match(fractionPattern)) {
-		                    var value = new Fraction(value_text);
-		                    sum = sum.add(value);
-		                } else {
-		                    sum_is_valid = false;
-		                    $(element).addClass("error");
-		                }
-		            }
-		        );
+						if (value_text.match(fractionPattern)) {
+							var value = new Fraction(value_text);
+							sum = sum.add(value);
+						} else {
+							sum_is_valid = false;
+							$(element).addClass("error");
+						}
+					}
+				);
 
-		        var sum_text = "-";
-		        if (sum_is_valid) {
-		            sum_text = sum.toString();
-		        }
+				var sum_text = "-";
+				if (sum_is_valid) {
+					sum_text = sum.toString();
+				}
 
-		        table.find("#sum").text(sum_text);
-		    };
+				table.find("#sum").text(sum_text);
+			};
 
-		    return {
-		        "form": {
-		            "_init": function() {
-		                $(this).find("#description_entry").focus();
-		                return false;
-		            },
-		            "submit": function() {
-		                var form = $(this);
-		                var inputs = form.find("input");
-		                var status = form.find("#status");
+			return {
+				"form": {
+					"_init": function() {
+						$(this).find("#description_entry").focus();
+						return false;
+					},
+					"submit": function() {
+						var form = $(this);
+						var inputs = form.find("input");
+						var status = form.find("#status");
 
-		                var get_items = function(table) {
-		                    var items = {};
-		                    table.find("tr").each(function() {
-		                        var name = $(this).find(".name").val();
-		                        var value = new Fraction($(this).find(".value").val());
-		                        if ((name) && (name !== "") && (value) && (!value.equals(0))) {
-		                            items[name] = value.toString();
-		                        }
-		                    });
-		                    return items;
-		                };
+						var get_items = function(table) {
+							var items = {};
+							table.find("tr").each(function() {
+								var name = $(this).find(".name").val();
+								var value = new Fraction($(this).find(".value").val());
+								if ((name) && (name !== "") && (value) && (!value.equals(0))) {
+									items[name] = value.toString();
+								}
+							});
+							return items;
+						};
 
-		                var post = {
-				            "_id": form.find("#_id").val(),
-				            "_rev": form.find("#_rev").val(),
-		                    "meta": {
-		                        "timestamp": form.find("#timestamp_entry").val(),
-		                        "description": form.find("#description_entry").val()
-		                    },
-		                    "transaction": {
-		                        "credits": get_items(form.find("table#credits")),
-		                        "debets": get_items(form.find("table#debets"))
-		                    }
-		                };
+						var post = {
+							"_id": form.find("#_id").val(),
+							"_rev": form.find("#_rev").val(),
+							"meta": {
+								"timestamp": form.find("#timestamp_entry").val(),
+								"description": form.find("#description_entry").val()
+							},
+							"transaction": {
+								"credits": get_items(form.find("table#credits")),
+								"debets": get_items(form.find("table#debets"))
+							}
+						};
 
-		                inputs.attr("disabled", true);
-		                form.fadeTo(1000, 0.60);
-		                status.text("Saving...");
-		                status.removeClass("error");
-		                status.addClass("info");
+						inputs.attr("disabled", true);
+						form.fadeTo(1000, 0.60);
+						status.text("Saving...");
+						status.removeClass("error");
+						status.addClass("info");
 
-		                var app = $$(this).app;
-		                $$(this).app.db.saveDoc(post, {
-		                    success: function(response) {
+						var app = $$(this).app;
+						$$(this).app.db.saveDoc(post, {
+							success: function(response) {
 								form.find("#_rev").val(response.rev);
-		                        status.text("Saved successfully!");
-		                        status.removeClass("error");
-		                        status.addClass("info");
-		                        inputs.removeAttr("disabled");
-		                        form.stop();
-		                        form.fadeTo(100, 1.00);
-		                    },
-		                    error: function(httpCode, httpMessage, body) {
-		                        status.text("Error: " + body);
-		                        status.removeClass("info");
-		                        status.addClass("error");
-		                        inputs.removeAttr("disabled");
-		                        form.stop();
-		                        form.fadeTo(100, 1.00);
-		                    }
-		                });
+								status.text("Saved successfully!");
+								status.removeClass("error");
+								status.addClass("info");
+								inputs.removeAttr("disabled");
+								form.stop();
+								form.fadeTo(100, 1.00);
+							},
+							error: function(httpCode, httpMessage, body) {
+								status.text("Error: " + body);
+								status.removeClass("info");
+								status.addClass("error");
+								inputs.removeAttr("disabled");
+								form.stop();
+								form.fadeTo(100, 1.00);
+							}
+						});
 
-		                return false;
-		            },
-		        },
-		        "#description_entry": {
-		            "change": function() {
-		                var is_valid = $(this).val() != "";
-		                if (is_valid) $(this).removeClass("error");
-		                else $(this).addClass("error");
-		            }
-		        },
-		        "input.dr.value": { "_init": sum_calculator, "change": sum_calculator },
-		        "input.cr.value": { "_init": sum_calculator, "change": sum_calculator },
-		        "#delete": {
-		            "click": function(ev) {
+						return false;
+					},
+				},
+				"#description_entry": {
+					"change": function() {
+						var is_valid = $(this).val() != "";
+						if (is_valid) $(this).removeClass("error");
+						else $(this).addClass("error");
+					}
+				},
+				"input.dr.value": { "_init": sum_calculator, "change": sum_calculator },
+				"input.cr.value": { "_init": sum_calculator, "change": sum_calculator },
+				"#delete": {
+					"click": function(ev) {
 						ev.stopPropagation();
 						ev.preventDefault();
 
-		                var form = $("form");
-		                var inputs = form.find("input");
-		                var status = form.find("#status");
+						var form = $("form");
+						var inputs = form.find("input");
+						var status = form.find("#status");
 
-		                var post = {
-				            "_id": form.find("#_id").val(),
-				            "_rev": form.find("#_rev").val()
-		                };
+						var post = {
+							"_id": form.find("#_id").val(),
+							"_rev": form.find("#_rev").val()
+						};
 
-		                inputs.attr("disabled", true);
-		                form.fadeTo(1000, 0.60);
-		                status.text("Deleting...");
-		                status.removeClass("error");
-		                status.addClass("info");
+						inputs.attr("disabled", true);
+						form.fadeTo(1000, 0.60);
+						status.text("Deleting...");
+						status.removeClass("error");
+						status.addClass("info");
 
-		                $$(this).app.db.removeDoc(post, {
-		                    success: function(response) {
-		                        status.text("Deleted successfully!");
-		                        status.removeClass("error");
-		                        status.addClass("info");
-		                        inputs.removeAttr("disabled");
-		                    },
-		                    error: function(httpCode, httpMessage, body) {
-		                        status.text("Error: " + body);
-		                        status.removeClass("info");
-		                        status.addClass("error");
-		                        inputs.removeAttr("disabled");
-		                        form.stop();
-		                        form.fadeTo(100, 1.00);
-		                    }
-		                });
-		            }
-		        }
-		    };
+						$$(this).app.db.removeDoc(post, {
+							success: function(response) {
+								status.text("Deleted successfully!");
+								status.removeClass("error");
+								status.addClass("info");
+								inputs.removeAttr("disabled");
+							},
+							error: function(httpCode, httpMessage, body) {
+								status.text("Error: " + body);
+								status.removeClass("info");
+								status.addClass("error");
+								inputs.removeAttr("disabled");
+								form.stop();
+								form.fadeTo(100, 1.00);
+							}
+						});
+					}
+				}
+			};
 		};
 
 	    sharebill.onReady(function(app) {
