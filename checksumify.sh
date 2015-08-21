@@ -7,7 +7,7 @@ EXTENSION="$(echo "$IN" | sed -e 's/.*\.\(.*\)$/\1/')"
 
 OUT_SUM=".intermediate/$BASE_NAME.$EXTENSION.sum"
 
-SUM=$(md5 -q "$IN")
+SUM=$(md5sum "$IN" | cut '-d ' -f 1 )
 OUT_FILE="release/$BASE_NAME.sum-$SUM.$EXTENSION"
 
 mkdir -p $(dirname "$OUT_SUM") $(dirname "$OUT_FILE")

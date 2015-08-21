@@ -19,7 +19,7 @@ JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(LOCAL)
 
 CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/local.css
 
-FILES_FROM_COPY_DIRS=$(shell find src/{$(COPY_DIRS)})
+FILES_FROM_COPY_DIRS=$(shell bash -c "find src/{$(COPY_DIRS)}")
 TRGS_FROM_COPY_DIRS=$(FILES_FROM_COPY_DIRS:src/%=%)
 SRCS=$(TRGS_FROM_COPY_DIRS) $(COPY_FILES)
 TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%)
