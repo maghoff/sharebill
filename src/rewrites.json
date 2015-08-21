@@ -11,6 +11,10 @@
 		"to": "_show/userpage",
 		"query": { "user": ":uid" }
     },
+    {
+		"from": "post/:pid",
+		"to": "_show/freeform/:pid"
+    },
 
 
     "Basic fallback rewrites",
