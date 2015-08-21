@@ -2,7 +2,19 @@
     {
         "to": "index.html",
         "from": ""
-    }, {
+    },
+
+
+    "Smart rewrites",
+    {
+		"from": "user/:uid",
+		"to": "_show/userpage",
+		"query": { "user": ":uid" }
+    },
+
+
+    "Basic fallback rewrites",
+    {
         "to": "vendor/*",
         "from": "vendor/*"
     }, {

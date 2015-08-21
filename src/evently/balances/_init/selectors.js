@@ -42,7 +42,7 @@ function() {
                         var sign = (value.numerator < 0 ? -1 : 1);
                         (value.numerator > 0 ? cr : dr).text(sharebill.formatCurrencyShort(value.multiply(sign)));
 
-                        var userpage = '_show/userpage?user=' + encodeURIComponent(user);
+                        var userpage = 'user/' + encodeURIComponent(user);
 
                         var row = $('<tr></tr>');
                         row.append($('<td></td>').append($('<a></a>').text(user).attr('href', userpage)));

@@ -1,4 +1,6 @@
 function () {
+	var user = $(".metadata")[0].getAttribute("data-user");
+
 	var dataFunctionString = $$(this).evently._init.data;
 	var dataFunction = eval("(" + dataFunctionString + ")");
 	var data = dataFunction();
@@ -40,8 +42,8 @@ function () {
                         view: "user",
                         type: "newRows",
                         descending: true,
-                        startkey: [data.user, {}],
-                        endkey: [data.user]
+                        startkey: [user, {}],
+                        endkey: [user]
                     };
                     if (args.limit) q.limit = args.limit;
                     return q;
