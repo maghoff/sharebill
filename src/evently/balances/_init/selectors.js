@@ -23,11 +23,11 @@ function() {
                         var r = data.rows[row];
                         var user = r.key[0];
                         var type = r.key[1];
-                        var value = new Fraction(r.value);
+                        var value = fractionParser(r.value);
 
-                        if (type !== "credits") value = value.multiply(-1);
+                        if (type !== "credits") value = SchemeNumber.fn['*'](value, new SchemeNumber("-1"));
 
-                        user_total_credits[user] = value.add(user_total_credits[user] || 0);
+                        user_total_credits[user] = SchemeNumber.fn['+'](value, user_total_credits[user] || new SchemeNumber("0"));
                     }
 
                     var sorted_keys = function(d, sort_func) {
@@ -39,8 +39,8 @@ function() {
                         var value = user_total_credits[user];
                         var cr = $('<td class="credits currency"></td>');
                         var dr = $('<td class="debets currency"></td>');
-                        var sign = (value.numerator < 0 ? -1 : 1);
-                        (value.numerator > 0 ? cr : dr).text(sharebill.formatCurrencyShort(value.multiply(sign)));
+                        var sign = (SchemeNumber.fn["negative?"](value) ? -1 : 1);
+                        (SchemeNumber.fn["negative?"](value) ? dr : cr).text(sharebill.formatCurrencyShort(SchemeNumber.fn["*"](value, sign)));
 
                         var userpage = 'user/' + encodeURIComponent(user);
 

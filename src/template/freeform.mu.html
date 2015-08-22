@@ -32,7 +32,7 @@
 			var sum_calculator = function() {
 				var table = $(this).closest("table");
 
-				var sum = new Fraction(0);
+				var sum = new SchemeNumber("0");
 				var sum_is_valid = true;
 				table.find(".value").each(
 					function(index, element) {
@@ -41,8 +41,8 @@
 						if (value_text === "") return;
 
 						if (value_text.match(fractionPattern)) {
-							var value = new Fraction(value_text);
-							sum = sum.add(value);
+							var value = fractionParser(value_text);
+							sum = SchemeNumber.fn['+'](sum, value);
 						} else {
 							sum_is_valid = false;
 							$(element).addClass("error");
@@ -64,17 +64,26 @@
 						$(this).find("#description_entry").focus();
 						return false;
 					},
-					"submit": function() {
+					"submit": function(ev) {
+						ev.preventDefault();
+						ev.stopPropagation();
+						ev.originalEvent.preventDefault();
+						ev.originalEvent.stopPropagation();
+
 						var form = $(this);
 						var inputs = form.find("input");
 						var status = form.find("#status");
 
 						var get_items = function(table) {
+							console.log("get_items");
 							var items = {};
 							table.find("tr").each(function() {
 								var name = $(this).find(".name").val();
-								var value = new Fraction($(this).find(".value").val());
-								if ((name) && (name !== "") && (value) && (!value.equals(0))) {
+								console.log($(this).find(".value").val());
+								console.log($(this).find(".value").val() || "0");
+								var value = fractionParser($(this).find(".value").val() || "0");
+								console.log(value);
+								if ((name) && (name !== "") && (value) && (!SchemeNumber.fn['zero?'](value))) {
 									items[name] = value.toString();
 								}
 							});

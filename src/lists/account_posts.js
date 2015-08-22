@@ -1,7 +1,8 @@
 function (head, req) {
 	// !json template.readonlypost
 
-	var Fraction = require("views/lib/fraction").Fraction;
+	var SchemeNumber = require("views/lib/schemeNumber").SchemeNumber;
+	var fractionParser = require("views/lib/fractionParser").fractionParser;
 
 	function parseRFC3339(dString) {
 		var regexp = /(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)(T)?(\d\d)(:)?(\d\d)(:)?(\d\d)(\.\d+)?(Z|([+-])(\d\d)(:)?(\d\d))/;
@@ -104,9 +105,9 @@ function (head, req) {
 		};
 
 		function sum_values(d) {
-			var sum = new Fraction(0);
+			var sum = new SchemeNumber("0");
 			for (var key in d) {
-				sum = sum.add(d[key]);
+				sum = SchemeNumber.fn["+"](sum, fractionParser(d[key]));
 			}
 			return sum.toString();
 		};

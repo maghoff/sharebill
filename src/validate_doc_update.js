@@ -3,7 +3,8 @@ function(newDoc, oldDoc, userCtx) {
 
     if (newDoc._id === "instance_config") return;
 
-    var Fraction = require("views/lib/fraction").Fraction;
+	var SchemeNumber = require("views/lib/schemeNumber").SchemeNumber;
+	var fractionParser = require("views/lib/fractionParser").fractionParser;
 
     var assert_has = function(path) {
         var node = newDoc;
@@ -22,19 +23,26 @@ function(newDoc, oldDoc, userCtx) {
     if (!newDoc.meta.timestamp.match(rfc3339)) throw({forbidden: 'meta.timestamp must be RFC3339-formatted and in UTC with timezone specifier Z'});
 
     var fractionPattern = /^(\d+ )?\d+(\/\d+)?$/;
-    var totals = { "credits": new Fraction(0), "debets": new Fraction(0) };
+    var totals = { "credits": new SchemeNumber("0"), "debets": new SchemeNumber("0") };
     var types = ["credits", "debets"];
     for (type_n in types) {
         var type = types[type_n];
         for (name in newDoc.transaction[type]) {
-            var value = new Fraction(newDoc.transaction[type][name]);
-            totals[type] = totals[type].add(value);
+			if (!newDoc.transaction[type][name].match(fractionPattern)) {
+				throw({
+					forbidden: "All values must be integers or integer fractions, of " +
+						"the pattern /^(\\d+ )?\\d+(\\/\d+)?$/"
+				});
+			}
+            var value = fractionParser(newDoc.transaction[type][name]);
+            totals[type] = SchemeNumber.fn['+'](totals[type], value);
 
-            if (value.numerator < 0) throw({forbidden: "All values must be non-negative. " +
+            if (SchemeNumber.fn['negative?'](value)) throw({forbidden:
+				"All values must be non-negative. " +
                 "(" + type + ": " + name + " = " + value + ")"});
         }
     }
-    if (!totals.credits.equals(totals.debets)) {
+    if (!SchemeNumber.fn["="](totals.credits, totals.debets)) {
         throw({
             forbidden : 'Total credits must equal total debets in a transaction.\n' +
                 'Actual total credits: ' + totals.credits + '\n' +

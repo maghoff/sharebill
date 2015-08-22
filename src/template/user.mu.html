@@ -15,18 +15,18 @@
           endkey: ["{{user}}", "debets"],
           success: function (json) {
             var totals = {
-              credits: new Fraction(0),
-              debets: new Fraction(0)
+              credits: new SchemeNumber("0"),
+              debets: new SchemeNumber("0")
             };
             json.rows.forEach(function (row) {
-              totals[row.key[1]] = new Fraction(row.value);
+              totals[row.key[1]] = fractionParser(row.value);
             });
             $("#credit").text(sharebill.formatCurrencyShortOrEmpty(totals.credits));
             $("#debit").text(sharebill.formatCurrencyShortOrEmpty(totals.debets));
 
-            var balance = totals.credits.subtract(totals.debets);
+            var balance = SchemeNumber.fn['-'](totals.credits, totals.debets);
             $("#balance").text(sharebill.formatCurrencyShortOrEmpty(balance));
-            if (balance.numerator < 0) {
+            if (SchemeNumber.fn['negative?'](balance)) {
               $("#balance").closest("tr").find("td").addClass("debets");
             }
           }

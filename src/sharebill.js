@@ -72,25 +72,23 @@ var sharebill = (function () {
 	}, config);
 
 	function formatCurrencyShort(fraction) {
-		fraction = new Fraction(fraction);
-
 		var formatString = instance_config.currency_formatting.short;
 
 		var formatData = {
-			decimal: fraction.numerator / fraction.denominator,
-			numerator: fraction.numerator,
-			denominator: fraction.denominator,
-			wholepart: Math.floor(fraction.numerator / fraction.denominator),
-			reducedNumerator: fraction.numerator % fraction.denominator
-		}
+			decimal: SchemeNumber.fn.inexact(fraction) + 0,
+			numerator: SchemeNumber.fn.numerator(fraction) + 0,
+			denominator: SchemeNumber.fn.denominator(fraction) + 0,
+			wholepart: SchemeNumber.fn.floor(fraction) + 0,
+			reducedNumerator: SchemeNumber.fn.mod(SchemeNumber.fn.numerator(fraction), SchemeNumber.fn.denominator(fraction)) + 0
+		};
 
 		return sprintf(formatString, formatData);
 	}
 
 	function formatCurrencyShortOrEmpty(fraction) {
 		if (fraction === undefined) return "";
-		fraction = new Fraction(fraction);
-		if ((new Fraction(0)).equals(fraction)) return "";
+		if (typeof fraction === "string") fraction = fractionParser(fraction);
+		if (SchemeNumber.fn["zero?"](fraction)) return "";
 		return formatCurrencyShort(fraction);
 	}
 

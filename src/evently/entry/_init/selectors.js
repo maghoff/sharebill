@@ -24,7 +24,7 @@ function() {
     var sum_calculator = function() {
         var table = $(this).closest("table");
 
-        var sum = new Fraction(0);
+        var sum = new SchemeNumber("0");
         var sum_is_valid = true;
         table.find(".currency_input input").each(
             function(index, element) {
@@ -33,8 +33,8 @@ function() {
                 if (value_text === "") return;
 
                 if (value_text.match(fractionPattern)) {
-                    var value = new Fraction(value_text);
-                    sum = sum.add(value);
+                    var value = fractionParser(value_text);
+                    sum = SchemeNumber.fn["+"](sum, value);
                 } else {
                     sum_is_valid = false;
                     $(element).addClass("error");
@@ -66,8 +66,8 @@ function() {
                     var items = {};
                     table.find("tr").each(function() {
                         var name = $(this).find(".account_input input").val();
-                        var value = new Fraction($(this).find(".currency_input input").val());
-                        if ((name) && (name !== "") && (value) && (!value.equals(0))) {
+                        var value = fractionParser($(this).find(".currency_input input").val() || "0");
+                        if ((name) && (name !== "") && (value) && (!SchemeNumber.fn["zero?"](value))) {
                             items[name] = value.toString();
                         }
                     });

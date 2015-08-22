@@ -1,12 +1,16 @@
 function(key, values) {
-	// !code views/lib/fraction.js
 
-	var total = new Fraction(0);
+	// !code views/lib/biginteger.js
+	(function () { this.BigInteger = BigInteger; })();
+
+	// !code views/lib/schemeNumber.js
+	// !code views/lib/fractionParser.js
+
+	var total = new SchemeNumber("0");
 
 	values.forEach(function (x) {
-		var y = new Fraction(x);
-	    total = total.add(y);
+		total = SchemeNumber.fn['+'](total, fractionParser(x));
 	});
 
-    return total.toString();
+	return total.toString();
 }
