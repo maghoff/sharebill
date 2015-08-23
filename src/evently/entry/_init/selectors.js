@@ -44,7 +44,16 @@ function() {
 
 		var sum_text = "-";
 		if (sum_is_valid) {
-			sum_text = sum.toString();
+			var denom = SchemeNumber.fn.denominator(sum);
+			if (SchemeNumber.fn["="](denom, new SchemeNumber("1"))) {
+				sum_text = sum.toString();
+			} else if (SchemeNumber.fn["="](SchemeNumber.fn.lcm(denom, new SchemeNumber("100")), new SchemeNumber("100"))) {
+				sum_text = sum.toFixed(2);
+			} else {
+				var floor = SchemeNumber.fn.floor(sum);
+				var rest = SchemeNumber.fn['-'](sum, floor);
+				sum_text = floor.toString() + " " + rest.toString();
+			}
 		}
 
 		table.find("#sum").text(sum_text);

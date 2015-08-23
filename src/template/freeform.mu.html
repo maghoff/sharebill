@@ -28,7 +28,6 @@
 				);
 			};
 
-			var fractionPattern = /^(\d+ )?\d+(\/\d+)?$/;
 			var sum_calculator = function() {
 				var table = $(this).closest("table");
 
@@ -40,10 +39,11 @@
 						$(element).removeClass("error");
 						if (value_text === "") return;
 
-						if (value_text.match(fractionPattern)) {
-							var value = fractionParser(value_text);
-							sum = SchemeNumber.fn['+'](sum, value);
-						} else {
+						try {
+							var value = evaluate(value_text);
+							sum = SchemeNumber.fn["+"](sum, value);
+						}
+						catch (err) {
 							sum_is_valid = false;
 							$(element).addClass("error");
 						}
@@ -52,7 +52,16 @@
 
 				var sum_text = "-";
 				if (sum_is_valid) {
-					sum_text = sum.toString();
+					var denom = SchemeNumber.fn.denominator(sum);
+					if (SchemeNumber.fn["="](denom, new SchemeNumber("1"))) {
+						sum_text = sum.toString();
+					} else if (SchemeNumber.fn["="](SchemeNumber.fn.lcm(denom, new SchemeNumber("100")), new SchemeNumber("100"))) {
+						sum_text = sum.toFixed(2);
+					} else {
+						var floor = SchemeNumber.fn.floor(sum);
+						var rest = SchemeNumber.fn['-'](sum, floor);
+						sum_text = floor.toString() + " " + rest.toString();
+					}
 				}
 
 				table.find("#sum").text(sum_text);
@@ -75,33 +84,38 @@
 						var status = form.find("#status");
 
 						var get_items = function(table) {
-							console.log("get_items");
 							var items = {};
 							table.find("tr").each(function() {
 								var name = $(this).find(".name").val();
-								console.log($(this).find(".value").val());
-								console.log($(this).find(".value").val() || "0");
-								var value = fractionParser($(this).find(".value").val() || "0");
-								console.log(value);
-								if ((name) && (name !== "") && (value) && (!SchemeNumber.fn['zero?'](value))) {
+								var value = evaluate($(this).find(".value").val() || "0");
+								if ((name) && (name !== "") && (value) && (!SchemeNumber.fn["zero?"](value))) {
 									items[name] = value.toString();
 								}
 							});
 							return items;
 						};
 
-						var post = {
-							"_id": form.find("#_id").val(),
-							"_rev": form.find("#_rev").val(),
-							"meta": {
-								"timestamp": form.find("#timestamp_entry").val(),
-								"description": form.find("#description_entry").val()
-							},
-							"transaction": {
-								"credits": get_items(form.find("table#credits")),
-								"debets": get_items(form.find("table#debets"))
-							}
-						};
+						var post;
+						try {
+							post = {
+								"_id": form.find("#_id").val(),
+								"_rev": form.find("#_rev").val(),
+								"meta": {
+									"timestamp": form.find("#timestamp_entry").val(),
+									"description": form.find("#description_entry").val()
+								},
+								"transaction": {
+									"credits": get_items(form.find("table#credits")),
+									"debets": get_items(form.find("table#debets"))
+								}
+							};
+						}
+						catch (err) {
+							status.text(err.toString());
+							status.removeClass("info");
+							status.addClass("error");
+							return false;
+						}
 
 						inputs.attr("disabled", true);
 						form.fadeTo(1000, 0.60);
