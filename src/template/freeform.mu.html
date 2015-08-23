@@ -58,9 +58,7 @@
 					} else if (SchemeNumber.fn["="](SchemeNumber.fn.lcm(denom, new SchemeNumber("100")), new SchemeNumber("100"))) {
 						sum_text = sum.toFixed(2);
 					} else {
-						var floor = SchemeNumber.fn.floor(sum);
-						var rest = SchemeNumber.fn['-'](sum, floor);
-						sum_text = floor.toString() + " " + rest.toString();
+						sum_text = toMixedNumber(sum);
 					}
 				}
 
@@ -89,7 +87,7 @@
 								var name = $(this).find(".name").val();
 								var value = evaluate($(this).find(".value").val() || "0");
 								if ((name) && (name !== "") && (value) && (!SchemeNumber.fn["zero?"](value))) {
-									items[name] = value.toString();
+									items[name] = toMixedNumber(value);
 								}
 							});
 							return items;

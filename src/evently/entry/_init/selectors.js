@@ -50,9 +50,7 @@ function() {
 			} else if (SchemeNumber.fn["="](SchemeNumber.fn.lcm(denom, new SchemeNumber("100")), new SchemeNumber("100"))) {
 				sum_text = sum.toFixed(2);
 			} else {
-				var floor = SchemeNumber.fn.floor(sum);
-				var rest = SchemeNumber.fn['-'](sum, floor);
-				sum_text = floor.toString() + " " + rest.toString();
+				sum_text = toMixedNumber(sum);
 			}
 		}
 
@@ -77,7 +75,7 @@ function() {
 						var name = $(this).find(".account_input input").val();
 						var value = evaluate($(this).find(".currency_input input").val() || "0");
 						if ((name) && (name !== "") && (value) && (!SchemeNumber.fn["zero?"](value))) {
-							items[name] = value.toString();
+							items[name] = toMixedNumber(value);
 						}
 					});
 					return items;
