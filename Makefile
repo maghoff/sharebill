@@ -14,7 +14,7 @@ BOOTSTRAP_FILES=bootstrap.min bootstrap-typeahead
 BOOTSTRAP=$(BOOTSTRAP_FILES:%=vendor/bootstrap/_attachments/js/%.js)
 COUCHAPP_FILES=sha1 json2 jquery.couch jquery.couch.app jquery.couch.app.util jquery.mustache jquery.evently
 COUCHAPP=$(COUCHAPP_FILES:%=vendor/couchapp/_attachments/%.js)
-LOCAL=views/lib/biginteger.js views/lib/schemeNumber.js views/lib/fractionParser.js views/lib/sprintf-0.7-beta1.js sharebill.js
+LOCAL=views/lib/biginteger.js views/lib/schemeNumber.js views/lib/fractionParser.js views/lib/sprintf-0.7-beta1.js calc.js sharebill.js
 JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(LOCAL)
 
 CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/local.css
