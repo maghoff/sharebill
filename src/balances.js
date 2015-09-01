@@ -7,8 +7,6 @@ function format(number) {
 
 var BalanceRow = React.createClass({
 	render: function () {
-		if (this.props.value === "0") return null;
-
 		var negative = this.props.value.match(/^-/);
 		var debits = "", credits = "";
 		if (negative) debits = format(this.props.value.substr(1));
@@ -26,7 +24,9 @@ var BalanceRow = React.createClass({
 
 var BalancesTable = React.createClass({
 	render: function () {
-		var balances = this.props.balances.map(function (balance) {
+		var balances = this.props.balances.filter(function (balance) {
+			return balance.value !== "0";
+		}).map(function (balance) {
 			balance.user = balance.key;
 			return React.createElement(BalanceRow, balance);
 		});
