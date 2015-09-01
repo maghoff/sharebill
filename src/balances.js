@@ -1,14 +1,18 @@
 var React = require('react');
 var request = require('browser-request');
 
+function format(number) {
+	return sharebill.formatCurrencyShort(fractionParser(number));
+}
+
 var BalanceRow = React.createClass({
 	render: function () {
+		if (this.props.value === "0") return null;
+
 		var negative = this.props.value.match(/^-/);
 		var debits = "", credits = "";
-		if (negative) debits = this.props.value.substr(1);
-		else credits = this.props.value;
-
-		if (credits === "0") return null;
+		if (negative) debits = format(this.props.value.substr(1));
+		else credits = format(this.props.value);
 
 		return React.createElement('tr', { className: "accounts" },
 			React.createElement('td', null,
