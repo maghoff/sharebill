@@ -2,6 +2,9 @@ var React = require('react');
 var request = require('browser-request');
 var moment = require('moment');
 
+require('moment/locale/en-gb');
+moment.locale('en-gb');
+
 function format(number) {
 	if (number === undefined) return "";
 	return sharebill.formatCurrencyShort(fractionParser(number));
