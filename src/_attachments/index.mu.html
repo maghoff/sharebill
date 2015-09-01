@@ -3,19 +3,8 @@
   <head>
     <title>Sharebill</title>
     <link rel="stylesheet" href="{{cdn_base}}style/all.sum-{{all_css_sum}}.css" type="text/css">
-    <script src="{{cdn_base}}all.sum-{{all_js_sum}}.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      sharebill.onReady(function(app) {
-        $("#balances").evently("balances", app);
-        $("#recent").evently("recent", app);
-        $(".entry_link").click(function(event) {
-          event.preventDefault();
-          var form = $("<div/>");
-          $("#entry").before(form);
-          form.evently($(this).attr("entry_type"), app);
-        });
-      });
-    </script>
+    <script src="{{cdn_base}}all.sum-{{all_js_sum}}.js" async defer></script>
+    <script src="{{cdn_base}}browserify.sum-{{browserify_js_sum}}.js" async defer></script>
   </head>
   <body>
     <h1>Sharebill</h1>
@@ -39,5 +28,25 @@
             <li><a href="http://bitbucket.org/maghoff/sharebill/issues">Report an issue</a></li>
         </ul>
     </div>
+    <script type="text/javascript" charset="utf-8">
+		function initEvently() {
+			sharebill.onReady(function(app) {
+				$("#recent").evently("recent", app);
+				$(".entry_link").click(function(event) {
+					event.preventDefault();
+					var form = $("<div/>");
+					$("#entry").before(form);
+					form.evently($(this).attr("entry_type"), app);
+				});
+			});
+		}
+
+		document.addEventListener("readystatechange", function () {
+			if (document.readyState === "interactive") {
+			} else if (document.readyState === "complete") {
+				initEvently();
+			}
+		});
+    </script>
   </body>
 </html>

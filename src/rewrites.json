@@ -15,6 +15,11 @@
 		"from": "post/:pid",
 		"to": "_show/freeform/:pid"
     },
+    {
+		"from": "balances",
+		"to": "_view/balances",
+		"query": { "group": "true", "reduce": "true" }
+    },
 
 
     "Basic fallback rewrites",

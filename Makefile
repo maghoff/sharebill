@@ -2,10 +2,10 @@ COPY_DIRS=views,lists,shows,evently,vendor/couchapp/lib
 COPY_FILES=_id couchapp.json language validate_doc_update.js .couchapprc rewrites.json
 
 HTML_FILES=_attachments/index.html _attachments/posts.html template/freeform.html template/readonlypost.html template/user.html
-HTML_DEPS=.intermediate/_attachments/all.js .intermediate/_attachments/style/all.css
+HTML_DEPS=.intermediate/_attachments/all.js .intermediate/_attachments/style/all.css .intermediate/_attachments/browserify.js
 HTML_DEP_SUM_FILES=$(HTML_DEPS:.intermediate/%=.intermediate/%.sum)
 
-IMAGE_FILES=_attachments/style/Feed-icon.svg _attachments/style/brillant.png _attachments/style/ornate_13.png _attachments/img//glyphicons-halflings-white.png _attachments/img//glyphicons-halflings.png
+IMAGE_FILES=_attachments/style/Feed-icon.svg _attachments/style/ornate_13.png _attachments/img//glyphicons-halflings-white.png _attachments/img//glyphicons-halflings.png
 IMAGE_SUM_SRCS=$(IMAGE_FILES)
 IMAGE_SUM_FILES=$(IMAGE_SUM_SRCS:%=.intermediate/%.sum)
 
@@ -15,7 +15,9 @@ BOOTSTRAP=$(BOOTSTRAP_FILES:%=vendor/bootstrap/_attachments/js/%.js)
 COUCHAPP_FILES=sha1 json2 jquery.couch jquery.couch.app jquery.couch.app.util jquery.mustache jquery.evently
 COUCHAPP=$(COUCHAPP_FILES:%=vendor/couchapp/_attachments/%.js)
 LOCAL=views/lib/biginteger.js views/lib/schemeNumber.js views/lib/fractionParser.js views/lib/sprintf-0.7-beta1.js calc.js toMixedNumber.js sharebill.js
-JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(LOCAL)
+JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(REACT) $(LOCAL)
+
+BROWSERIFY_MODULES=src/balances.js
 
 CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/local.css
 
@@ -62,6 +64,10 @@ release/%.html: src/%.mu.html .intermediate/html-dep-sums.json
 	mkdir -p `dirname $@`
 	cat $(JS_FILES:%.js=.intermediate/%.min.js) > $@
 
+.intermediate/_attachments/browserify.js: .intermediate/browserify.min.js
+	mkdir -p `dirname $@`
+	cp $< $@
+
 .intermediate/%.min.js: src/%.js
 	mkdir -p `dirname $@`
 	uglifyjs -nc --unsafe -o $@ $<
@@ -78,3 +84,10 @@ release/%.html: src/%.mu.html .intermediate/html-dep-sums.json
 .intermediate/_attachments/style/all-prestache.css: $(CSS_FILES:%=src/%)
 	mkdir -p `dirname $@`
 	cat $(CSS_FILES:%=src/%) > $@
+
+node_modules: package.json
+	npm install
+	touch node_modules
+
+.intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules
+	./node_modules/.bin/browserify -e $(BROWSERIFY_MODULES) -o $@

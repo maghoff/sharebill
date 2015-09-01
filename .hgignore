@@ -7,3 +7,4 @@ jsTestDriver-tests/jslint.js
 release
 .intermediate
 cdn_base
+node_modules
