@@ -30,7 +30,7 @@ var BalancesTable = React.createClass({
 			balance.user = balance.key;
 			return React.createElement(BalanceRow, balance);
 		});
-		return React.createElement('table', null,
+		return React.createElement('table', { className: "accounts" },
 			React.createElement('thead', null,
 				React.createElement('tr', null,
 					React.createElement('th', null, "Account"),
