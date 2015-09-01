@@ -54,14 +54,14 @@ td+td {
   border-left: 1px solid rgba(200,200,200,0.4);
 }
 
-td:not(.debets)+td.debets, td:not(.credits)+td.credits {
+td:not(.debits)+td.debits, td:not(.credits)+td.credits {
   border-left: 1px solid rgba(200,200,200,0.8);
 }
 
 .accounts>tbody>tr:nth-child(2n), tbody>tr:nth-child(2n)>.credits { background: rgba(200, 250, 200, 0.2); }
 .accounts>tbody>tr:nth-child(2n+1), tbody>tr:nth-child(2n+1)>.credits { background: rgba(150, 200, 150, 0.2); }
-tbody>tr:nth-child(2n)>.debets { background: rgba(250, 200, 200, 0.2); }
-tbody>tr:nth-child(2n+1)>.debets { background: rgba(200, 150, 150, 0.2); }
+tbody>tr:nth-child(2n)>.debits { background: rgba(250, 200, 200, 0.2); }
+tbody>tr:nth-child(2n+1)>.debits { background: rgba(200, 150, 150, 0.2); }
 
 h1, .footer {
   color: #eee;

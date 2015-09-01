@@ -16,7 +16,7 @@ var BalanceRow = React.createClass({
 			React.createElement('td', null,
 				React.createElement('a', { href: "user/" + this.props.user }, this.props.user)
 			),
-			React.createElement('td', { className: "debets currency" }, debits),
+			React.createElement('td', { className: "debits currency" }, debits),
 			React.createElement('td', { className: "credits currency" }, credits)
 		);
 	}
@@ -43,7 +43,7 @@ var BalancesTable = React.createClass({
 	}
 });
 
-function initBalances(domNode) {
+module.exports = function (domNode) {
 	React.render(React.createElement(BalancesTable, {balances: []}), domNode);
 
 	request({ url: "balances", json: true }, function (err, response, body) {
@@ -57,18 +57,4 @@ function initBalances(domNode) {
 			domNode
 		);
 	});
-}
-
-function initApp() {
-	initBalances(document.getElementById("balances"));
-}
-
-function maybeInitApp() {
-	if (document.readyState === "complete") {
-		initApp();
-		return true;
-	}
-	return false;
-}
-
-if (!maybeInitApp()) document.addEventListener("readystatechange", maybeInitApp);
+};

@@ -17,7 +17,7 @@ COUCHAPP=$(COUCHAPP_FILES:%=vendor/couchapp/_attachments/%.js)
 LOCAL=views/lib/biginteger.js views/lib/schemeNumber.js views/lib/fractionParser.js views/lib/sprintf-0.7-beta1.js calc.js toMixedNumber.js sharebill.js
 JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(REACT) $(LOCAL)
 
-BROWSERIFY_MODULES=src/balances.js
+BROWSERIFY_MODULES=src/app.js src/recent.js src/balances.js
 
 CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/local.css
 
@@ -90,4 +90,4 @@ node_modules: package.json
 	touch node_modules
 
 .intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules
-	./node_modules/.bin/browserify -e $(BROWSERIFY_MODULES) -o $@
+	./node_modules/.bin/browserify -e src/app.js -o $@

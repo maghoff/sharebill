@@ -17,6 +17,10 @@
 		"from": "balances",
 		"to": "_view/balances",
 		"query": { "group": "true", "reduce": "true" }
+    }, {
+		"from": "recent",
+		"to": "_view/all",
+		"query": { "limit": "10", "descending": "true" }
     },
 
 
