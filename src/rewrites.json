@@ -1,7 +1,7 @@
 [
     {
-        "to": "index.html",
-        "from": ""
+        "from": "",
+        "to": "index.html"
     },
 
 
@@ -10,12 +10,10 @@
 		"from": "user/:uid",
 		"to": "_show/userpage",
 		"query": { "user": ":uid" }
-    },
-    {
+    }, {
 		"from": "post/:pid",
 		"to": "_show/freeform/:pid"
-    },
-    {
+    }, {
 		"from": "balances",
 		"to": "_view/balances",
 		"query": { "group": "true", "reduce": "true" }
