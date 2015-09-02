@@ -93,3 +93,8 @@ h1, .footer {
 input.currency {
   text-align: right;
 }
+
+.date {
+	text-align: right;
+	min-width: 100px;
+}
