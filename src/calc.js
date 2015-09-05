@@ -79,3 +79,5 @@ var evaluate = (function () {
 
 	return evaluate;
 }());
+
+if (typeof module !== "undefined") module.exports = evaluate;

@@ -36,7 +36,7 @@ td.currency {
     text-align: right;
 }
 
-#totals>td {
+.total>td {
     border-top: 1px solid rgb(200,200,200);
     border-bottom: 3px double rgb(200,200,200);
 }
@@ -97,4 +97,11 @@ input.currency {
 .date {
 	text-align: right;
 	min-width: 100px;
+}
+
+.account-inputs {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 12px;
+	margin-bottom: 12px;
 }

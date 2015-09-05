@@ -1,59 +1,65 @@
 [
-    {
-        "from": "",
-        "to": "index.html"
-    },
+	{
+		"from": "",
+		"to": "index.html",
+		"method": "GET"
+	},
 
 
-    "Smart rewrites",
-    {
+	"Smart rewrites",
+	{
 		"from": "user/:uid",
 		"to": "_show/userpage",
 		"query": { "user": ":uid" }
-    }, {
+	}, {
 		"from": "post/:pid",
-		"to": "_show/freeform/:pid"
-    }, {
+		"to": "_show/freeform/:pid",
+		"method": "GET"
+	}, {
+		"from": "post/:pid",
+		"to": "../../:pid",
+		"method": "PUT"
+	}, {
 		"from": "balances",
 		"to": "_view/balances",
 		"query": { "group": "true", "reduce": "true" }
-    }, {
+	}, {
 		"from": "recent",
 		"to": "_view/all",
 		"query": { "limit": "10", "descending": "true" }
-    },
+	},
 
 
-    "Basic fallback rewrites",
-    {
-        "to": "vendor/*",
-        "from": "vendor/*"
-    }, {
-        "to": "app/*",
-        "from": "app/*"
-    }, {
-        "to": "config/*",
-        "from": "config/*"
-    }, {
-        "to": "_view/*",
-        "from": "_view/*"
-    }, {
-        "to": "",
-        "from": "the_database/_design/the_design_document"
-    }, {
-        "to": "*",
-        "from": "the_database/_design/the_design_document/*"
-    }, {
-        "to": "*",
-        "from": "the_design_document/*"
-    }, {
-        "to": "../../",
-        "from": "the_database"
-    }, {
-        "to": "../../*",
-        "from": "the_database/*"
-    }, {
-        "to": "*",
-        "from": "*"
-    }
+	"Basic fallback rewrites",
+	{
+		"to": "vendor/*",
+		"from": "vendor/*"
+	}, {
+		"to": "app/*",
+		"from": "app/*"
+	}, {
+		"to": "config/*",
+		"from": "config/*"
+	}, {
+		"to": "_view/*",
+		"from": "_view/*"
+	}, {
+		"to": "",
+		"from": "the_database/_design/the_design_document"
+	}, {
+		"to": "*",
+		"from": "the_database/_design/the_design_document/*"
+	}, {
+		"to": "*",
+		"from": "the_design_document/*"
+	}, {
+		"to": "../../",
+		"from": "the_database"
+	}, {
+		"to": "../../*",
+		"from": "the_database/*"
+	}, {
+		"to": "*",
+		"from": "*"
+	}
 ]
