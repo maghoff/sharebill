@@ -4,7 +4,7 @@ function(newDoc, oldDoc, userCtx) {
 	if (newDoc._id === "instance_config") return;
 
 	var SchemeNumber = require("views/lib/schemeNumber").SchemeNumber;
-	var fractionParser = require("views/lib/fractionParser").fractionParser;
+	var fractionParser = require("views/lib/fractionParser");
 
 	var assert_has = function(path) {
 		var node = newDoc;

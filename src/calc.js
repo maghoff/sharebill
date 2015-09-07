@@ -1,3 +1,5 @@
+if (typeof require !== 'undefined') SchemeNumber = require('./views/lib/schemeNumber').SchemeNumber;
+
 var evaluate = (function () {
 	function repeat(s, n) { return new Array(n+1).join(s); }
 

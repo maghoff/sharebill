@@ -1,6 +1,13 @@
 var React = require('react');
 var request = require('browser-request');
 var moment = require('moment');
+var SchemeNumber = require('./views/lib/schemeNumber').SchemeNumber;
+var evaluate = require('./calc');
+var toMixedNumber = require('./toMixedNumber');
+
+var sharebill = {
+	currencyName: function () { return "kr"; }
+}
 
 function formatSum(sum) {
 	var denom = SchemeNumber.fn.denominator(sum);

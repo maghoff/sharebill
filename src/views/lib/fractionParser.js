@@ -21,5 +21,5 @@ function fractionParser(num) {
 }
 
 if (typeof exports !== 'undefined') {
-	exports.fractionParser = fractionParser;
+	module.exports = fractionParser;
 }

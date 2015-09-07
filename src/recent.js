@@ -1,6 +1,11 @@
 var React = require('react');
 var request = require('browser-request');
 var moment = require('moment');
+var fractionParser = require('./views/lib/fractionParser.js');
+
+var sharebill = {
+	formatCurrencyShort: function (number) { return number.toFixed(0); }
+};
 
 function format(number) {
 	if (number === undefined) return "";

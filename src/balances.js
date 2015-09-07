@@ -1,5 +1,10 @@
 var React = require('react');
 var request = require('browser-request');
+var fractionParser = require('./views/lib/fractionParser.js');
+
+var sharebill = {
+	formatCurrencyShort: function (number) { return number.toFixed(0); }
+};
 
 function format(number) {
 	return sharebill.formatCurrencyShort(fractionParser(number));
