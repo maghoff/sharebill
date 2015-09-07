@@ -25,8 +25,8 @@ moment.locale('en-gb', {
 
 function initApp() {
 	var instance_config = initInstanceConfig(early_xhrs.instance_config);
-	initBalances(document.getElementById("balances"), instance_config);
-	initRecent(document.getElementById("recent"), instance_config);
+	initBalances(document.getElementById("balances"), early_xhrs.balances, instance_config);
+	initRecent(document.getElementById("recent"), early_xhrs.recent, instance_config);
 	initEntryButtons(document.getElementById("entry-buttons"), document.getElementById("entry"), instance_config);
 }
 

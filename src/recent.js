@@ -1,5 +1,5 @@
 var React = require('react');
-var request = require('browser-request');
+var completeEarlyXHR = require('./complete_early_xhr');
 var moment = require('moment');
 var fractionParser = require('./views/lib/fractionParser.js');
 
@@ -112,10 +112,10 @@ RecentComponent.prototype.updateTimestamps = function () {
 	}.bind(this), msToNextUpdate);
 }
 
-module.exports = function (domNode, instanceConfig) {
+module.exports = function (domNode, xhr, instanceConfig) {
 	var recentComponent = new RecentComponent(domNode, instanceConfig);
 
-	request({ url: "recent", json: true }, function (err, response, body) {
+	completeEarlyXHR(xhr, function (err, response, body) {
 		if (err) {
 			console.error(err);
 			return;

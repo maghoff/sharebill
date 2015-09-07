@@ -1,5 +1,5 @@
 var React = require('react');
-var request = require('browser-request');
+var completeEarlyXHR = require('./complete_early_xhr');
 var fractionParser = require('./views/lib/fractionParser.js');
 
 var BalanceRow = React.createClass({
@@ -47,10 +47,10 @@ var BalancesTable = React.createClass({
 	}
 });
 
-module.exports = function (domNode, instanceConfig) {
+module.exports = function (domNode, xhr, instanceConfig) {
 	var balances = React.render(React.createElement(BalancesTable, null), domNode);
 
-	request({ url: "balances", json: true }, function (err, response, body) {
+	completeEarlyXHR(xhr, function (err, response, body) {
 		if (err) {
 			console.error(err);
 			return;
