@@ -5,10 +5,6 @@ var SchemeNumber = require('./views/lib/schemeNumber').SchemeNumber;
 var evaluate = require('./calc');
 var toMixedNumber = require('./toMixedNumber');
 
-var sharebill = {
-	currencyName: function () { return "kr"; }
-}
-
 function formatSum(sum) {
 	var denom = SchemeNumber.fn.denominator(sum);
 	if (SchemeNumber.fn["="](denom, new SchemeNumber("1"))) {
@@ -112,8 +108,7 @@ var AccountInputRow = React.createClass({
 						 onChange: this.handleChange,
 						 onBlur: this.handleBlur
 					}),
-					React.createElement("span", { className: "add-on" }, sharebill.currencyName())
-					// TODO ^^^ dependency inject currency information instead of reading from global state
+					React.createElement("span", { className: "add-on" }, this.props.currencyName)
 				)
 			)
 		);
@@ -190,6 +185,7 @@ var AccountInputs = React.createClass({
 						account_error: account_error,
 						value: item.value,
 						value_error: item.value_error,
+						currencyName: this.props.currencyName,
 						enabled: this.props.enabled,
 						set: this.set.bind(this, index),
 						deleteMe: this.deleteRow.bind(this, index)
@@ -200,6 +196,7 @@ var AccountInputs = React.createClass({
 						type: this.props.type,
 						account: "",
 						value: "",
+						currencyName: this.props.currencyName,
 						placeholder_value: this.props.extra ? formatSum(this.props.extra) : null,
 						enabled: this.props.enabled,
 						set: this.set.bind(this, this.props.values.length),
@@ -348,7 +345,8 @@ var FreeformEntry = React.createClass({
 				extra: missing_debits,
 				set: this.set.bind(this, "debits"),
 				deleteRow: this.deleteRow.bind(this, "debits"),
-				enabled: !this.state.saving
+				enabled: !this.state.saving,
+				currencyName: this.props.instanceConfig.isReady() ? this.props.instanceConfig.currencyName() : ""
 			}),
 			React.createElement(AccountInputs, {
 				type: "credits",
@@ -356,7 +354,8 @@ var FreeformEntry = React.createClass({
 				extra: missing_credits,
 				set: this.set.bind(this, "credits"),
 				deleteRow: this.deleteRow.bind(this, "credits"),
-				enabled: !this.state.saving
+				enabled: !this.state.saving,
+				currencyName: this.props.instanceConfig.isReady() ? this.props.instanceConfig.currencyName() : ""
 			}),
 			this.state.error ? React.createElement("div", { className: "alert alert-error" }, this.state.error) : "",
 			React.createElement("div", null,
@@ -377,11 +376,12 @@ var FreeformEntry = React.createClass({
 	}
 });
 
-module.exports = function (domNode, entry, deleteCallback) {
-	return React.render(
+module.exports = function (domNode, entry, instanceConfig, deleteCallback) {
+	var component = React.render(
 		React.createElement(
 			FreeformEntry, {
 				initialState: entry,
+				instanceConfig: instanceConfig,
 				deleteMe: function () {
 					React.unmountComponentAtNode(domNode);
 					deleteCallback();
@@ -389,4 +389,8 @@ module.exports = function (domNode, entry, deleteCallback) {
 			}),
 		domNode
 	);
+	if (!instanceConfig.isReady()) instanceConfig.whenReady(function () {
+		component.setState({});
+	});
+	return component;
 };

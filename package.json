@@ -4,6 +4,7 @@
   "dependencies": {
     "browser-request": "^0.3.3",
     "browserify": "^11.0.1",
-    "moment": "^2.10.6"
+    "moment": "^2.10.6",
+    "sprintf-js": "^1.0.3"
   }
 }

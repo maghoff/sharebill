@@ -27,6 +27,9 @@
 		"from": "recent",
 		"to": "_view/all",
 		"query": { "limit": "10", "descending": "true" }
+	}, {
+		"from": "instance_config",
+		"to": "../../instance_config"
 	},
 
 

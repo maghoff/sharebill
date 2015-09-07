@@ -2,20 +2,12 @@ var React = require('react');
 var request = require('browser-request');
 var fractionParser = require('./views/lib/fractionParser.js');
 
-var sharebill = {
-	formatCurrencyShort: function (number) { return number.toFixed(0); }
-};
-
-function format(number) {
-	return sharebill.formatCurrencyShort(fractionParser(number));
-}
-
 var BalanceRow = React.createClass({
 	render: function () {
 		var negative = this.props.value.match(/^-/);
 		var debits = "", credits = "";
-		if (negative) debits = format(this.props.value.substr(1));
-		else credits = format(this.props.value);
+		if (negative) debits = this.props.format(this.props.value.substr(1));
+		else credits = this.props.format(this.props.value);
 
 		return React.createElement('tr', { className: "accounts" },
 			React.createElement('td', null,
@@ -28,13 +20,20 @@ var BalanceRow = React.createClass({
 });
 
 var BalancesTable = React.createClass({
+	getInitialState: function () {
+		return {
+			balances: [],
+			format: function () { return ''; }
+		};
+	},
 	render: function () {
-		var balances = this.props.balances.filter(function (balance) {
+		var balances = this.state.balances.filter(function (balance) {
 			return balance.value !== "0";
 		}).map(function (balance) {
 			balance.user = balance.key;
+			balance.format = this.state.format;
 			return React.createElement(BalanceRow, balance);
-		});
+		}.bind(this));
 		return React.createElement('table', { className: "accounts" },
 			React.createElement('thead', null,
 				React.createElement('tr', null,
@@ -48,8 +47,8 @@ var BalancesTable = React.createClass({
 	}
 });
 
-module.exports = function (domNode) {
-	React.render(React.createElement(BalancesTable, {balances: []}), domNode);
+module.exports = function (domNode, instanceConfig) {
+	var balances = React.render(React.createElement(BalancesTable, null), domNode);
 
 	request({ url: "balances", json: true }, function (err, response, body) {
 		if (err) {
@@ -57,9 +56,14 @@ module.exports = function (domNode) {
 			return;
 		}
 
-		React.render(
-			React.createElement(BalancesTable, {balances: body.rows}),
-			domNode
-		);
+		balances.setState({ balances: body.rows });
+	});
+
+	instanceConfig.whenReady(function () {
+		balances.setState({
+			format: function (number) {
+				return instanceConfig.formatCurrencyShort(fractionParser(number));
+			}
+		});
 	});
 };

@@ -17,7 +17,16 @@ COUCHAPP=$(COUCHAPP_FILES:%=vendor/couchapp/_attachments/%.js)
 LOCAL=views/lib/biginteger.js views/lib/schemeNumber.js views/lib/fractionParser.js views/lib/sprintf-0.7-beta1.js calc.js toMixedNumber.js sharebill.js
 JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(REACT) $(LOCAL)
 
-BROWSERIFY_MODULES=src/app.js src/recent.js src/balances.js src/entry-buttons.js src/freeform.js
+BROWSERIFY_MODULES= \
+	src/app.js \
+	src/recent.js \
+	src/balances.js \
+	src/entry-buttons.js \
+	src/freeform.js \
+	src/instance_config.js \
+	src/complete_early_xhr.js \
+	src/calc.js \
+	src/toMixedNumber.js
 
 CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/local.css
 

@@ -1,3 +1,4 @@
+var initInstanceConfig = require('./instance_config');
 var initBalances = require('./balances');
 var initRecent = require('./recent');
 var initEntryButtons = require('./entry-buttons');
@@ -23,9 +24,10 @@ moment.locale('en-gb', {
 });
 
 function initApp() {
-	initBalances(document.getElementById("balances"));
-	initRecent(document.getElementById("recent"));
-	initEntryButtons(document.getElementById("entry-buttons"), document.getElementById("entry"));
+	var instance_config = initInstanceConfig(early_xhrs.instance_config);
+	initBalances(document.getElementById("balances"), instance_config);
+	initRecent(document.getElementById("recent"), instance_config);
+	initEntryButtons(document.getElementById("entry-buttons"), document.getElementById("entry"), instance_config);
 }
 
 function maybeInitApp() {

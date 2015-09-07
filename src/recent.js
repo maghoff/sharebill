@@ -3,13 +3,10 @@ var request = require('browser-request');
 var moment = require('moment');
 var fractionParser = require('./views/lib/fractionParser.js');
 
-var sharebill = {
-	formatCurrencyShort: function (number) { return number.toFixed(0); }
-};
-
-function format(number) {
+function format(instanceConfig, number) {
+	if (!instanceConfig.isReady()) return "";
 	if (number === undefined) return "";
-	return sharebill.formatCurrencyShort(fractionParser(number));
+	return instanceConfig.formatCurrencyShort(fractionParser(number));
 }
 
 var PostsTable = React.createClass({
@@ -53,28 +50,30 @@ var PostsTable = React.createClass({
 					var debits = debitAccounts.map(function (account) {
 						return React.createElement('td',
 							{ key: "debit-" + account, className: "debits currency" },
-							format(post.value.transaction.debets[account]));
-					});
+							this.props.format(post.value.transaction.debets[account]));
+					}.bind(this));
 					var credits = creditAccounts.map(function (account) {
 						return React.createElement('td',
 							{ key: "credit-" + account, className: "credits currency" },
-							format(post.value.transaction.credits[account]));
-					});
+							this.props.format(post.value.transaction.credits[account]));
+					}.bind(this));
 					return React.createElement('tr', { key: post.id }, [date, description].concat(debits).concat(credits));
-				})
+				}.bind(this))
 			)
 		);
 	}
 });
 
-function RecentComponent(domNode) {
-	if (!(this instanceof RecentComponent)) return new RecentComponent(domNode);
+function RecentComponent(domNode, instanceConfig) {
+	if (!(this instanceof RecentComponent)) return new RecentComponent(domNode, instanceConfig);
 
 	this.domNode = domNode;
 	this.data = [];
+	this.instanceConfig = instanceConfig;
 	this.pendingUpdate = null;
 
 	this.render();
+	if (!this.instanceConfig.isReady()) this.instanceConfig.whenReady(this.render.bind(this));
 }
 
 RecentComponent.prototype.setData = function (data) {
@@ -83,7 +82,13 @@ RecentComponent.prototype.setData = function (data) {
 };
 
 RecentComponent.prototype.render = function () {
-	React.render(React.createElement(PostsTable, {posts: this.data}), this.domNode);
+	React.render(
+		React.createElement(PostsTable, {
+			posts: this.data,
+			format: format.bind(this, this.instanceConfig)
+		}),
+		this.domNode
+	);
 	this.updateTimestamps();
 };
 
@@ -107,8 +112,8 @@ RecentComponent.prototype.updateTimestamps = function () {
 	}.bind(this), msToNextUpdate);
 }
 
-module.exports = function (domNode) {
-	var recentComponent = new RecentComponent(domNode);
+module.exports = function (domNode, instanceConfig) {
+	var recentComponent = new RecentComponent(domNode, instanceConfig);
 
 	request({ url: "recent", json: true }, function (err, response, body) {
 		if (err) {

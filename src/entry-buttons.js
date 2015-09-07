@@ -13,7 +13,7 @@ function generateId() {
 	return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-module.exports = function (buttons, target) {
+module.exports = function (buttons, target, instanceConfig) {
 	buttons.addEventListener('click', function (ev) {
 		if (!ev.target.classList.contains('entry_link')) return;
 
@@ -37,7 +37,7 @@ module.exports = function (buttons, target) {
 			box.parentNode.removeChild(box);
 		}
 
-		var component = entryTypes[ev.target.getAttribute("data-type")](box, entry, deleteCallback);
+		var component = entryTypes[ev.target.getAttribute("data-type")](box, entry, instanceConfig, deleteCallback);
 
 		component.focus();
 	});
