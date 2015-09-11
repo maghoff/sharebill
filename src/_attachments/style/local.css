@@ -135,8 +135,8 @@ input.currency {
 }
 
 .entry-sheet-enter {
-	opacity: 0;
 	overflow: hidden;
+	opacity: 0;
 	max-height: 0px;
 	transform: translateY(-10px);
 	-webkit-transform: translateY(-10px);
@@ -149,6 +149,7 @@ input.currency {
 	transition: all 500ms ease-out;
 }
 .entry-sheet-leave {
+	overflow: hidden;
 	opacity: 1;
 	max-height: 1000px;
 }
