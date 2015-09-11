@@ -28,6 +28,16 @@ function(newDoc, oldDoc, userCtx) {
 	for (type_n in types) {
 		var type = types[type_n];
 		for (name in newDoc.transaction[type]) {
+			if (name.trim() !== name) {
+				throw({
+					forbidden: "Account names must be trimmed of white space."
+				});
+			}
+			if (name === "") {
+				throw({
+					forbidden: "The empty string is an invalid account name."
+				});
+			}
 			if (typeof newDoc.transaction[type][name] !== "string") {
 				throw({
 					forbidden: "All numbers must be represented as strings " +

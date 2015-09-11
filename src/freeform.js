@@ -27,7 +27,7 @@ function accountDictFromArray(array) {
 	var dict = {};
 	array.forEach(function (line) {
 		if (!line) return;
-		dict[line.account] = toMixedNumber(evaluate(line.value));
+		dict[line.account.trim()] = toMixedNumber(evaluate(line.value));
 	});
 	return dict;
 }
@@ -53,8 +53,10 @@ function validate_account_inputs(inputs) {
 	inputs.forEach(function (entry) {
 		entries++;
 
-		accounts[entry.account] = (accounts[entry.account] || 0) + 1;
-		valid &= (accounts[entry.account] === 1);
+		var account = entry.account.trim();
+		accounts[account] = (accounts[account] || 0) + 1;
+		valid &= (accounts[account] === 1);
+		valid &= account.length >= 1;
 
 		try {
 			var value = evaluate(entry.value);
@@ -160,7 +162,7 @@ var AccountInputs = React.createClass({
 
 		var accounts = {};
 		this.props.values.forEach(function (entry) {
-			accounts[entry.account] = (accounts[entry.account] || 0) + 1;
+			accounts[entry.account.trim()] = (accounts[entry.account.trim()] || 0) + 1;
 		});
 
 		return React.createElement("table", { className: "accounts account-inputs" },
@@ -176,8 +178,8 @@ var AccountInputs = React.createClass({
 			React.createElement("tbody", null,
 				this.props.values.map(function (item, index) {
 					var account_error = null;
-					if (item.account === "") account_error = "Fill in account name";
-					else if (accounts[item.account] > 1) account_error = "Duplicate account";
+					if (item.account.trim() === "") account_error = "Fill in account name";
+					else if (accounts[item.account.trim()] > 1) account_error = "Duplicate account";
 					return React.createElement(AccountInputRow, {
 						key: index,
 						type: this.props.type,
