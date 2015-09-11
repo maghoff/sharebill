@@ -320,7 +320,6 @@ var FreeformEntry = React.createClass({
 			{
 				onSubmit: this.submit.bind(this, valid_form && !this.state.saving)
 			},
-			React.createElement("h2", null, "Add a post"),
 			React.createElement("dl", null,
 				React.createElement("dt", null, "When"),
 				React.createElement("dd", { className: "control-group" + (valid_timestamp ? "" : " error") },
@@ -378,21 +377,14 @@ var FreeformEntry = React.createClass({
 	}
 });
 
-module.exports = function (domNode, entry, instanceConfig, deleteCallback) {
-	var component = React.render(
-		React.createElement(
-			FreeformEntry, {
-				initialState: entry,
-				instanceConfig: instanceConfig,
-				deleteMe: function () {
-					React.unmountComponentAtNode(domNode);
-					deleteCallback();
-				}
-			}),
-		domNode
+module.exports = function (entry, instanceConfig, deleteCallback) {
+	return React.createElement(
+		FreeformEntry, {
+			key: entry._id,
+			ref: entry._id,
+			initialState: entry,
+			instanceConfig: instanceConfig,
+			deleteMe: deleteCallback
+		}
 	);
-	if (!instanceConfig.isReady()) instanceConfig.whenReady(function () {
-		component.setState({});
-	});
-	return component;
 };
