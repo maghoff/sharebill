@@ -37,6 +37,35 @@ var Sheet = React.createClass({
 	}
 });
 
+function keepInView(domNode) {
+	var request;
+
+	function scroller() {
+		var w = {
+			top: window.scrollY,
+			bottom: window.scrollY + window.innerHeight
+		};
+		var n = {
+			top: domNode.offsetTop,
+			bottom: domNode.offsetTop + domNode.clientHeight
+		};
+		if (n.top < w.top) window.scroll(window.scrollX, n.top);
+		else if (n.bottom > w.bottom) window.scroll(window.scrollX, n.bottom-window.innerHeight);
+
+		request = requestAnimationFrame(scroller);
+	}
+
+	scroller();
+
+	return {
+		stop: function () {
+			cancelAnimationFrame(request);
+			scroller();
+			cancelAnimationFrame(request);
+		}
+	};
+}
+
 var EntrySheets = React.createClass({
 	getInitialState: function () {
 		return {
@@ -51,7 +80,11 @@ var EntrySheets = React.createClass({
 				{$unshift: [{type: entryType, entry: document}]}
 			)
 		}, function () {
-			this.refs[document._id].focus();
+			var scroller = keepInView(this.refs[document._id].getDOMNode().parentNode);
+			setTimeout(function () {
+				this.refs[document._id].focus();
+				scroller.stop();
+			}.bind(this), 500);
 		}.bind(this));
 	},
 	removeSheet: function (index) {
@@ -64,8 +97,7 @@ var EntrySheets = React.createClass({
 	},
 	render: function () {
 		return React.createElement(
-			//React.addons.CSSTransitionGroup, { transitionName: "entry-sheet", component: "div" },
-			"div", null,
+			React.addons.CSSTransitionGroup, { transitionName: "entry-sheet", component: "div" },
 			this.state.sheets.map(function (sheet, index) {
 				var constructor = entryTypes[sheet.type];
 				var deleteCallback = function () { this.removeSheet(index); }.bind(this);
