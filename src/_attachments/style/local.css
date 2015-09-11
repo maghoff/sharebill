@@ -105,3 +105,31 @@ input.currency {
 	margin-right: 12px;
 	margin-bottom: 12px;
 }
+
+.account-inputs td>span {
+	display: block;
+	margin: 0;
+	padding: 1px;
+	overflow-y: hidden;
+}
+
+/* Surrogate transitions to communicate with React */
+.account-row-enter, .account-row-leave { left: 0px; }
+.account-row-enter-active, .account-row-leave-active { left: 10px; transition: left 100ms ease-in; }
+
+/* Real transitions for showing and hiding entry rows */
+.account-row-enter td>span {
+	height: 0px;
+}
+.account-row-enter-active td>span {
+	transition: all 100ms ease-in;
+	height: 28px;
+}
+
+.account-row-leave td>span {
+	height: 28px;
+}
+.account-row-leave-active td>span {
+	height: 0px;
+	transition: all 100ms ease-in;
+}

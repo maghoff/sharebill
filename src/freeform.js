@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var request = require('browser-request');
 var moment = require('moment');
 var SchemeNumber = require('./views/lib/schemeNumber').SchemeNumber;
@@ -175,7 +175,7 @@ var AccountInputs = React.createClass({
 					React.createElement("th", null, "Value")
 				)
 			),
-			React.createElement("tbody", null,
+			React.createElement(React.addons.CSSTransitionGroup, { transitionName: "account-row", component: "tbody" },
 				this.props.values.map(function (item, index) {
 					var account_error = null;
 					if (item.account.trim() === "") account_error = "Fill in account name";
@@ -203,9 +203,9 @@ var AccountInputs = React.createClass({
 						enabled: this.props.enabled,
 						set: this.set.bind(this, this.props.values.length),
 						deleteMe: function () {}
-					})
-				]),
-				React.createElement(AccountInputTotalRow, { type: this.props.type, value: sum_text })
+					}),
+					React.createElement(AccountInputTotalRow, { key: "sum", type: this.props.type, value: sum_text })
+				])
 			)
 		);
 	}
