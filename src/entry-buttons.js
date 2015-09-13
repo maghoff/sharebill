@@ -1,9 +1,6 @@
 var React = require('react/addons');
 var moment = require('moment');
-
-var entryTypes = {
-	"freeform": require('./freeform')
-};
+var Sheet = require('./sheet');
 
 function generateId() {
 	function s4() {
@@ -28,19 +25,10 @@ function blankTransactionDocument() {
 	};
 }
 
-var Sheet = React.createClass({
-	render: function () {
-		return React.createElement("div", { className: "section" },
-			React.createElement("h2", null, "Add a post"),
-			this.props.children
-		);
-	}
-});
-
 function keepInView(domNode) {
 	var request;
 
-	function scroller() {
+	function scrollIntoView() {
 		var w = {
 			top: window.scrollY,
 			bottom: window.scrollY + window.innerHeight
@@ -51,7 +39,10 @@ function keepInView(domNode) {
 		};
 		if (n.top < w.top) window.scroll(window.scrollX, n.top);
 		else if (n.bottom > w.bottom) window.scroll(window.scrollX, n.bottom-window.innerHeight);
+	}
 
+	function scroller() {
+		scrollIntoView();
 		request = requestAnimationFrame(scroller);
 	}
 
@@ -60,8 +51,7 @@ function keepInView(domNode) {
 	return {
 		stop: function () {
 			cancelAnimationFrame(request);
-			scroller();
-			cancelAnimationFrame(request);
+			scrollIntoView();
 		}
 	};
 }
@@ -80,7 +70,8 @@ var EntrySheets = React.createClass({
 				{$unshift: [{type: entryType, entry: document}]}
 			)
 		}, function () {
-			var scroller = keepInView(this.refs[document._id].getDOMNode().parentNode);
+			// FIXME .parentNode.parentNode seems a bit random
+			var scroller = keepInView(this.refs[document._id].getDOMNode());
 			setTimeout(function () {
 				this.refs[document._id].focus();
 				scroller.stop();
@@ -99,11 +90,16 @@ var EntrySheets = React.createClass({
 		return React.createElement(
 			React.addons.CSSTransitionGroup, { transitionName: "entry-sheet", component: "div" },
 			this.state.sheets.map(function (sheet, index) {
-				var constructor = entryTypes[sheet.type];
 				var deleteCallback = function () { this.removeSheet(index); }.bind(this);
 				return React.createElement(
-					Sheet, { key: sheet.entry._id },
-					constructor(sheet.entry, this.props.instanceConfig, deleteCallback)
+					Sheet, {
+						key: sheet.entry._id,
+						ref: sheet.entry._id,
+						type: sheet.type,
+						document: sheet.entry,
+						deleteMe: deleteCallback,
+						instanceConfig: this.props.instanceConfig
+					}
 				);
 			}.bind(this))
 		)

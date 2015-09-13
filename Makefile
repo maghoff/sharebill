@@ -18,14 +18,16 @@ LOCAL=views/lib/biginteger.js views/lib/schemeNumber.js views/lib/fractionParser
 JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(REACT) $(LOCAL)
 
 BROWSERIFY_MODULES= \
+	src/account-input-table.js \
 	src/app.js \
-	src/recent.js \
 	src/balances.js \
+	src/calc.js \
+	src/complete_early_xhr.js \
 	src/entry-buttons.js \
 	src/freeform.js \
 	src/instance_config.js \
-	src/complete_early_xhr.js \
-	src/calc.js \
+	src/recent.js \
+	src/sheet.js \
 	src/toMixedNumber.js
 
 CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/local.css
