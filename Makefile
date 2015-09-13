@@ -19,13 +19,13 @@ JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(REACT) $(LOCAL)
 
 BROWSERIFY_MODULES= \
 	src/account-input-table.js \
-	src/app.js \
 	src/balances.js \
 	src/calc.js \
 	src/complete_early_xhr.js \
 	src/entry-buttons.js \
 	src/freeform.js \
-	src/instance_config.js \
+	src/instance-config.js \
+	src/moment-config.js \
 	src/recent.js \
 	src/sheet.js \
 	src/toMixedNumber.js
@@ -100,5 +100,11 @@ node_modules: package.json
 	npm install
 	touch node_modules
 
-.intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules
-	./node_modules/.bin/browserify -e src/app.js -o $@
+.intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules Makefile
+	./node_modules/.bin/browserify \
+		-r './src/instance-config:./instance-config' \
+		-r './src/balances:./balances' \
+		-r './src/recent:./recent' \
+		-r './src/entry-buttons:./entry-buttons' \
+		src/moment-config.js \
+		-o $@

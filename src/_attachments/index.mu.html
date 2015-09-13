@@ -19,7 +19,6 @@
 			early_xhrs[x].send();
 		}
 	</script>
-	<script src="{{cdn_base}}browserify.sum-{{browserify_js_sum}}.js" async defer></script>
 </head>
 <body>
 	<h1>Sharebill</h1>
@@ -45,5 +44,14 @@
 			<li><a href="http://bitbucket.org/maghoff/sharebill/issues">Report an issue</a></li>
 		</ul>
 	</div>
+	<script src="{{cdn_base}}browserify.sum-{{browserify_js_sum}}.js"></script>
+	<script>
+		(function() {
+			var instance_config = require('./instance-config')(early_xhrs.instance_config);
+			require('./balances')(document.getElementById("balances"), early_xhrs.balances, instance_config);
+			require('./recent')(document.getElementById("recent"), early_xhrs.recent, instance_config);
+			require('./entry-buttons')(document.getElementById("entry-buttons"), document.getElementById("entry"), instance_config);
+		}());
+	</script>
 </body>
 </html>
