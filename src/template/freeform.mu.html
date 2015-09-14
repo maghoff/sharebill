@@ -1,294 +1,41 @@
 {{=<% %>=}}
 <!DOCTYPE html>
 <html>
-
 <head>
 	<title>Post - Sharebill</title>
+	<meta charset="utf8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<base href="../../">
+	<base href="../">
 	<link rel="stylesheet" href="<%cdn_base%>style/all.sum-<%all_css_sum%>.css" type="text/css">
-	<script src="<%cdn_base%>all.sum-<%all_js_sum%>.js"></script>
-	<script type="text/javascript" charset="utf-8">
-		var selectors = function() {
-			var timestamp = function (date) {
-				var pad = function (amount, width) {
-					var str = amount.toString();
-					while (str.length < width) str = "0" + str;
-					return str;
-				};
-
-				date = date ? date : new Date();
-				return (
-					pad(date.getUTCFullYear(), 4) + "-" +
-					pad(date.getUTCMonth() + 1, 2) + "-" +
-					pad(date.getUTCDate(), 2) + "T" +
-					pad(date.getUTCHours(), 2) + ":" +
-					pad(date.getUTCMinutes(), 2) + ":" +
-					pad(date.getUTCSeconds(), 2) + "." +
-					pad(date.getUTCMilliseconds(), 3) + "Z"
-				);
-			};
-
-			var sum_calculator = function() {
-				var table = $(this).closest("table");
-
-				var sum = new SchemeNumber("0");
-				var sum_is_valid = true;
-				table.find(".value").each(
-					function(index, element) {
-						var value_text = $(element).val().trim();
-						$(element).removeClass("error");
-						if (value_text === "") return;
-
-						try {
-							var value = evaluate(value_text);
-							sum = SchemeNumber.fn["+"](sum, value);
-						}
-						catch (err) {
-							sum_is_valid = false;
-							$(element).addClass("error");
-						}
-					}
-				);
-
-				var sum_text = "-";
-				if (sum_is_valid) {
-					var denom = SchemeNumber.fn.denominator(sum);
-					if (SchemeNumber.fn["="](denom, new SchemeNumber("1"))) {
-						sum_text = sum.toString();
-					} else if (SchemeNumber.fn["="](SchemeNumber.fn.lcm(denom, new SchemeNumber("100")), new SchemeNumber("100"))) {
-						sum_text = sum.toFixed(2);
-					} else {
-						sum_text = toMixedNumber(sum);
-					}
-				}
-
-				table.find("#sum").text(sum_text);
-			};
-
-			return {
-				"form": {
-					"_init": function() {
-						$(this).find("#description_entry").focus();
-						return false;
-					},
-					"submit": function(ev) {
-						ev.preventDefault();
-						ev.stopPropagation();
-						ev.originalEvent.preventDefault();
-						ev.originalEvent.stopPropagation();
-
-						var form = $(this);
-						var inputs = form.find("input");
-						var status = form.find("#status");
-
-						var get_items = function(table) {
-							var items = {};
-							table.find("tr").each(function() {
-								var name = $(this).find(".name").val();
-								var value = evaluate($(this).find(".value").val() || "0");
-								if ((name) && (name !== "") && (value) && (!SchemeNumber.fn["zero?"](value))) {
-									items[name] = toMixedNumber(value);
-								}
-							});
-							return items;
-						};
-
-						var post;
-						try {
-							post = {
-								"_id": form.find("#_id").val(),
-								"_rev": form.find("#_rev").val(),
-								"meta": {
-									"timestamp": form.find("#timestamp_entry").val(),
-									"description": form.find("#description_entry").val()
-								},
-								"transaction": {
-									"credits": get_items(form.find("table#credits")),
-									"debets": get_items(form.find("table#debets"))
-								}
-							};
-						}
-						catch (err) {
-							status.text(err.toString());
-							status.removeClass("info");
-							status.addClass("error");
-							return false;
-						}
-
-						inputs.attr("disabled", true);
-						form.fadeTo(1000, 0.60);
-						status.text("Saving...");
-						status.removeClass("error");
-						status.addClass("info");
-
-						var app = $$(this).app;
-						$$(this).app.db.saveDoc(post, {
-							success: function(response) {
-								form.find("#_rev").val(response.rev);
-								status.text("Saved successfully!");
-								status.removeClass("error");
-								status.addClass("info");
-								inputs.removeAttr("disabled");
-								form.stop();
-								form.fadeTo(100, 1.00);
-							},
-							error: function(httpCode, httpMessage, body) {
-								status.text("Error: " + body);
-								status.removeClass("info");
-								status.addClass("error");
-								inputs.removeAttr("disabled");
-								form.stop();
-								form.fadeTo(100, 1.00);
-							}
-						});
-
-						return false;
-					},
-				},
-				"#description_entry": {
-					"change": function() {
-						var is_valid = $(this).val() != "";
-						if (is_valid) $(this).removeClass("error");
-						else $(this).addClass("error");
-					}
-				},
-				"input.dr.value": { "_init": sum_calculator, "change": sum_calculator },
-				"input.cr.value": { "_init": sum_calculator, "change": sum_calculator },
-				"#delete": {
-					"click": function(ev) {
-						ev.stopPropagation();
-						ev.preventDefault();
-
-						var form = $("form");
-						var inputs = form.find("input");
-						var status = form.find("#status");
-
-						var post = {
-							"_id": form.find("#_id").val(),
-							"_rev": form.find("#_rev").val()
-						};
-
-						inputs.attr("disabled", true);
-						form.fadeTo(1000, 0.60);
-						status.text("Deleting...");
-						status.removeClass("error");
-						status.addClass("info");
-
-						$$(this).app.db.removeDoc(post, {
-							success: function(response) {
-								status.text("Deleted successfully!");
-								status.removeClass("error");
-								status.addClass("info");
-								inputs.removeAttr("disabled");
-							},
-							error: function(httpCode, httpMessage, body) {
-								status.text("Error: " + body);
-								status.removeClass("info");
-								status.addClass("error");
-								inputs.removeAttr("disabled");
-								form.stop();
-								form.fadeTo(100, 1.00);
-							}
-						});
-					}
-				}
-			};
+	<script>
+		var early_xhrs = {
+			instance_config: "instance_config"
 		};
-
-	    sharebill.onReady(function(app) {
-			$("body").evently({_init: {selectors: selectors()}}, app);
-		});
-    </script>
-
+		for (var x in early_xhrs) {
+			var url = early_xhrs[x];
+			early_xhrs[x] = new XMLHttpRequest();
+			early_xhrs[x].responseType = "json";
+			early_xhrs[x].open("GET", url);
+			early_xhrs[x].send();
+		}
+	</script>
 </head>
-
 <body>
-
-<h1>Post</h1>
-
-<div class="section">
-
-<form>
-
-<input type="hidden" id="_id" value="{{_id}}"></input>
-<input type="hidden" id="_rev" value="{{_rev}}"></input>
-
-{{#meta}}
-<dl>
-<dt>Description:</dt> <dd><input class="wide" type="text" id="description_entry" value="{{description}}"></input></dd>
-<dt>Timestamp:</dt> <dd><input class="wide" type="text" id="timestamp_entry" value="{{timestamp}}"></input></dd>
-</dl>
-{{/meta}}
-
-{{#transaction}}
-<table class="accounts" style="float: left; margin-right: 1em" id="debets">
-
-<thead>
-<tr><th colspan="2">Debit</th></tr>
-<tr><th>Account</th><th>Value</th></tr>
-</thead>
-
-<tbody>
-{{#debit_array}}
-<tr>
-  <td class="debets" ><input type="text" class="dr name" value="{{key}}"></input></td>
-  <td class="debets currency" ><input type="text" class="dr value" value="{{value}}"></input></td>
-</tr>
-{{/debit_array}}
-<tr><td class="debets" ><input type="text" class="dr name"></input></td><td class="debets" ><input type="text" class="dr value"></input></td></tr>
-<tr><td class="debets" ><input type="text" class="dr name"></input></td><td class="debets" ><input type="text" class="dr value"></input></td></tr>
-<tr><td class="debets" ><input type="text" class="dr name"></input></td><td class="debets" ><input type="text" class="dr value"></input></td></tr>
-<tr id="totals"><td class="debets" >Sum</td><td class="debets currency" id="sum">-</input></td></tr>
-</tbody>
-</table>
-
-<table class="accounts" style="float: left; margin-bottom: 1em" id="credits">
-
-<thead>
-<tr><th colspan="2">Credit</th></tr>
-<tr><th>Account</th><th>Value</th></tr>
-</thead>
-
-<tbody>
-{{#credit_array}}
-<tr>
-  <td class="credits"><input type="text" class="cr name" value="{{key}}"></input></td>
-  <td class="credits currency"><input type="text" class="cr value" value="{{value}}"></input></td>
-</tr>
-{{/credit_array}}
-<tr><td class="credits"><input type="text" class="cr name"></input></td><td class="credits"><input type="text" class="cr value"></input></td></tr>
-<tr><td class="credits"><input type="text" class="cr name"></input></td><td class="credits"><input type="text" class="cr value"></input></td></tr>
-<tr><td class="credits"><input type="text" class="cr name"></input></td><td class="credits"><input type="text" class="cr value"></input></td></tr>
-<tr id="totals"><td class="credits" >Sum</td><td class="credits currency" id="sum">-</input></td></tr>
-</tbody>
-</table>
-{{/transaction}}
-
-<p style="clear:both">Attachments:</p>
-{{#a}}
-<p><a href="../../{{_id}}/{{key}}">{{key}}</a></p>
-{{/a}}
-
-<p style="clear:both">
-<button class="btn btn-primary" type="submit">Save</button>
-<button class="btn" type="reset">Reset</button>
-<button class="btn btn-danger" id="delete">Delete</button>
-</p>
-<p><span id="status"></span></p>
-
-</form>
-
-</div>
-
-<div class="footer">
-    <ul>
-        <li>Sharebill</li>
-        <li><a href="http://bitbucket.org/maghoff/sharebill">Source code</a></li>
-        <li><a href="http://bitbucket.org/maghoff/sharebill/issues">Report an issue</a></li>
-    </ul>
-</div>
-
+	<h1>Post</h1>
+	<div id="post"></div>
+	<div class="footer">
+		<ul>
+			<li>Sharebill</li>
+			<li><a href="http://bitbucket.org/maghoff/sharebill">Source code</a></li>
+			<li><a href="http://bitbucket.org/maghoff/sharebill/issues">Report an issue</a></li>
+		</ul>
+	</div>
+	<script src="<%cdn_base%>browserify.sum-<%browserify_js_sum%>.js"></script>
+	<script>
+		(function () {
+			var instanceConfig = require('./instance-config')(early_xhrs.instance_config);
+			require('./post-editor')(document.getElementById("post"), {{{document}}}, instanceConfig);
+		}());
+	</script>
 </body>
-
 </html>

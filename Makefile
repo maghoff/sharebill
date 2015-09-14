@@ -26,6 +26,7 @@ BROWSERIFY_MODULES= \
 	src/freeform.js \
 	src/instance-config.js \
 	src/moment-config.js \
+	src/post-editor.js \
 	src/recent.js \
 	src/sheet.js \
 	src/toMixedNumber.js
@@ -102,9 +103,11 @@ node_modules: package.json
 
 .intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules Makefile
 	./node_modules/.bin/browserify \
-		-r './src/instance-config:./instance-config' \
 		-r './src/balances:./balances' \
-		-r './src/recent:./recent' \
 		-r './src/entry-buttons:./entry-buttons' \
+		-r './src/instance-config:./instance-config' \
+		-r './src/post-editor:./post-editor' \
+		-r './src/recent:./recent' \
+		-r 'react' \
 		src/moment-config.js \
 		-o $@

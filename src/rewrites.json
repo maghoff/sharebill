@@ -20,6 +20,10 @@
 		"to": "../../:pid",
 		"method": "PUT"
 	}, {
+		"from": "post/:pid",
+		"to": "../../:pid",
+		"method": "DELETE"
+	}, {
 		"from": "balances",
 		"to": "_view/balances",
 		"query": { "group": "true", "reduce": "true" }

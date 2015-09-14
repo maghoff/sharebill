@@ -23,11 +23,14 @@ var Sheet = React.createClass({
 
 		this.setState({ saving: true });
 
-		var document = this.refs.entryForm.stateAsDocument();
+		var doc = this.refs.entryForm.stateAsDocument();
+		doc._id = this.state.id;
+		doc._rev = this.state.rev;
+
 		request.put({
-			uri: "post/" + document._id,
+			uri: "post/" + doc._id,
 			json: true,
-			body: document
+			body: doc
 		}, function (err, xhr, body) {
 			if (err) {
 				this.setState({ saving: false, error: err.toString() });
@@ -37,12 +40,12 @@ var Sheet = React.createClass({
 				this.setState({ saving: false, error: body.reason });
 				return;
 			}
-			/*this.setState({
+			this.setState({
 				saving: false,
-				_id: body.id,
-				_rev: body.rev
-			});*/
-			this.props.deleteMe();
+				id: body.id,
+				rev: body.rev
+			});
+			this.props.didSave();
 		}.bind(this));
 	},
 	focus: function () {

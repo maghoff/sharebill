@@ -98,6 +98,7 @@ var EntrySheets = React.createClass({
 						type: sheet.type,
 						document: sheet.entry,
 						deleteMe: deleteCallback,
+						didSave: deleteCallback,
 						instanceConfig: this.props.instanceConfig
 					}
 				);
