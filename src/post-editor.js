@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var request = require('browser-request');
 var FreeformEntry = require('./freeform');
 
@@ -171,3 +171,4 @@ function initPostEditor(domNode, doc, instanceConfig) {
 }
 
 module.exports = initPostEditor;
+module.exports.PostEditor = PostEditor;

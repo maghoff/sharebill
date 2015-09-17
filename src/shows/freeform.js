@@ -4,5 +4,19 @@ function(doc, req) {
 	// !json template.freeform
 	var Mustache = require('vendor/couchapp/lib/mustache');
 
-	return Mustache.to_html(template.freeform, { document: JSON.stringify(doc) });
+	var React = require('react/addons');
+	var PostEditor = require('lib/post-editor').PostEditor;
+
+	var post = React.renderToString(
+		React.createElement(
+			PostEditor, {
+				document: doc,
+				deleteMe: function () {},
+				didSave: function () {},
+				instanceConfig: { isReady: function () { return false; } }
+			}
+		)
+	);
+
+	return Mustache.to_html(template.freeform, { document: JSON.stringify(doc), form: post });
 }

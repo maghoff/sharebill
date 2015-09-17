@@ -31,18 +31,46 @@ BROWSERIFY_MODULES= \
 	src/sheet.js \
 	src/toMixedNumber.js
 
+SERVER_RENDERING_TRGS= \
+	release/react/addons.js \
+	release/moment.js \
+	release/browser-request.js \
+	release/lib/views/lib/schemeNumber.js \
+	release/lib/views/lib/biginteger.js \
+	$(BROWSERIFY_MODULES:src/%=release/lib/%)
+
 CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/local.css
 
 FILES_FROM_COPY_DIRS=$(shell bash -c "find src/{$(COPY_DIRS)}")
 TRGS_FROM_COPY_DIRS=$(FILES_FROM_COPY_DIRS:src/%=%)
 SRCS=$(TRGS_FROM_COPY_DIRS) $(COPY_FILES)
-TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%)
+TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%) $(SERVER_RENDERING_TRGS)
 
 release: $(TRGS)
 
 release/%: src/%
 	mkdir -p `dirname $@`
 	if [ ! -d $< ] ; then cp $< $@ ; fi
+
+release/react/addons.js: node_modules/react/dist/react-with-addons.min.js
+	mkdir -p `dirname $@`
+	cp $< $@
+
+release/moment.js: node_modules/moment/min/moment-with-locales.js
+	mkdir -p `dirname $@`
+	cp $< $@
+
+release/browser-request.js:
+	mkdir -p `dirname $@`
+	touch $@
+
+release/lib/views/lib/%: src/views/lib/%
+	mkdir -p `dirname $@`
+	uglifyjs -nc --unsafe -o $@ $<
+
+release/lib/%.js: src/%.js
+	mkdir -p `dirname $@`
+	uglifyjs -nc --unsafe -o $@ $<
 
 clean:
 	rm -rf release .intermediate
@@ -101,7 +129,7 @@ node_modules: package.json
 	npm install
 	touch node_modules
 
-.intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules Makefile
+.intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules
 	./node_modules/.bin/browserify \
 		-r './src/balances:./balances' \
 		-r './src/entry-buttons:./entry-buttons' \
