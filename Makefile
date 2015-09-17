@@ -1,7 +1,7 @@
 COPY_DIRS=views,lists,shows,evently,vendor/couchapp/lib
 COPY_FILES=_id couchapp.json language validate_doc_update.js .couchapprc rewrites.json
 
-HTML_FILES=_attachments/index.html _attachments/posts.html template/freeform.html template/readonlypost.html template/user.html
+HTML_FILES=_attachments/index.html template/freeform.html template/readonlypost.html template/user.html
 HTML_DEPS=.intermediate/_attachments/all.js .intermediate/_attachments/style/all.css .intermediate/_attachments/browserify.js
 HTML_DEP_SUM_FILES=$(HTML_DEPS:.intermediate/%=.intermediate/%.sum)
 
