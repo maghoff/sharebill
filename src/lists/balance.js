@@ -1,6 +1,6 @@
 function (head, req) {
 	var SchemeNumber = require("views/lib/schemeNumber").SchemeNumber;
-	var fractionParser = require("views/lib/fractionParser").fractionParser;
+	var fractionParser = require("views/lib/fractionParser");
 
 	var POS = new SchemeNumber("1"), NEG = new SchemeNumber("-1");
 

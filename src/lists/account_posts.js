@@ -2,7 +2,7 @@ function (head, req) {
 	// !json template.readonlypost
 
 	var SchemeNumber = require("views/lib/schemeNumber").SchemeNumber;
-	var fractionParser = require("views/lib/fractionParser").fractionParser;
+	var fractionParser = require("views/lib/fractionParser");
 
 	function parseRFC3339(dString) {
 		var regexp = /(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)(T)?(\d\d)(:)?(\d\d)(:)?(\d\d)(\.\d+)?(Z|([+-])(\d\d)(:)?(\d\d))/;
