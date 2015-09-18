@@ -1,21 +1,13 @@
-COPY_DIRS=views,lists,shows,evently,vendor/couchapp/lib
+COPY_DIRS=views,lists,shows,vendor
 COPY_FILES=_id couchapp.json language validate_doc_update.js .couchapprc rewrites.json
 
 HTML_FILES=_attachments/index.html template/freeform.html template/readonlypost.html template/account.html
-HTML_DEPS=.intermediate/_attachments/all.js .intermediate/_attachments/style/all.css .intermediate/_attachments/browserify.js
+HTML_DEPS=.intermediate/_attachments/style/all.css .intermediate/_attachments/browserify.js
 HTML_DEP_SUM_FILES=$(HTML_DEPS:.intermediate/%=.intermediate/%.sum)
 
 IMAGE_FILES=_attachments/style/Feed-icon.svg _attachments/style/ornate_13.png _attachments/img//glyphicons-halflings-white.png _attachments/img//glyphicons-halflings.png
 IMAGE_SUM_SRCS=$(IMAGE_FILES)
 IMAGE_SUM_FILES=$(IMAGE_SUM_SRCS:%=.intermediate/%.sum)
-
-JQUERY=vendor/jquery/_attachments/jquery-1.7.2.js
-BOOTSTRAP_FILES=bootstrap.min bootstrap-typeahead
-BOOTSTRAP=$(BOOTSTRAP_FILES:%=vendor/bootstrap/_attachments/js/%.js)
-COUCHAPP_FILES=sha1 json2 jquery.couch jquery.couch.app jquery.couch.app.util jquery.mustache jquery.evently
-COUCHAPP=$(COUCHAPP_FILES:%=vendor/couchapp/_attachments/%.js)
-LOCAL=views/lib/biginteger.js views/lib/schemeNumber.js views/lib/fractionParser.js views/lib/sprintf-0.7-beta1.js calc.js toMixedNumber.js sharebill.js
-JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(REACT) $(LOCAL)
 
 BROWSERIFY_MODULES= \
 	src/account-balance.js \
@@ -103,10 +95,6 @@ release/%.html: src/%.mu.html .intermediate/html-dep-sums.json
 	mkdir -p `dirname $@`
 	pystache "`cat $<`" .intermediate/html-dep-sums.json > $@
 
-
-.intermediate/_attachments/all.js: $(JS_FILES:%.js=.intermediate/%.min.js)
-	mkdir -p `dirname $@`
-	cat $(JS_FILES:%.js=.intermediate/%.min.js) > $@
 
 .intermediate/_attachments/browserify.js: .intermediate/browserify.min.js
 	mkdir -p `dirname $@`
