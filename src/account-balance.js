@@ -50,7 +50,7 @@ var AccountBalance = React.createClass({
 
 function format(instanceConfig, value) {
 	if (!value) return "";
-	if (!instanceConfig.isReady()) return value.toFixed(2);
+	if (!instanceConfig.isReady()) return "";
 	return instanceConfig.formatCurrencyShort(value);
 }
 

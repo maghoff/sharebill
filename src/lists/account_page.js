@@ -6,6 +6,7 @@ function (head, req) {
 	var React = require('react/addons');
 	var AccountBalance = require('lib/account-balance').AccountBalance;
 	var PostsTable = require('lib/posts-table');
+	var SchemeNumber = require('lib/views/lib/schemeNumber').SchemeNumber;
 	var fractionParser = require('lib/views/lib/fractionParser');
 
 	var row;
@@ -32,7 +33,7 @@ function (head, req) {
 			PostsTable,
 			{
 				posts: list,
-				format: function (value) { return value ? fractionParser(value).toFixed(0) : ""; }
+				format: function (value) { return value ? SchemeNumber.fn.floor(fractionParser(value)).toFixed(0) : ""; }
 			}
 		)
 	);
