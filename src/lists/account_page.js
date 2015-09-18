@@ -1,5 +1,5 @@
 function (head, req) {
-	// !json template.user
+	// !json template.account
 	var Mustache = require('vendor/couchapp/lib/mustache');
 
 	require('lib/moment-config');
@@ -44,7 +44,7 @@ function (head, req) {
         }
     });
 	return Mustache.to_html(
-		template.user,
+		template.account,
 		{
 			account: account,
 			balance: balance,
