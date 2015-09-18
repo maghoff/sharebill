@@ -56,7 +56,7 @@ release/react/addons.js: node_modules/react/dist/react-with-addons.min.js
 	mkdir -p `dirname $@`
 	cp $< $@
 
-release/moment.js: node_modules/moment/min/moment-with-locales.js
+release/moment.js: node_modules/moment/min/moment.min.js
 	mkdir -p `dirname $@`
 	cp $< $@
 
