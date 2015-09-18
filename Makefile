@@ -2,7 +2,7 @@ COPY_DIRS=views,lists,shows,vendor
 COPY_FILES=_id couchapp.json language validate_doc_update.js .couchapprc rewrites.json
 
 HTML_FILES=_attachments/index.html template/freeform.html template/readonlypost.html template/account.html
-HTML_DEPS=.intermediate/_attachments/style/all.css .intermediate/_attachments/browserify.js
+HTML_DEPS=.intermediate/_attachments/style/all.css .intermediate/_attachments/all.js
 HTML_DEP_SUM_FILES=$(HTML_DEPS:.intermediate/%=.intermediate/%.sum)
 
 IMAGE_FILES=_attachments/style/Feed-icon.svg _attachments/style/ornate_13.png _attachments/img//glyphicons-halflings-white.png _attachments/img//glyphicons-halflings.png
@@ -96,7 +96,7 @@ release/%.html: src/%.mu.html .intermediate/html-dep-sums.json
 	pystache "`cat $<`" .intermediate/html-dep-sums.json > $@
 
 
-.intermediate/_attachments/browserify.js: .intermediate/browserify.min.js
+.intermediate/_attachments/all.js: .intermediate/all.min.js
 	mkdir -p `dirname $@`
 	cp $< $@
 
@@ -121,7 +121,7 @@ node_modules: package.json
 	npm install
 	touch node_modules
 
-.intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules
+.intermediate/all.js: $(BROWSERIFY_MODULES) node_modules
 	./node_modules/.bin/browserify \
 		-r './src/account-balance:./account-balance' \
 		-r './src/account-posts:./account-posts' \
