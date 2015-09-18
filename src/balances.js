@@ -11,7 +11,7 @@ var BalanceRow = React.createClass({
 
 		return React.createElement('tr', { className: "accounts" },
 			React.createElement('td', null,
-				React.createElement('a', { href: "user/" + this.props.user }, this.props.user)
+				React.createElement('a', { href: "account/" + this.props.user }, this.props.user)
 			),
 			React.createElement('td', { className: "debits currency" }, debits),
 			React.createElement('td', { className: "credits currency" }, credits)

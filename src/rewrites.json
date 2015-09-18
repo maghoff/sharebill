@@ -8,10 +8,6 @@
 
 	"Smart rewrites",
 	{
-		"from": "user/:uid",
-		"to": "_show/userpage",
-		"query": { "user": ":uid" }
-	}, {
 		"from": "post/:pid",
 		"to": "_show/freeform/:pid",
 		"method": "GET"
@@ -23,6 +19,58 @@
 		"from": "post/:pid",
 		"to": "../../:pid",
 		"method": "DELETE"
+	}, {
+		"from": "account/:uid",
+		"to": "_list/account_page/user",
+		"query": {
+			"uid": ":uid",
+			"startkey": [ ":uid", {} ],
+			"endkey": [ ":uid" ],
+			"descending": "true",
+			"limit": "10"
+		}
+	}, {
+		"from": "account/:uid/posts",
+		"to": "_list/account_posts/user",
+		"query": {
+			"startkey": [ ":uid", {} ],
+			"endkey": [ ":uid" ],
+			"descending": "true",
+			"limit": "10"
+		}
+	}, {
+		"from": "account/:uid/debit",
+		"to": "_list/balance/totals",
+		"query": {
+			"group": "true",
+			"startkey": [ ":uid", "debets" ],
+			"endkey": [ ":uid", "debets", {} ]
+		}
+	}, {
+		"from": "account/:uid/credit",
+		"to": "_list/balance/totals",
+		"query": {
+			"group": "true",
+			"startkey": [ ":uid", "credits" ],
+			"endkey": [ ":uid", "credits", {} ]
+		}
+	}, {
+		"from": "account/:uid/balance",
+		"to": "_list/balance/totals",
+		"query": {
+			"group": "true",
+			"startkey": [ ":uid", "credits" ],
+			"endkey": [ ":uid", "debets" ]
+		}
+	}, {
+		"from": "account/:uid/totals",
+		"to": "_view/totals",
+		"query": {
+			"reduce": "true",
+			"group": "true",
+			"startkey": [ ":uid" ],
+			"endkey": [ ":uid", {} ]
+		}
 	}, {
 		"from": "balances",
 		"to": "_view/balances",

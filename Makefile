@@ -18,7 +18,9 @@ LOCAL=views/lib/biginteger.js views/lib/schemeNumber.js views/lib/fractionParser
 JS_FILES=config.js $(JQUERY) $(BOOTSTRAP) $(COUCHAPP) $(REACT) $(LOCAL)
 
 BROWSERIFY_MODULES= \
+	src/account-balance.js \
 	src/account-input-table.js \
+	src/account-posts.js \
 	src/balances.js \
 	src/calc.js \
 	src/complete_early_xhr.js \
@@ -27,6 +29,7 @@ BROWSERIFY_MODULES= \
 	src/instance-config.js \
 	src/moment-config.js \
 	src/post-editor.js \
+	src/posts-table.js \
 	src/recent.js \
 	src/sheet.js \
 	src/toMixedNumber.js
@@ -35,6 +38,7 @@ SERVER_RENDERING_TRGS= \
 	release/react/addons.js \
 	release/moment.js \
 	release/browser-request.js \
+	release/lib/views/lib/fractionParser.js \
 	release/lib/views/lib/schemeNumber.js \
 	release/lib/views/lib/biginteger.js \
 	$(BROWSERIFY_MODULES:src/%=release/lib/%)
@@ -131,6 +135,8 @@ node_modules: package.json
 
 .intermediate/browserify.js: $(BROWSERIFY_MODULES) node_modules
 	./node_modules/.bin/browserify \
+		-r './src/account-balance:./account-balance' \
+		-r './src/account-posts:./account-posts' \
 		-r './src/balances:./balances' \
 		-r './src/entry-buttons:./entry-buttons' \
 		-r './src/instance-config:./instance-config' \
