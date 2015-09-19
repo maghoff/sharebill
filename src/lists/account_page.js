@@ -2,7 +2,29 @@ function (head, req) {
 	// !json template.account
 	var Mustache = require('vendor/couchapp/lib/mustache');
 
+	var moment = require('moment');
 	require('lib/moment-config');
+
+	// Avoid rendering relative times on the server. The
+	// resulting html may be cached for a long time.
+	moment.locale('lokale', {
+		relativeTime: {
+			future: "",
+			past:   "",
+			s:  "",
+			m:  "",
+			mm: "",
+			h:  "",
+			hh: "",
+			d:  "",
+			dd: "",
+			M:  "",
+			MM: "",
+			y:  "",
+			yy: ""
+		}
+	});
+
 	var React = require('react/addons');
 	var AccountBalance = require('lib/account-balance').AccountBalance;
 	var PostsTable = require('lib/posts-table');
