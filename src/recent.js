@@ -1,4 +1,5 @@
 var React = require('react');
+var request = require('browser-request');
 var completeEarlyXHR = require('./complete_early_xhr');
 var fractionParser = require('./views/lib/fractionParser');
 var PostsTable = require('./posts-table');
@@ -57,17 +58,30 @@ RecentComponent.prototype.updateTimestamps = function () {
 	}.bind(this), msToNextUpdate);
 }
 
-module.exports = function (domNode, xhr, instanceConfig) {
-	var recentComponent = new RecentComponent(domNode, instanceConfig);
+function Recent(domNode, url, xhr, instanceConfig) {
+	this.url = url;
+	this.component = new RecentComponent(domNode, instanceConfig);
 
-	completeEarlyXHR(xhr, function (err, response, body) {
-		if (err) {
-			console.error(err);
-			return;
-		}
+	completeEarlyXHR(xhr, this.handleResponse.bind(this));
+}
 
-		body.rows.reverse();
+Recent.prototype.handleResponse = function (err, response, body) {
+	if (err) {
+		console.error(err);
+		return;
+	}
 
-		recentComponent.setData(body.rows);
-	});
+	this.updateSeq = body.update_seq;
+
+	body.rows.reverse();
+
+	this.component.setData(body.rows);
+};
+
+Recent.prototype.poll = function () {
+	request.get({ uri: this.url, json: true }, this.handleResponse.bind(this));
+};
+
+module.exports = function (domNode, url, xhr, instanceConfig) {
+	return new Recent(domNode, url, xhr, instanceConfig);
 };

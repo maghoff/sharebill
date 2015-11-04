@@ -74,14 +74,17 @@
 	}, {
 		"from": "balances",
 		"to": "_view/balances",
-		"query": { "group": "true", "reduce": "true" }
+		"query": { "group": "true", "reduce": "true", "update_seq": "true" }
 	}, {
 		"from": "recent",
 		"to": "_view/all",
-		"query": { "limit": "10", "descending": "true" }
+		"query": { "limit": "10", "descending": "true", "update_seq": "true" }
 	}, {
 		"from": "instance_config",
 		"to": "../../instance_config"
+	}, {
+		"from": "changes",
+		"to": "../../_changes"
 	},
 
 

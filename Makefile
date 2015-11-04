@@ -15,6 +15,7 @@ BROWSERIFY_MODULES= \
 	src/account-posts.js \
 	src/balances.js \
 	src/calc.js \
+	src/changes.js \
 	src/complete_early_xhr.js \
 	src/entry-buttons.js \
 	src/freeform.js \
@@ -130,6 +131,7 @@ node_modules: package.json
 		-r './src/instance-config:./instance-config' \
 		-r './src/post-editor:./post-editor' \
 		-r './src/recent:./recent' \
+		-r './src/changes:./changes' \
 		-r 'react' \
 		src/moment-config.js \
 		-o $@

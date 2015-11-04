@@ -1,4 +1,5 @@
 var React = require('react');
+var request = require('browser-request');
 var completeEarlyXHR = require('./complete_early_xhr');
 var fractionParser = require('./views/lib/fractionParser.js');
 
@@ -47,23 +48,37 @@ var BalancesTable = React.createClass({
 	}
 });
 
-module.exports = function (domNode, xhr, instanceConfig) {
-	var balances = React.render(React.createElement(BalancesTable, null), domNode);
+function Balances(domNode, url, earlyXhr, instanceConfig) {
+	this.url = url;
 
-	completeEarlyXHR(xhr, function (err, response, body) {
-		if (err) {
-			console.error(err);
-			return;
-		}
+	this.component = React.render(React.createElement(BalancesTable, null), domNode);
 
-		balances.setState({ balances: body.rows });
-	});
+	completeEarlyXHR(earlyXhr, this.handleResponse.bind(this));
 
 	instanceConfig.whenReady(function () {
-		balances.setState({
+		this.component.setState({
 			format: function (number) {
 				return instanceConfig.formatCurrencyShort(fractionParser(number));
 			}
 		});
-	});
+	}.bind(this));
+}
+
+Balances.prototype.handleResponse = function (err, response, body) {
+	if (err) {
+		console.error(err);
+		return;
+	}
+
+	this.updateSeq = body.update_seq;
+
+	this.component.setState({ balances: body.rows });
+};
+
+Balances.prototype.poll = function () {
+	request.get({ uri: this.url, json: true }, this.handleResponse.bind(this));
+};
+
+module.exports = function (domNode, url, xhr, instanceConfig) {
+	return new Balances(domNode, url, xhr, instanceConfig);
 };
