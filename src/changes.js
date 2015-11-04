@@ -19,7 +19,7 @@ function Changes(components) {
 		else {
 			outstanding++;
 			component.updateSeqListener = function (updateSeq) {
-				lastSeq = Math.min(lastSeq, component.updateSeq);
+				lastSeq = Math.min(lastSeq, updateSeq);
 				outstanding--;
 				maybePoll();
 			}
