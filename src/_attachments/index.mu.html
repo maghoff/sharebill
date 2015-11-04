@@ -50,14 +50,7 @@
 			var balances = require('./balances')(document.getElementById("balances"), "balances", early_xhrs.balances, instance_config);
 			var recent = require('./recent')(document.getElementById("recent"), "recent", early_xhrs.recent, instance_config);
 			require('./entry-buttons')(document.getElementById("entry-buttons"), document.getElementById("entry"), instance_config);
-			var changes = new (require('./changes'))();
-
-			changes.listen(balances.poll.bind(balances));
-			changes.listen(recent.poll.bind(recent));
-
-			setTimeout(function () {
-				changes.initPoll(Math.min(balances.updateSeq, recent.updateSeq));
-			}, 1000);
+			var changes = new (require('./changes'))([balances, recent]);
 		}());
 	</script>
 </body>

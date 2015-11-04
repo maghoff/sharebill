@@ -1,9 +1,32 @@
 var INITIAL_BACKOFF_INTERVAL = 500;
 
-function Changes() {
+function Changes(components) {
 	this.lastSeq = null;
 	this.backoffInterval = INITIAL_BACKOFF_INTERVAL;
-	this.listeners = [];
+	this.listeners = components.map(function (x) { return x.poll.bind(x); });
+
+	var lastSeq = Infinity, outstanding = 0;
+
+	var maybePoll = function () {
+		if (outstanding === 0) {
+			this.lastSeq = lastSeq;
+			this.poll();
+		}
+	}.bind(this);
+
+	components.forEach(function (component) {
+		if (component.updateSeq) lastSeq = Math.min(lastSeq, component.updateSeq);
+		else {
+			outstanding++;
+			component.updateSeqListener = function (updateSeq) {
+				lastSeq = Math.min(lastSeq, component.updateSeq);
+				outstanding--;
+				maybePoll();
+			}
+		}
+	});
+
+	maybePoll();
 }
 
 Changes.prototype.listen = function (listener) {
@@ -20,7 +43,6 @@ Changes.prototype.loadHandler = function () {
 		var changes = JSON.parse(this.xhr.responseText);
 		this.lastSeq = changes.last_seq;
 		if (changes.results.length) {
-			console.log("Changes have been found,", this.lastSeq);
 			this.listeners.forEach(function (listener) {
 				try {
 					listener();

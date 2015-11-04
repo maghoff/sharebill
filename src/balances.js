@@ -53,7 +53,10 @@ function Balances(domNode, url, earlyXhr, instanceConfig) {
 
 	this.component = React.render(React.createElement(BalancesTable, null), domNode);
 
-	completeEarlyXHR(earlyXhr, this.handleResponse.bind(this));
+	completeEarlyXHR(earlyXhr, function (err, response, body) {
+		this.handleResponse(err, response, body);
+		if (this.updateSeqListener) this.updateSeqListener(this.updateSeq);
+	}.bind(this));
 
 	instanceConfig.whenReady(function () {
 		this.component.setState({
