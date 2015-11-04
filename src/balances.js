@@ -73,7 +73,7 @@ Balances.prototype.handleResponse = function (err, response, body) {
 		return;
 	}
 
-	this.updateSeq = body.update_seq;
+	this.updateSeq = body.update_seq || Infinity;
 
 	this.component.setState({ balances: body.rows });
 };
