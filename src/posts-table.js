@@ -33,22 +33,28 @@ var PostsTable = React.createClass({
 					creditAccounts.map(function (account) { return React.createElement('th', { key: account }, account); })
 				)
 			),
-			React.createElement('tbody', null,
+			React.createElement(React.addons.CSSTransitionGroup, { transitionName: "posts-row", component: "tbody" },
 				this.props.posts.map(function (post) {
 					var timestamp = moment(post.value.meta.timestamp);
-					var date = React.createElement('td', { key: "date", title: timestamp.calendar(), className: "date" }, timestamp.fromNow());
+					var date = React.createElement('td', { key: "date", title: timestamp.calendar(), className: "date" },
+						React.createElement('div', null, timestamp.fromNow()));
+
 					var description = React.createElement('td', { key: "description" },
-						React.createElement('a', { href: "post/"+post.id }, post.value.meta.description));
+						React.createElement('div', null,
+							React.createElement('a', { href: "post/"+post.id }, post.value.meta.description)));
+
 					var debits = debitAccounts.map(function (account) {
 						return React.createElement('td',
 							{ key: "debit-" + account, className: "debits currency" },
-							this.props.format(post.value.transaction.debets[account]));
+							React.createElement('div', null, this.props.format(post.value.transaction.debets[account])));
 					}.bind(this));
+
 					var credits = creditAccounts.map(function (account) {
 						return React.createElement('td',
 							{ key: "credit-" + account, className: "credits currency" },
-							this.props.format(post.value.transaction.credits[account]));
+							React.createElement('div', null, this.props.format(post.value.transaction.credits[account])));
 					}.bind(this));
+
 					return React.createElement('tr', { key: post.id }, [date, description].concat(debits).concat(credits));
 				}.bind(this))
 			)

@@ -10,11 +10,11 @@ function format(instanceConfig, number) {
 	return instanceConfig.formatCurrencyShort(fractionParser(number));
 }
 
-function RecentComponent(domNode, instanceConfig) {
+function RecentComponent(domNode, data, instanceConfig) {
 	if (!(this instanceof RecentComponent)) return new RecentComponent(domNode, instanceConfig);
 
 	this.domNode = domNode;
-	this.data = [];
+	this.data = data;
 	this.instanceConfig = instanceConfig;
 	this.pendingUpdate = null;
 
@@ -59,8 +59,9 @@ RecentComponent.prototype.updateTimestamps = function () {
 }
 
 function Recent(domNode, url, earlyXhr, instanceConfig) {
+	this.domNode = domNode;
 	this.url = url;
-	this.component = new RecentComponent(domNode, instanceConfig);
+	this.instanceConfig = instanceConfig;
 
 	completeEarlyXHR(earlyXhr, function (err, response, body) {
 		this.handleResponse(err, response, body);
@@ -78,7 +79,8 @@ Recent.prototype.handleResponse = function (err, response, body) {
 
 	body.rows.reverse();
 
-	this.component.setData(body.rows);
+	if (this.component) this.component.setData(body.rows);
+	else this.component = new RecentComponent(this.domNode, body.rows, this.instanceConfig);
 };
 
 Recent.prototype.poll = function () {

@@ -158,3 +158,40 @@ input.currency {
 	max-height: 0px;
 	transition: all 500ms ease-out;
 }
+
+.accounts td {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.accounts div {
+	box-sizing: border-box;
+	height: 20px;
+	line-height: 20px;
+	max-width: 400px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Surrogate transitions to communicate with React */
+.posts-row-enter, .posts-row-leave { left: 0px; }
+.posts-row-enter-active, .posts-row-leave-active { left: 10px; transition: left 600ms ease-in; }
+
+.posts-row-enter td>div {
+	height: 0px;
+	line-height: 0px;
+}
+.posts-row-enter-active td>div {
+	transition: all 100ms ease-out;
+	height: 20px;
+	line-height: 20px;
+}
+.posts-row-leave td>div {
+	height: 20px;
+	line-height: 20px;
+}
+.posts-row-leave-active td>div {
+	transition: all 100ms ease-out;
+	height: 0px;
+	line-height: 0px;
+}
