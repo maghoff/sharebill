@@ -5,7 +5,11 @@ HTML_FILES=_attachments/index.html template/freeform.html template/readonlypost.
 HTML_DEPS=.intermediate/_attachments/style/all.css .intermediate/_attachments/all.js
 HTML_DEP_SUM_FILES=$(HTML_DEPS:.intermediate/%=.intermediate/%.sum)
 
-IMAGE_FILES=_attachments/style/Feed-icon.svg _attachments/style/ornate_13.png _attachments/img//glyphicons-halflings-white.png _attachments/img//glyphicons-halflings.png
+IMAGE_FILES= \
+	_attachments/style/Feed-icon.svg \
+	_attachments/style/ornate_13.png \
+	_attachments/img//glyphicons-halflings-white.png \
+	_attachments/img//glyphicons-halflings.png
 IMAGE_SUM_SRCS=$(IMAGE_FILES)
 IMAGE_SUM_FILES=$(IMAGE_SUM_SRCS:%=.intermediate/%.sum)
 
