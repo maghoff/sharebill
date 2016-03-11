@@ -1,9 +1,12 @@
+var serverSide = (typeof toJSON !== 'undefined');
+
 var React = require('react/addons');
 var moment = require('moment');
 var SchemeNumber = require('./views/lib/schemeNumber').SchemeNumber;
-var evaluate = require('./calc');
 var toMixedNumber = require('./toMixedNumber');
 var AccountInputTable = require('./account-input-table');
+
+if (!serverSide) var evaluate = require('./calc');
 
 var RFC3339 = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z$/;
 

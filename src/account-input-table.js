@@ -1,7 +1,10 @@
+var serverSide = (typeof toJSON !== 'undefined');
+
 var React = require('react/addons');
-var evaluate = require('./calc');
 var SchemeNumber = require('./views/lib/schemeNumber').SchemeNumber;
 var toMixedNumber = require('./toMixedNumber');
+
+if (!serverSide) var evaluate = require('./calc');
 
 function formatSum(sum) {
 	var denom = SchemeNumber.fn.denominator(sum);
