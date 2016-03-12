@@ -1,5 +1,5 @@
 COPY_DIRS=views,lists,shows,vendor
-COPY_FILES=_id couchapp.json language validate_doc_update.js .couchapprc rewrites.json
+COPY_FILES=couchapp.json language validate_doc_update.js .couchapprc rewrites.json
 
 HTML_FILES=template/index.html template/freeform.html template/readonlypost.html template/account.html
 HTML_DEPS=.intermediate/_attachments/style/all.css .intermediate/_attachments/all.js
