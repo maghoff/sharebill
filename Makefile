@@ -47,7 +47,7 @@ TRGS_FROM_COPY_DIRS=$(FILES_FROM_COPY_DIRS:src/%=%)
 SRCS=$(TRGS_FROM_COPY_DIRS) $(COPY_FILES)
 TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%) $(SERVER_RENDERING_TRGS)
 
-sharebill.json: release
+sharebill.json: $(TRGS) release
 	couchapp push --export release > sharebill.json
 
 release: $(TRGS)
