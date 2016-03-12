@@ -7,7 +7,7 @@ function InstanceConfig(config) {
 }
 
 InstanceConfig.prototype.formatCurrencyShort = function (fraction) {
-	return fraction.toFixed(0);
+	return fraction.toFixed(this.config.currency_formatting.short.decimals);
 };
 
 InstanceConfig.prototype.formatCurrencyShortOrEmpty = function (fraction) {
