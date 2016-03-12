@@ -1,38 +1,13 @@
-var completeEarlyXHR = require('./complete_early_xhr');
+var fractionParser = require('./views/lib/fractionParser');
 var SchemeNumber = require('./views/lib/schemeNumber').SchemeNumber;
-var sprintf = require('sprintf-js').sprintf;
 
-function InstanceConfig() {
-	this.config = null;
-	this.listeners = [];
+function InstanceConfig(config) {
+	if (!(this instanceof InstanceConfig)) return new InstanceConfig(config);
+	this.config = config;
 }
 
-InstanceConfig.prototype.setConfig = function (config) {
-	this.config = config;
-	this.listeners.forEach(function (listener) { listener() });
-};
-
-InstanceConfig.prototype.isReady = function () {
-	return !!this.config;
-};
-
-InstanceConfig.prototype.whenReady = function (listener) {
-	this.listeners.push(listener);
-	if (this.isReady()) listener();
-};
-
 InstanceConfig.prototype.formatCurrencyShort = function (fraction) {
-	var formatString = this.config.currency_formatting.short;
-
-	var formatData = {
-		decimal: SchemeNumber.fn.inexact(fraction) + 0,
-		numerator: SchemeNumber.fn.numerator(fraction) + 0,
-		denominator: SchemeNumber.fn.denominator(fraction) + 0,
-		wholepart: SchemeNumber.fn.floor(fraction) + 0,
-		reducedNumerator: SchemeNumber.fn.mod(SchemeNumber.fn.numerator(fraction), SchemeNumber.fn.denominator(fraction)) + 0
-	};
-
-	return sprintf(formatString, formatData);
+	return fraction.toFixed(0);
 };
 
 InstanceConfig.prototype.formatCurrencyShortOrEmpty = function (fraction) {
@@ -50,25 +25,4 @@ InstanceConfig.prototype.currencyPosition = function () {
 	return this.config.currency_formatting.currency_position;
 };
 
-module.exports = function (xhr) {
-	var instanceConfig = new InstanceConfig();
-
-	completeEarlyXHR(xhr, function (err, httpResponse, body) {
-		if (err) {
-			console.warn("This sharebill instance lacks instance_config -- it should be configured! Falling back on default config");
-
-			instanceConfig.setConfig({
-				currency_formatting: {
-					short: "%(wholepart)d",
-					currency: "kr",
-					currency_position: "suffix"
-				}
-			});
-			return;
-		}
-
-		instanceConfig.setConfig(body);
-	});
-
-	return instanceConfig;
-}
+module.exports = InstanceConfig;

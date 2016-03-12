@@ -1,3 +1,4 @@
+{{=<% %>=}}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +7,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script>
 		var early_xhrs = {
-			instance_config: "instance_config",
 			balances: "balances",
 			recent: "recent"
 		};
@@ -18,7 +18,7 @@
 			early_xhrs[x].send();
 		}
 	</script>
-	<link rel="stylesheet" href="{{cdn_base}}style/all.sum-{{all_css_sum}}.css" type="text/css">
+	<link rel="stylesheet" href="<%cdn_base%>style/all.sum-<%all_css_sum%>.css" type="text/css">
 </head>
 <body>
 	<h1>Sharebill</h1>
@@ -43,13 +43,13 @@
 			<li><a href="http://bitbucket.org/maghoff/sharebill/issues">Report an issue</a></li>
 		</ul>
 	</div>
-	<script src="{{cdn_base}}all.sum-{{all_js_sum}}.js"></script>
+	<script src="<%cdn_base%>all.sum-<%all_js_sum%>.js"></script>
 	<script>
 		(function() {
-			var instance_config = require('./instance-config')(early_xhrs.instance_config);
-			var balances = require('./balances')(document.getElementById("balances"), "balances", early_xhrs.balances, instance_config);
-			var recent = require('./recent')(document.getElementById("recent"), "recent", early_xhrs.recent, instance_config);
-			require('./entry-buttons')(document.getElementById("entry-buttons"), document.getElementById("entry"), instance_config);
+			var instanceConfig = require('./instance-config')({{{instance_config}}});
+			var balances = require('./balances')(document.getElementById("balances"), "balances", early_xhrs.balances, instanceConfig);
+			var recent = require('./recent')(document.getElementById("recent"), "recent", early_xhrs.recent, instanceConfig);
+			require('./entry-buttons')(document.getElementById("entry-buttons"), document.getElementById("entry"), instanceConfig);
 			var changes = new (require('./changes'))([balances, recent]);
 		}());
 	</script>

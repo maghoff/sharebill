@@ -154,20 +154,6 @@ function initPostEditor(domNode, doc, instanceConfig) {
 		),
 		domNode
 	);
-
-	instanceConfig.whenReady(function () {
-		React.render(
-			React.createElement(
-				PostEditor, {
-					document: doc,
-					deleteMe: function () {},
-					didSave: function () {},
-					instanceConfig: instanceConfig
-				}
-			),
-			domNode
-		);
-	});
 }
 
 module.exports = initPostEditor;

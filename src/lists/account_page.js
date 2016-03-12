@@ -71,7 +71,8 @@ function (head, req) {
 			account: account,
 			balance: balance,
 			posts: posts,
-			list: JSON.stringify(list)
+			list: JSON.stringify(list),
+			instance_config: JSON.stringify(this.instance_config)
 		}
 	);
 }

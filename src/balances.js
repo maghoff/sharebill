@@ -24,7 +24,6 @@ var BalancesTable = React.createClass({
 	getInitialState: function () {
 		return {
 			balances: [],
-			format: function () { return ''; }
 		};
 	},
 	render: function () {
@@ -32,7 +31,7 @@ var BalancesTable = React.createClass({
 			return balance.value !== "0";
 		}).map(function (balance) {
 			balance.user = balance.key;
-			balance.format = this.state.format;
+			balance.format = this.props.format;
 			return React.createElement(BalanceRow, balance);
 		}.bind(this));
 		return React.createElement('table', { className: "accounts" },
@@ -51,19 +50,18 @@ var BalancesTable = React.createClass({
 function Balances(domNode, url, earlyXhr, instanceConfig) {
 	this.url = url;
 
-	this.component = React.render(React.createElement(BalancesTable, null), domNode);
+	this.component = React.render(
+		React.createElement(BalancesTable, {
+			format: function (number) {
+				return instanceConfig.formatCurrencyShort(fractionParser(number));
+			}
+		}),
+		domNode
+	);
 
 	completeEarlyXHR(earlyXhr, function (err, response, body) {
 		this.handleResponse(err, response, body);
 		if (this.updateSeqListener) this.updateSeqListener(this.updateSeq);
-	}.bind(this));
-
-	instanceConfig.whenReady(function () {
-		this.component.setState({
-			format: function (number) {
-				return instanceConfig.formatCurrencyShort(fractionParser(number));
-			}
-		});
 	}.bind(this));
 }
 

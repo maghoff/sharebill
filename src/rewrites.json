@@ -1,13 +1,11 @@
 [
-	{
-		"from": "",
-		"to": "index.html",
-		"method": "GET"
-	},
-
-
 	"Smart rewrites",
 	{
+		"from": "",
+		"to": "_list/index/all",
+		"query": { "limit": "10", "descending": "true", "update_seq": "true" },
+		"method": "GET"
+	}, {
 		"from": "post/:pid",
 		"to": "_show/freeform/:pid",
 		"method": "GET"

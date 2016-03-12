@@ -7,7 +7,6 @@
     <base href="../">
 	<script>
 		var early_xhrs = {
-			instance_config: "instance_config",
 			balance: "account/{{account}}/totals"
 		};
 		for (var x in early_xhrs) {
@@ -47,7 +46,7 @@
 		(function () {
 			var list = {{{list}}};
 
-			var instanceConfig = require('./instance-config')(early_xhrs.instance_config);
+			var instanceConfig = require('./instance-config')({{{instance_config}}});
 			require('./account-balance')(document.getElementById('balance'), early_xhrs.balance, "{{account}}", instanceConfig);
 			require('./account-posts')(document.getElementById('posts'), list, instanceConfig);
 		}());

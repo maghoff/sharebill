@@ -50,7 +50,6 @@ var AccountBalance = React.createClass({
 
 function format(instanceConfig, value) {
 	if (!value) return "";
-	if (!instanceConfig.isReady()) return "";
 	return instanceConfig.formatCurrencyShort(value);
 }
 
@@ -68,10 +67,6 @@ function initAccountBalance(domNode, xhr, account, instanceConfig) {
 		data = { credits: "0", debets: "0" };
 		body.rows.forEach(function (row) { data[row.key[1]] = row.value; });
 
-		React.render(React.createElement(AccountBalance, { account: account, format: format.bind(this, instanceConfig), data: data }), domNode);
-	});
-
-	instanceConfig.whenReady(function () {
 		React.render(React.createElement(AccountBalance, { account: account, format: format.bind(this, instanceConfig), data: data }), domNode);
 	});
 };

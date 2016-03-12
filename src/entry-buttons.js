@@ -114,8 +114,4 @@ module.exports = function (buttons, target, instanceConfig) {
 		if (!ev.target.classList.contains('entry_link')) return;
 		entrySheets.addSheet(ev.target.getAttribute("data-type"));
 	});
-
-	if (!instanceConfig.isReady()) instanceConfig.whenReady(function () {
-		entrySheets.setState({});
-	});
 };

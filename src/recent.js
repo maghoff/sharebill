@@ -5,7 +5,6 @@ var fractionParser = require('./views/lib/fractionParser');
 var PostsTable = require('./posts-table');
 
 function format(instanceConfig, number) {
-	if (!instanceConfig.isReady()) return "";
 	if (number === undefined) return "";
 	return instanceConfig.formatCurrencyShort(fractionParser(number));
 }
@@ -19,7 +18,6 @@ function RecentComponent(domNode, data, instanceConfig) {
 	this.pendingUpdate = null;
 
 	this.render();
-	if (!this.instanceConfig.isReady()) this.instanceConfig.whenReady(this.render.bind(this));
 }
 
 RecentComponent.prototype.setData = function (data) {
