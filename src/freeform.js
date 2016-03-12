@@ -147,7 +147,8 @@ var FreeformEntry = React.createClass({
 				set: this.set.bind(this, "debits"),
 				deleteRow: this.deleteRow.bind(this, "debits"),
 				enabled: !this.props.saving,
-				currencyName: this.props.instanceConfig.isReady() ? this.props.instanceConfig.currencyName() : ""
+				currencyName: this.props.instanceConfig.currencyName(),
+				currencyPosition: this.props.instanceConfig.currencyPosition()
 			}),
 			React.createElement(AccountInputTable, {
 				type: "credits",
@@ -156,7 +157,8 @@ var FreeformEntry = React.createClass({
 				set: this.set.bind(this, "credits"),
 				deleteRow: this.deleteRow.bind(this, "credits"),
 				enabled: !this.props.saving,
-				currencyName: this.props.instanceConfig.isReady() ? this.props.instanceConfig.currencyName() : ""
+				currencyName: this.props.instanceConfig.currencyName(),
+				currencyPosition: this.props.instanceConfig.currencyPosition()
 			})
 		);
 	}

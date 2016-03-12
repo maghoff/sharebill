@@ -28,6 +28,22 @@ var AccountInputRow = React.createClass({
 		}
 	},
 	render: function () {
+		var input = React.createElement("input", {
+			className: "input-small currency",
+			"data-for": "value",
+			value: this.props.value,
+			placeholder: this.props.placeholder_value,
+			title: this.props.value_error,
+			disabled: this.props.enabled ? "" : "disabled",
+			onChange: this.handleChange,
+			onBlur: this.handleBlur
+		});
+
+		var currency = React.createElement("span", { className: "add-on" }, this.props.currencyName);
+
+		var inputClass = (this.props.currencyPosition === "prefix" ? "input-prepend" : "input-append");
+		var inputElements = (this.props.currencyPosition === "prefix" ? [ currency, input ] : [ input, currency ]);
+
 		return React.createElement("tr", null,
 			React.createElement("td", { className: this.props.type },
 				React.createElement("span", { className: "input-prepend control-group" + (this.props.account_error ? " error" : "") },
@@ -46,19 +62,17 @@ var AccountInputRow = React.createClass({
 				)
 			),
 			React.createElement("td", { className: this.props.type + " currency" },
-				// TODO Implement support for prefix currencies
-				React.createElement("span", { className: "currency_input input-append control-group" + (this.props.value_error ? " error": "") },
-					React.createElement("input", {
-						className: "input-small currency",
-						 "data-for": "value",
-						 value: this.props.value,
-						 placeholder: this.props.placeholder_value,
-						 title: this.props.value_error,
-						 disabled: this.props.enabled ? "" : "disabled",
-						 onChange: this.handleChange,
-						 onBlur: this.handleBlur
-					}),
-					React.createElement("span", { className: "add-on" }, this.props.currencyName)
+				React.createElement(
+					"span",
+					{
+						className: [
+							"currency_input",
+							"control-group",
+							inputClass,
+						].concat(this.props.value_error ? ["error"]: [])
+						.join(' ')
+					},
+					inputElements
 				)
 			)
 		);
@@ -136,6 +150,7 @@ var AccountInputTable = React.createClass({
 						value: item.value,
 						value_error: item.value_error,
 						currencyName: this.props.currencyName,
+						currencyPosition: this.props.currencyPosition,
 						enabled: this.props.enabled,
 						set: this.set.bind(this, index),
 						deleteMe: this.deleteRow.bind(this, index)
@@ -147,6 +162,7 @@ var AccountInputTable = React.createClass({
 						account: "",
 						value: "",
 						currencyName: this.props.currencyName,
+						currencyPosition: this.props.currencyPosition,
 						placeholder_value: this.props.extra ? formatSum(this.props.extra) : null,
 						enabled: this.props.enabled,
 						set: this.set.bind(this, this.props.values.length),
