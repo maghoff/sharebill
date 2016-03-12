@@ -33,6 +33,7 @@ BROWSERIFY_MODULES= \
 
 SERVER_RENDERING_TRGS= \
 	release/react/addons.js \
+	release/infix/no_references.js \
 	release/moment.js \
 	release/browser-request.js \
 	release/lib/views/lib/fractionParser.js \
@@ -59,6 +60,13 @@ release/%: src/%
 release/react/addons.js: node_modules/react/dist/react-with-addons.min.js
 	mkdir -p `dirname $@`
 	cp $< $@
+
+release/infix/no_references.js: node_modules/infix/no_references.js
+	mkdir -p `dirname $@`
+	./node_modules/.bin/browserify \
+		-r infix/no_references \
+		-s 'infix/no_references' \
+		| uglifyjs -nc --unsafe -o $@
 
 release/moment.js: node_modules/moment/min/moment.min.js
 	mkdir -p `dirname $@`
