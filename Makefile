@@ -29,7 +29,8 @@ BROWSERIFY_MODULES= \
 	src/posts-table.js \
 	src/recent.js \
 	src/sheet.js \
-	src/toMixedNumber.js
+	src/toMixedNumber.js \
+	src/humanized-precise.js
 
 SERVER_RENDERING_TRGS= \
 	release/react/addons.js \

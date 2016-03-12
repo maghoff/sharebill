@@ -2,18 +2,7 @@ var React = require('react/addons');
 var SchemeNumber = require('./views/lib/schemeNumber').SchemeNumber;
 var evaluate = require('./calc');
 var toMixedNumber = require('./toMixedNumber');
-
-function formatSum(sum) {
-	var denom = SchemeNumber.fn.denominator(sum);
-	if (SchemeNumber.fn["="](denom, new SchemeNumber("1"))) {
-		sum_text = sum.toString();
-	} else if (SchemeNumber.fn["="](SchemeNumber.fn.lcm(denom, new SchemeNumber("100")), new SchemeNumber("100"))) {
-		sum_text = sum.toFixed(2);
-	} else {
-		sum_text = toMixedNumber(sum);
-	}
-	return sum_text;
-}
+var humanizedPrecise = require('./humanized-precise');
 
 var AccountInputRow = React.createClass({
 	handleChange: function (ev) {
@@ -117,7 +106,7 @@ var AccountInputTable = React.createClass({
 		});
 
 		var sum_text = "-";
-		if (sum_is_valid) sum_text = formatSum(sum);
+		if (sum_is_valid) sum_text = humanizedPrecise(sum);
 
 		var accounts = {};
 		this.props.values.forEach(function (entry) {
@@ -160,7 +149,7 @@ var AccountInputTable = React.createClass({
 						value: "",
 						currencyName: this.props.currencyName,
 						currencyPosition: this.props.currencyPosition,
-						placeholder_value: this.props.extra ? formatSum(this.props.extra) : null,
+						placeholder_value: this.props.extra ? humanizedPrecise(this.props.extra) : null,
 						enabled: this.props.enabled,
 						set: this.set.bind(this, this.props.values.length),
 						deleteMe: function () {}
