@@ -30,6 +30,9 @@ function (head, req) {
 	var PostsTable = require('lib/posts-table');
 	var SchemeNumber = require('lib/views/lib/schemeNumber').SchemeNumber;
 	var fractionParser = require('lib/views/lib/fractionParser');
+	var InstanceConfig = require('lib/instance-config');
+
+	var instanceConfig = new InstanceConfig(this.instance_config);
 
 	var row;
 	var list = [];
@@ -55,7 +58,10 @@ function (head, req) {
 			PostsTable,
 			{
 				posts: list,
-				format: function (value) { return value ? SchemeNumber.fn.floor(fractionParser(value)).toFixed(0) : ""; }
+				format: function (value) {
+					if (!value) return "";
+					return instanceConfig.formatCurrencyShort(fractionParser(value));
+				}
 			}
 		)
 	);
