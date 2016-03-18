@@ -49,7 +49,7 @@ TRGS_FROM_COPY_DIRS=$(FILES_FROM_COPY_DIRS:src/%=%)
 SRCS=$(TRGS_FROM_COPY_DIRS) $(COPY_FILES)
 TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%) $(SERVER_RENDERING_TRGS)
 
-UGLIFYJS=./node_modules/.bin/uglifyjs2 -nc --unsafe
+UGLIFYJS=./node_modules/.bin/uglifyjs -nc --screw-ie8 --unsafe
 
 sharebill.json: $(TRGS) release
 	couchapp push --export release > sharebill.json
