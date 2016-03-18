@@ -49,6 +49,8 @@ TRGS_FROM_COPY_DIRS=$(FILES_FROM_COPY_DIRS:src/%=%)
 SRCS=$(TRGS_FROM_COPY_DIRS) $(COPY_FILES)
 TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%) $(SERVER_RENDERING_TRGS)
 
+UGLIFYJS=./node_modules/.bin/uglifyjs2 -nc --unsafe
+
 sharebill.json: $(TRGS) release
 	couchapp push --export release > sharebill.json
 
@@ -67,7 +69,7 @@ release/infix/no_references.js: node_modules/infix/no_references.js
 	./node_modules/.bin/browserify \
 		-r infix/no_references \
 		-s 'infix/no_references' \
-		| uglifyjs -nc --unsafe -o $@
+		| $(UGLIFYJS) -o $@
 
 release/moment.js: node_modules/moment/min/moment.min.js
 	mkdir -p `dirname $@`
@@ -79,11 +81,11 @@ release/browser-request.js:
 
 release/lib/views/lib/%: src/views/lib/%
 	mkdir -p `dirname $@`
-	uglifyjs -nc --unsafe -o $@ $<
+	$(UGLIFYJS) -o $@ $<
 
 release/lib/%.js: src/%.js
 	mkdir -p `dirname $@`
-	uglifyjs -nc --unsafe -o $@ $<
+	$(UGLIFYJS) -o $@ $<
 
 clean:
 	rm -rf sharebill.json release .intermediate
@@ -119,11 +121,11 @@ release/%.html: src/%.mu.html .intermediate/html-dep-sums.json
 
 .intermediate/%.min.js: src/%.js
 	mkdir -p `dirname $@`
-	uglifyjs -nc --unsafe -o $@ $<
+	$(UGLIFYJS) -o $@ $<
 
 .intermediate/%.min.js: .intermediate/%.js
 	mkdir -p `dirname $@`
-	uglifyjs -nc --unsafe -o $@ $<
+	$(UGLIFYJS) -o $@ $<
 
 
 # pystache claims to accept filenames, but it doesn't seem to work right
