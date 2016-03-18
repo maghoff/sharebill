@@ -50,6 +50,7 @@ SRCS=$(TRGS_FROM_COPY_DIRS) $(COPY_FILES)
 TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%) $(SERVER_RENDERING_TRGS)
 
 UGLIFYJS=./node_modules/.bin/uglifyjs -nc --screw-ie8 --unsafe
+BROWSERIFY=./node_modules/.bin/browserify
 
 sharebill.json: $(TRGS) release
 	couchapp push --export release > sharebill.json
@@ -66,7 +67,7 @@ release/react/addons.js: node_modules/react/dist/react-with-addons.min.js
 
 release/infix/no_references.js: node_modules/infix/no_references.js
 	mkdir -p `dirname $@`
-	./node_modules/.bin/browserify \
+	$(BROWSERIFY) \
 		-r infix/no_references \
 		-s 'infix/no_references' \
 		| $(UGLIFYJS) -o $@
@@ -141,7 +142,7 @@ node_modules: package.json
 	touch node_modules
 
 .intermediate/all.js: $(BROWSERIFY_MODULES) node_modules
-	./node_modules/.bin/browserify \
+	$(BROWSERIFY) \
 		-r './src/account-balance:./account-balance' \
 		-r './src/account-posts:./account-posts' \
 		-r './src/balances:./balances' \
