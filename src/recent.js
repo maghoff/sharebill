@@ -56,15 +56,12 @@ RecentComponent.prototype.updateTimestamps = function () {
 	}.bind(this), msToNextUpdate);
 }
 
-function Recent(domNode, url, earlyXhr, instanceConfig) {
+function Recent(domNode, url, data, instanceConfig) {
 	this.domNode = domNode;
 	this.url = url;
 	this.instanceConfig = instanceConfig;
 
-	completeEarlyXHR(earlyXhr, function (err, response, body) {
-		this.handleResponse(err, response, body);
-		if (this.updateSeqListener) this.updateSeqListener(this.updateSeq);
-	}.bind(this));
+	this.handleResponse(null, null, data);
 }
 
 Recent.prototype.handleResponse = function (err, response, body) {

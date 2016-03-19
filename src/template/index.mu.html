@@ -7,8 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script>
 		var early_xhrs = {
-			balances: "balances",
-			recent: "recent"
+			balances: "balances"
 		};
 		for (var x in early_xhrs) {
 			var url = early_xhrs[x];
@@ -28,7 +27,7 @@
 	</div>
 	<div class="section">
 		<h2>Activity</h2>
-		<div id="recent" class="too_wide"></div>
+		<div id="recent" class="too_wide">{{{recent_rendered}}}</div>
 		<div id="entry-buttons">
 			<!--<button class="entry_link btn" data-type="single_payer">I paid an expense</button>-->
 			<button class="entry_link btn" data-type="freeform">Add a post</button>
@@ -48,7 +47,7 @@
 		(function() {
 			var instanceConfig = require('./instance-config')({{{instance_config}}});
 			var balances = require('./balances')(document.getElementById("balances"), "balances", early_xhrs.balances, instanceConfig);
-			var recent = require('./recent')(document.getElementById("recent"), "recent", early_xhrs.recent, instanceConfig);
+			var recent = require('./recent')(document.getElementById("recent"), "recent", {{{recent}}}, instanceConfig);
 			require('./entry-buttons')(document.getElementById("entry-buttons"), document.getElementById("entry"), instanceConfig);
 			var changes = new (require('./changes'))([balances, recent]);
 		}());
