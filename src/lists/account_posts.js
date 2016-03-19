@@ -1,6 +1,5 @@
 function (head, req) {
-	// !json template.readonlypost
-
+	var ddoc = this;
 	var SchemeNumber = require("views/lib/schemeNumber").SchemeNumber;
 	var fractionParser = require("views/lib/fractionParser");
 
@@ -119,7 +118,7 @@ function (head, req) {
 
 		doc.a = make_dict_array(doc._attachments);
 
-		return Mustache.to_html(template.readonlypost, doc);
+		return Mustache.to_html(ddoc.template.readonlypost, doc);
 	}
 
 	var idPath = path.makePath(path.concatArgs(path.concatArgs([''], req.path), [req.query]));

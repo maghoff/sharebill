@@ -1,5 +1,4 @@
 function (head, req) {
-	// !json template.account
 	var Mustache = require('vendor/couchapp/lib/mustache');
 
 	var moment = require('moment');
@@ -72,7 +71,7 @@ function (head, req) {
         }
     });
 	return Mustache.to_html(
-		template.account,
+		this.template.account,
 		{
 			account: account,
 			balance: balance,
