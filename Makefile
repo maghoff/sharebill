@@ -47,7 +47,7 @@ CSS_FILES=vendor/bootstrap/_attachments/css/bootstrap.css _attachments/style/loc
 FILES_FROM_COPY_DIRS=$(shell bash -c "find src/{$(COPY_DIRS)}")
 TRGS_FROM_COPY_DIRS=$(FILES_FROM_COPY_DIRS:src/%=%)
 SRCS=$(TRGS_FROM_COPY_DIRS) $(COPY_FILES)
-TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%) $(SERVER_RENDERING_TRGS)
+TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%) release/sums.json $(SERVER_RENDERING_TRGS)
 
 UGLIFYJS=./node_modules/.bin/uglifyjs -nc --screw-ie8 --unsafe
 BROWSERIFY=./node_modules/.bin/browserify
@@ -111,7 +111,7 @@ release/sums.json: $(HTML_DEP_SUM_FILES) ./collect_checksums.sh
 	./collect_checksums.sh $(HTML_DEP_SUM_FILES) > $@
 
 
-release/%.html: src/%.mu.html release/sums.json
+release/%.html: src/%.mu.html
 	mkdir -p `dirname $@`
 	cp $< $@
 
