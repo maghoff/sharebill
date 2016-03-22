@@ -1,23 +1,20 @@
 #!/bin/bash
 
-OUT="$1"
-shift
-
-echo "{" > "$OUT"
+echo "{"
 
 if [ -f cdn_base ] ;
 then
-	echo -n "    \"cdn_base\": \"$(cat cdn_base)\"" >> "$OUT"
-	if [ $# -gt 0 ] ; then echo -n "," >> "$OUT" ; fi
-	echo "" >> "$OUT"
+	echo -n "    \"cdn_base\": \"$(cat cdn_base)\""
+	if [ $# -gt 0 ] ; then echo -n "," ; fi
+	echo ""
 fi
 
 while [ $# -gt 0 ] ;
 do
-	echo -n "    \"$(basename "$1" | sed -e 's/\./_/g')\": \"$(cat "$1")\"" >> "$OUT"
+	echo -n "    \"$(basename "$1" | sed -e 's/\./_/g')\": \"$(cat "$1")\""
 	shift
-	if [ $# -gt 0 ] ; then echo -n "," >> "$OUT" ; fi
-	echo "" >> "$OUT"
+	if [ $# -gt 0 ] ; then echo -n "," ; fi
+	echo ""
 done
 
-echo "}" >> "$OUT"
+echo "}"

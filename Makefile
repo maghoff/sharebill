@@ -104,11 +104,11 @@ remake: clean sharebill.json
 	./checksumify.sh $<
 
 .intermediate/image-sums.json: $(IMAGE_SUM_FILES) ./collect_checksums.sh cdn_base
-	./collect_checksums.sh $@ $(IMAGE_SUM_FILES)
+	./collect_checksums.sh $(IMAGE_SUM_FILES) > $@
 
 
 .intermediate/html-dep-sums.json: $(HTML_DEP_SUM_FILES) ./collect_checksums.sh cdn_base
-	./collect_checksums.sh $@ $(HTML_DEP_SUM_FILES)
+	./collect_checksums.sh $(HTML_DEP_SUM_FILES) > $@
 
 
 release/%.html: src/%.mu.html .intermediate/html-dep-sums.json
