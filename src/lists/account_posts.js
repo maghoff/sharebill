@@ -117,7 +117,7 @@ function (head, req) {
 
 		doc.a = make_dict_array(doc._attachments);
 
-		doc.cdn_base = ddoc.sums.cdn_base;
+		doc.cdn_base = ddoc.instance_config.cdn_base;
 		doc.all_css_sum = ddoc.sums.all_css_sum;
 		doc.all_js_sum = ddoc.sums.all_js_sum;
 
