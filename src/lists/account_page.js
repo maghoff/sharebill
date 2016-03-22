@@ -73,6 +73,9 @@ function (head, req) {
 	return Mustache.to_html(
 		this.template.account,
 		{
+			cdn_base: this.sums.cdn_base,
+			all_css_sum: this.sums.all_css_sum,
+			all_js_sum: this.sums.all_js_sum,
 			account: account,
 			balance: balance,
 			posts: posts,

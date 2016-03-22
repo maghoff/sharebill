@@ -1,4 +1,3 @@
-{{=<% %>=}}
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +16,7 @@
 			early_xhrs[x].send();
 		}
 	</script>
-	<link rel="stylesheet" href="<%cdn_base%>style/all.sum-<%all_css_sum%>.css" type="text/css">
+	<link rel="stylesheet" href="{{cdn_base}}style/all.sum-{{all_css_sum}}.css" type="text/css">
 </head>
 <body>
 	<h1>Sharebill</h1>
@@ -42,7 +41,7 @@
 			<li><a href="http://bitbucket.org/maghoff/sharebill/issues?status=new&status=open">Report an issue</a></li>
 		</ul>
 	</div>
-	<script src="<%cdn_base%>all.sum-<%all_js_sum%>.js"></script>
+	<script src="{{cdn_base}}all.sum-{{all_js_sum}}.js"></script>
 	<script>
 		(function() {
 			var instanceConfig = require('./instance-config')({{{instance_config}}});

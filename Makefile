@@ -110,13 +110,14 @@ remake: clean sharebill.json
 .intermediate/html-dep-sums.1.json: $(HTML_DEP_SUM_FILES) ./collect_checksums.sh
 	./collect_checksums.sh $(HTML_DEP_SUM_FILES) > $@
 
-.intermediate/html-dep-sums.json: .intermediate/html-dep-sums.1.json cdn_base.json
+release/sums.json: .intermediate/html-dep-sums.1.json cdn_base.json
+	mkdir -p `dirname $@`
 	jq -s '.[0] + .[1]' .intermediate/html-dep-sums.1.json cdn_base.json > $@
 
 
-release/%.html: src/%.mu.html .intermediate/html-dep-sums.json
+release/%.html: src/%.mu.html release/sums.json
 	mkdir -p `dirname $@`
-	pystache "`cat $<`" .intermediate/html-dep-sums.json > $@
+	cp $< $@
 
 
 .intermediate/_attachments/all.js: .intermediate/all.min.js

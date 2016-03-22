@@ -42,7 +42,6 @@ function (head, req) {
 	}
 
 
-	var ddoc = this;
 	var List = require("vendor/couchapp/lib/list");
 	var path = require("vendor/couchapp/lib/path").init(req);
 	var Atom = require("vendor/couchapp/lib/atom");
@@ -117,6 +116,10 @@ function (head, req) {
 		doc.transaction.sum_credits = sum_values(doc.transaction.credits);
 
 		doc.a = make_dict_array(doc._attachments);
+
+		doc.cdn_base = ddoc.sums.cdn_base;
+		doc.all_css_sum = ddoc.sums.all_css_sum;
+		doc.all_js_sum = ddoc.sums.all_js_sum;
 
 		return Mustache.to_html(ddoc.template.readonlypost, doc);
 	}

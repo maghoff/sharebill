@@ -23,6 +23,9 @@ function(doc, req) {
 	return Mustache.to_html(
 		this.template.freeform,
 		{
+			cdn_base: this.sums.cdn_base,
+			all_css_sum: this.sums.all_css_sum,
+			all_js_sum: this.sums.all_js_sum,
 			document: JSON.stringify(doc),
 			instance_config: JSON.stringify(this.instance_config),
 			form: post
