@@ -1,5 +1,5 @@
 function (head, req) {
-	var Mustache = require('vendor/couchapp/lib/mustache');
+	var Mustache = require('mustache');
 	var React = require('react/addons');
 	var PostsTable = require('lib/posts-table');
 	var fractionParser = require('lib/views/lib/fractionParser');

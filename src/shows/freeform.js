@@ -1,7 +1,7 @@
 function(doc, req) {
 	if (!doc) return { code: 404, body: "Not found" };
 
-	var Mustache = require('vendor/couchapp/lib/mustache');
+	var Mustache = require('mustache');
 
 	var React = require('react/addons');
 	var PostEditor = require('lib/post-editor').PostEditor;

@@ -39,6 +39,7 @@ SERVER_RENDERING_TRGS= \
 	release/infix/no_references.js \
 	release/moment.js \
 	release/browser-request.js \
+	release/mustache.js \
 	release/lib/views/lib/fractionParser.js \
 	release/lib/views/lib/schemeNumber.js \
 	release/lib/views/lib/biginteger.js \
@@ -82,6 +83,10 @@ release/moment.js: node_modules/moment/min/moment.min.js
 release/browser-request.js:
 	mkdir -p `dirname $@`
 	touch $@
+
+release/mustache.js: node_modules/mustache/mustache.min.js
+	mkdir -p `dirname $@`
+	cp $< $@
 
 release/lib/views/lib/%: src/views/lib/%
 	mkdir -p `dirname $@`

@@ -1,5 +1,5 @@
 function (head, req) {
-	var Mustache = require('vendor/couchapp/lib/mustache');
+	var Mustache = require('mustache');
 
 	var moment = require('moment');
 	require('lib/moment-config');

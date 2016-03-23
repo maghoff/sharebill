@@ -45,7 +45,7 @@ function (head, req) {
 	var List = require("vendor/couchapp/lib/list");
 	var path = require("vendor/couchapp/lib/path").init(req);
 	var Atom = require("vendor/couchapp/lib/atom");
-	var Mustache = require("vendor/couchapp/lib/mustache");
+	var Mustache = require("mustache");
 
 
 	/* req object example:
