@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 COPY_DIRS=views,lists,shows,vendor
 COPY_FILES=couchapp.json language validate_doc_update.js .couchapprc rewrites.json
 
@@ -51,6 +53,7 @@ TRGS=$(SRCS:%=release/%) $(HTML_FILES:%=release/%) release/sums.json $(SERVER_RE
 
 UGLIFYJS=./node_modules/.bin/uglifyjs -nc --screw-ie8 --unsafe
 BROWSERIFY=./node_modules/.bin/browserify
+MUSTACHE=./node_modules/.bin/mustache
 
 sharebill.json: $(TRGS) release
 	couchapp push --export release > sharebill.json
@@ -129,9 +132,8 @@ release/%.html: src/%.mu.html
 	$(UGLIFYJS) -o $@ $<
 
 
-# pystache claims to accept filenames, but it doesn't seem to work right
-.intermediate/_attachments/style/all.css: .intermediate/_attachments/style/all-prestache.css .intermediate/image-sums.json
-	pystache "`sed -e 's/glyphicons-halflings.png/glyphicons-halflings.sum-{{glyphicons-halflings_png_sum}}.png/' -e 's/glyphicons-halflings-white.png/glyphicons-halflings-white.sum-{{glyphicons-halflings-white_png_sum}}.png/' .intermediate/_attachments/style/all-prestache.css`" .intermediate/image-sums.json > $@
+.intermediate/_attachments/style/all.css: .intermediate/_attachments/style/all-prestache.css .intermediate/image-sums.json node_modules
+	$(MUSTACHE) .intermediate/image-sums.json <(sed -e 's/glyphicons-halflings.png/glyphicons-halflings.sum-{{glyphicons-halflings_png_sum}}.png/' -e 's/glyphicons-halflings-white.png/glyphicons-halflings-white.sum-{{glyphicons-halflings-white_png_sum}}.png/' .intermediate/_attachments/style/all-prestache.css) > $@
 
 .intermediate/_attachments/style/all-prestache.css: $(CSS_FILES:%=src/%)
 	mkdir -p `dirname $@`
