@@ -134,7 +134,7 @@ function (head, req) {
 		// generate the feed header
 		var feedHeader = Atom.header({
 			updated : (firstRow ? new Date(parseRFC3339(firstRow.value.meta.timestamp)) : new Date()),
-			title : ddoc.couchapp.name,
+			title : ddoc.instance_config.title,
 			feed_id : path.absolute(idPath),
 			feed_link : path.absolute(selfPath),
 		});
