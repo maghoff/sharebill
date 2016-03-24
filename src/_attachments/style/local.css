@@ -7,6 +7,28 @@ h1 {
   padding: 0 12px;
 }
 
+ul.breadcrumbs {
+  margin: 0;
+  padding: 0 12px;
+  color: white;
+}
+.breadcrumbs li {
+  display: inline-block;
+}
+.breadcrumbs li:after {
+  content: " > ";
+}
+.breadcrumbs li:last-child:after {
+  content: "";
+}
+
+.breadcrumbs a {
+  color: inherit;
+}
+.breadcrumbs li:last-child {
+  font-weight: bold;
+}
+
 input {
   margin-bottom: 0;
 }
