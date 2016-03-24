@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{{account}} (Sharebill)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="../">
+<head>
+	<title>{{account}} (Sharebill)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<base href="../">
 	<script>
 		var early_xhrs = {
 			balance: "account/{{account}}/totals"
@@ -17,29 +17,29 @@
 		}
 	</script>
 	<link rel="stylesheet" href="{{cdn_base}}style/all.sum-{{all_css_sum}}.css" type="text/css">
-    <link rel="alternate" href="account/{{account}}/posts" type="application/atom+xml" title="{{account}} (Sharebill)">
-    <style type="text/css">
-	  .atomlink { transition: opacity 100ms; }
-      .atomlink:hover { opacity: 0.6; }
-    </style>
-  </head>
-  <body class="metadata" data-user="{{account}}">
-    <h1>Account {{account}}</h1>
-    <div class="section">
-      <h2>Balance</h2>
-      <div id="balance">{{{balance}}}</div>
-    </div>
-    <div class="section">
-      <h2>Recent posts <a href="account/{{account}}/posts" class="atomlink" alt="Feed"></a></h2>
-      <div id="posts" class="too_wide">{{{posts}}}</div>
-    </div>
-    <div class="footer">
-        <ul>
-            <li>Sharebill</li>
-            <li><a href="http://bitbucket.org/maghoff/sharebill">Source code</a></li>
-            <li><a href="http://bitbucket.org/maghoff/sharebill/issues?status=new&status=open">Report an issue</a></li>
-        </ul>
-    </div>
+	<link rel="alternate" href="account/{{account}}/posts" type="application/atom+xml" title="{{account}} (Sharebill)">
+	<style type="text/css">
+	.atomlink { transition: opacity 100ms; }
+	.atomlink:hover { opacity: 0.6; }
+	</style>
+</head>
+<body class="metadata" data-user="{{account}}">
+	<h1>Account {{account}}</h1>
+	<div class="section">
+	<h2>Balance</h2>
+	<div id="balance">{{{balance}}}</div>
+	</div>
+	<div class="section">
+	<h2>Recent posts <a href="account/{{account}}/posts" class="atomlink" alt="Feed"></a></h2>
+	<div id="posts" class="too_wide">{{{posts}}}</div>
+	</div>
+	<div class="footer">
+		<ul>
+			<li>Sharebill</li>
+			<li><a href="https://github.com/maghoff/sharebill">Source code</a></li>
+			<li><a href="https://github.com/maghoff/sharebill/issues">Report an issue</a></li>
+		</ul>
+	</div>
 	<script src="{{cdn_base}}all.sum-{{all_js_sum}}.js"></script>
 	<script>
 		(function () {
@@ -50,5 +50,5 @@
 			require('./account-posts')(document.getElementById('posts'), list, instanceConfig);
 		}());
 	</script>
-  </body>
+</body>
 </html>
