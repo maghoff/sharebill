@@ -10,7 +10,6 @@ h1 {
 ul.breadcrumbs {
   margin: 0;
   padding: 0 12px;
-  color: white;
 }
 .breadcrumbs li {
   display: inline-block;
@@ -85,9 +84,9 @@ td:not(.debits)+td.debits, td:not(.credits)+td.credits {
 tbody>tr:nth-child(2n)>.debits { background: rgba(250, 200, 200, 0.2); }
 tbody>tr:nth-child(2n+1)>.debits { background: rgba(200, 150, 150, 0.2); }
 
-h1, .footer {
-  color: #eee;
-  text-shadow: 0px 0px 8px rgba(0,0,0,0.7);
+h1, .footer, .breadcrumbs {
+  color: white;
+  text-shadow: 0px 0px 8px rgba(0,0,0,0.4);
 }
 
 .footer {
