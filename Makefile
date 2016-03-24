@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 COPY_DIRS=views,lists,shows,vendor
-COPY_FILES=couchapp.json language validate_doc_update.js .couchapprc rewrites.json
+COPY_FILES=couchapp.json language validate_doc_update.js rewrites.json
 
 HTML_FILES=template/index.html template/freeform.html template/readonlypost.html template/account.html
 HTML_DEPS=.intermediate/_attachments/style/all.css .intermediate/_attachments/all.js
@@ -65,10 +65,12 @@ release/%: src/%
 	mkdir -p `dirname $@`
 	if [ ! -d $< ] ; then cp $< $@ ; fi
 
+node_modules/react/dist/react-with-addons.min.js: node_modules
 release/react/addons.js: node_modules/react/dist/react-with-addons.min.js
 	mkdir -p `dirname $@`
 	cp $< $@
 
+node_modules/infix/no_references.js: node_modules
 release/infix/no_references.js: node_modules/infix/no_references.js
 	mkdir -p `dirname $@`
 	$(BROWSERIFY) \
@@ -84,6 +86,7 @@ release/browser-request.js:
 	mkdir -p `dirname $@`
 	touch $@
 
+node_modules/mustache/mustache.min.js: node_modules
 release/mustache.js: node_modules/mustache/mustache.min.js
 	mkdir -p `dirname $@`
 	cp $< $@
