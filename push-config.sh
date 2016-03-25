@@ -27,4 +27,4 @@ fi
 jq -M -c -s \
 	".[0] + {\"instance_config\":.[1].instance_config} + $REV_OBJ" \
 	sharebill.json "$CFG" \
-	| curl -k -d @- -X PUT "$URL"
+	| curl -d @- -X PUT "$URL"
