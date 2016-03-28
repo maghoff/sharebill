@@ -55,10 +55,8 @@ function (head, req) {
 	return Mustache.to_html(
 		this.template.index,
 		{
-			title: this.instance_config.title,
-			cdn_base: this.instance_config.cdn_base,
-			all_css_sum: this.sums.all_css_sum,
-			all_js_sum: this.sums.all_js_sum,
+			cfg: this.instance_config,
+			sums: this.sums,
 			instance_config: JSON.stringify(this.instance_config),
 			recent_rendered: recent_rendered,
 			recent: JSON.stringify({

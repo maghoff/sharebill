@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{title}}</title>
+	<title>{{cfg.title}}</title>
 	<meta charset="utf8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script>
@@ -16,10 +16,10 @@
 			early_xhrs[x].send();
 		}
 	</script>
-	<link rel="stylesheet" href="{{cdn_base}}style/all.sum-{{all_css_sum}}.css" type="text/css">
+	<link rel="stylesheet" href="{{cfg.cdn_base}}style/all.sum-{{sums.all_css_sum}}.css" type="text/css">
 </head>
 <body>
-	<h1>{{title}}</h1>
+	<h1>{{cfg.title}}</h1>
 	<ul class="breadcrumbs">
 		<li><a href="">Overview</a></li>
 	</ul>
@@ -44,7 +44,7 @@
 			<li><a href="https://github.com/maghoff/sharebill/issues">Report an issue</a></li>
 		</ul>
 	</div>
-	<script src="{{cdn_base}}all.sum-{{all_js_sum}}.js"></script>
+	<script src="{{cfg.cdn_base}}all.sum-{{sums.all_js_sum}}.js"></script>
 	<script>
 		(function() {
 			var instanceConfig = require('./instance-config')({{{instance_config}}});
