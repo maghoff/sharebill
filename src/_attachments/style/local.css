@@ -1,6 +1,6 @@
 body {
   padding: 12px 0;
-  background: url("ornate_13.sum-{{ornate_13_png_sum}}.png") #6f951f;
+  background: url("ornate_13.sum-{{ornate_13_png}}.png") #6f951f;
 }
 
 h1 {
@@ -43,7 +43,7 @@ input {
 .atomlink {
   width: 18px;
   height: 18px;
-  background-image: url("Feed-icon.sum-{{Feed-icon_svg_sum}}.svg");
+  background-image: url("Feed-icon.sum-{{Feed-icon_svg}}.svg");
   background-repeat: no-repeat;
   background-size: 18px 18px;
   display: inline-block;

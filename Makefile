@@ -141,7 +141,7 @@ release/%.html: src/%.mu.html
 
 
 .intermediate/_attachments/style/all.css: .intermediate/_attachments/style/all-prestache.css .intermediate/image-sums.json node_modules
-	$(MUSTACHE) .intermediate/image-sums.json <(sed -e 's/glyphicons-halflings.png/glyphicons-halflings.sum-{{glyphicons-halflings_png_sum}}.png/' -e 's/glyphicons-halflings-white.png/glyphicons-halflings-white.sum-{{glyphicons-halflings-white_png_sum}}.png/' .intermediate/_attachments/style/all-prestache.css) > $@
+	$(MUSTACHE) .intermediate/image-sums.json <(sed -e 's/glyphicons-halflings.png/glyphicons-halflings.sum-{{glyphicons-halflings_png}}.png/' -e 's/glyphicons-halflings-white.png/glyphicons-halflings-white.sum-{{glyphicons-halflings-white_png}}.png/' .intermediate/_attachments/style/all-prestache.css) > $@
 
 .intermediate/_attachments/style/all-prestache.css: $(CSS_FILES:%=src/%)
 	mkdir -p `dirname $@`
