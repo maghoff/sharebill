@@ -16,7 +16,7 @@
 			early_xhrs[x].send();
 		}
 	</script>
-	<link rel="stylesheet" href="{{cfg.cdn_base}}style/all.sum-{{sums.all_css}}.css" type="text/css">
+	<link rel="stylesheet" href="{{cfg.cdn_base}}style/all.sum-{{sums.all_css}}.css" type="text/css" crossorigin="anonymous">
 </head>
 <body>
 	<h1>{{cfg.title}}</h1>
@@ -44,7 +44,7 @@
 			<li><a href="https://github.com/maghoff/sharebill/issues">Report an issue</a></li>
 		</ul>
 	</div>
-	<script src="{{cfg.cdn_base}}all.sum-{{sums.all_js}}.js"></script>
+	<script src="{{cfg.cdn_base}}all.sum-{{sums.all_js}}.js" crossorigin="anonymous"></script>
 	<script>
 		(function() {
 			var instanceConfig = require('./instance-config')({{{instance_config}}});
