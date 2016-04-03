@@ -41,6 +41,7 @@ function (head, req) {
 	while (row = getRow()) {
 		rows.push(row);
 	}
+	rows.reverse();
 
 	var recent_rendered = React.renderToString(
 		React.createElement(PostsTable, {
@@ -51,6 +52,8 @@ function (head, req) {
 			}
 		})
 	);
+
+	rows.reverse();
 
 	return Mustache.to_html(
 		this.template.index,

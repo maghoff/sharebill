@@ -56,6 +56,7 @@ RecentComponent.prototype.updateTimestamps = function () {
 	}.bind(this), msToNextUpdate);
 }
 
+
 function Recent(domNode, url, data, instanceConfig) {
 	this.domNode = domNode;
 	this.url = url;
